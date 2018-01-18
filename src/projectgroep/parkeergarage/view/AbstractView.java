@@ -13,4 +13,12 @@ public class AbstractView extends JPanel {
 		this.model = model;
 	}
 	
+	public AbstractModel getModel() {
+		return model;
+	}
+	
+	public void updateView() {
+		repaint();
+	}
+	
 }
