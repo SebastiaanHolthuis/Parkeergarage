@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage;
+package projectgroep.parkeergarage.logic.cars;
 
 import java.util.LinkedList;
 import java.util.Queue;

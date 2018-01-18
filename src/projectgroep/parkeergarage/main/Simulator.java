@@ -23,6 +23,7 @@ public class Simulator {
 		screen					= new JFrame();
 		parkeerLogic 			= new ParkeerLogic(numberOfFloors, numberOfRows, numberOfPlaces);
 		carParkView 			= new CarParkView(parkeerLogic);
+		parkeerLogic.addView(carParkView);
 	}
 	
 	private void initializeFrame() {

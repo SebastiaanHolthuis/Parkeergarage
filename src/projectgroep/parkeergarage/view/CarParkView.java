@@ -5,9 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import projectgroep.parkeergarage.Car;
-import projectgroep.parkeergarage.Location;
+import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.logic.cars.Car;
 
 public class CarParkView extends AbstractView {
 
@@ -64,5 +64,6 @@ public class CarParkView extends AbstractView {
                  60 + location.getPlace() * 10,
                  20 - 1,
                  10 - 1); // TODO use dynamic size or constants
+
      }
 }

@@ -6,7 +6,7 @@ import projectgroep.parkeergarage.view.AbstractView;
 
 public class AbstractModel implements Runnable {
 
-	private ArrayList<AbstractView> views;
+	protected ArrayList<AbstractView> views;
 	
 	public AbstractModel() {
 		views = new ArrayList<>();
@@ -17,8 +17,12 @@ public class AbstractModel implements Runnable {
 		notifyViews();
 	}
 	
-	private void notifyViews() {
-		views.forEach(v -> v.repaint());
+	protected void notifyViews() {
+		views.forEach(v -> v.updateView());
+	}
+	
+	public void addView(AbstractView view) {
+		views.add(view);
 	}
 
 }
