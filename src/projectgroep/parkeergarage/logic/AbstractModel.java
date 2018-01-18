@@ -2,13 +2,13 @@ package projectgroep.parkeergarage.logic;
 
 import java.util.ArrayList;
 
-import projectgroep.parkeergarage.view.View;
+import projectgroep.parkeergarage.view.AbstractView;
 
-public class Model implements Runnable {
+public class AbstractModel implements Runnable {
 
-	private ArrayList<View> views;
+	private ArrayList<AbstractView> views;
 	
-	public Model() {
+	public AbstractModel() {
 		views = new ArrayList<>();
 	}
 	

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Controller extends JPanel implements ActionListener {
+public class AbstractController extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
