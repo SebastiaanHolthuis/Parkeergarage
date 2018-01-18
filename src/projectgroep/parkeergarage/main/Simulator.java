@@ -28,14 +28,15 @@ public class Simulator {
 	
 	private void initializeFrame() {
 		screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-		screen.setPreferredSize(new Dimension(800, 500));
-		screen.setLocationRelativeTo(null);
+		screen.setPreferredSize(new Dimension(900, 600));
+		screen.setResizable(false);
 		screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		contentPane 	= screen.getContentPane();
 		contentPane.add(carParkView, BorderLayout.CENTER);
 		
 		screen.pack();
+		screen.setLocationRelativeTo(null);
 		screen.setVisible(true);
 		
 		carParkView.updateView();
