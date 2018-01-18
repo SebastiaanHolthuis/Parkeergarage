@@ -3,13 +3,14 @@ package projectgroep.parkeergarage.view;
 import javax.swing.JPanel;
 
 import projectgroep.parkeergarage.logic.AbstractModel;
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 @SuppressWarnings("serial")
 public class AbstractView extends JPanel {
 
-	protected AbstractModel model;
+	protected ParkeerLogic model;
 	
-	public AbstractView(AbstractModel model) {
+	public AbstractView(ParkeerLogic model) {
 		this.model = model;
 	}
 	

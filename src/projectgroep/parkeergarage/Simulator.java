@@ -6,13 +6,11 @@ public class Simulator {
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
-	
-	
+
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    private SimulatorView simulatorView;
 
     private int day = 0;
     private int hour = 0;
@@ -34,7 +32,6 @@ public class Simulator {
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        simulatorView = new SimulatorView(3, 6, 30);
     }
 
     public void run() {
@@ -86,9 +83,9 @@ public class Simulator {
     }
     
     private void updateViews(){
-    	simulatorView.tick();
-        // Update the car park view.
-        simulatorView.updateView();	
+//    	simulatorView.tick();
+//        // Update the car park view.
+//        simulatorView.updateView();	
     }
     
     private void carsArriving(){
@@ -99,31 +96,31 @@ public class Simulator {
     }
 
     private void carsEntering(CarQueue queue){
-        int i=0;
-        // Remove car from the front of the queue and assign to a parking space.
-    	while (queue.carsInQueue()>0 && 
-    			simulatorView.getNumberOfOpenSpots()>0 && 
-    			i<enterSpeed) {
-            Car car = queue.removeCar();
-            Location freeLocation = simulatorView.getFirstFreeLocation();
-            simulatorView.setCarAt(freeLocation, car);
-            i++;
-        }
+//        int i=0;
+//        // Remove car from the front of the queue and assign to a parking space.
+//    	while (queue.carsInQueue()>0 && 
+//    			simulatorView.getNumberOfOpenSpots()>0 && 
+//    			i<enterSpeed) {
+//            Car car = queue.removeCar();
+//            Location freeLocation = simulatorView.getFirstFreeLocation();
+//            simulatorView.setCarAt(freeLocation, car);
+//            i++;
+//        }
     }
     
     private void carsReadyToLeave(){
-        // Add leaving cars to the payment queue.
-        Car car = simulatorView.getFirstLeavingCar();
-        while (car!=null) {
-        	if (car.getHasToPay()){
-	            car.setIsPaying(true);
-	            paymentCarQueue.addCar(car);
-        	}
-        	else {
-        		carLeavesSpot(car);
-        	}
-            car = simulatorView.getFirstLeavingCar();
-        }
+//        // Add leaving cars to the payment queue.
+//        Car car = simulatorView.getFirstLeavingCar();
+//        while (car!=null) {
+//        	if (car.getHasToPay()){
+//	            car.setIsPaying(true);
+//	            paymentCarQueue.addCar(car);
+//        	}
+//        	else {
+//        		carLeavesSpot(car);
+//        	}
+//            car = simulatorView.getFirstLeavingCar();
+//        }
     }
 
     private void carsPaying(){
@@ -177,7 +174,7 @@ public class Simulator {
     }
     
     private void carLeavesSpot(Car car){
-    	simulatorView.removeCarAt(car.getLocation());
+//    	simulatorView.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
 
