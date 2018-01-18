@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage;
+package projectgroep.parkeergarage.logic;
 
 public class Location {
 
