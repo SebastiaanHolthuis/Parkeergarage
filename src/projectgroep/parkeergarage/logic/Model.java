@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.model;
+package projectgroep.parkeergarage.logic;
 
 import java.util.ArrayList;
 

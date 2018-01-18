@@ -2,7 +2,7 @@ package projectgroep.parkeergarage.view;
 
 import javax.swing.JPanel;
 
-import projectgroep.parkeergarage.model.Model;
+import projectgroep.parkeergarage.logic.Model;
 
 @SuppressWarnings("serial")
 public class View extends JPanel {
