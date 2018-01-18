@@ -54,6 +54,8 @@ public class CarParkView extends AbstractView {
             }
         }
         
+        
+        
         repaint();
 	}
 	
