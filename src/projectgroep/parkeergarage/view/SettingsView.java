@@ -3,6 +3,7 @@ package projectgroep.parkeergarage.view;
 import java.awt.GridLayout;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -33,6 +34,7 @@ public class SettingsView extends AbstractView {
 		super(model);
 		setLayout(new GridLayout(0,2));
 		initializeFields();
+		add(new JButton("Restart"));
 	}
 	
 	// TODO: duplicatie opruimen?

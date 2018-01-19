@@ -69,6 +69,13 @@ public class Simulator {
 		
 	}
 	
+	/**
+	 * Kills the simulator and restarts it with the new settings
+	 */
+	public void restart() {
+		
+	}
+	
 	public ParkeerLogic getParkeerLogic() {
 		return parkeerLogic;
 	}
