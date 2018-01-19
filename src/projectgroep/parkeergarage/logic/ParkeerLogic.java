@@ -241,33 +241,36 @@ public class ParkeerLogic extends AbstractModel {
         if (!locationIsValid(location)) {
             return false;
         }
+        
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
             
-            if(car instanceof ParkingPassCar) {
-            		if(parkingPassLocations.size() > 0) {
-            			if(location.getRow() < 2 && parkingPassLocations.contains(location)) {	            			
-	            			parkingPassLocations.remove(location);
-	            			cars[0][location.getRow()][location.getPlace()] = car;
-	                		car.setLocation(location);
-	                		System.out.println("Aankomen " + parkingPassLocations.size());
-            			}
-            		} else if(location.getRow() > 1){
-	            		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
-	            		car.setLocation(location);
-            		}
-            }
-            
-            if(!(car instanceof ParkingPassCar)) {
-            		if(location.getRow() > 1) {
-	            		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
-	            		car.setLocation(location);
-            		}
-            }
-            numberOfOpenSpots--;
-            return true;
-            
+	        if (car instanceof ParkingPassCar) {
+	        	if (parkingPassLocations.size() > 0) {
+	        		if (location.getRow() < 2 && parkingPassLocations.contains(location)) {	            			
+	        			parkingPassLocations.remove(location);
+		            	cars[0][location.getRow()][location.getPlace()] = car;
+		                car.setLocation(location);
+		                System.out.println(parkingPassLocations.size());
+	            	}
+	            } else if (location.getRow() > 1){
+		           cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
+		           car.setLocation(location);
+	            }
+	        }
+	            
+	        if (!(car instanceof ParkingPassCar)) {
+	        	if(location.getRow() > 1) {
+	        		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
+	        		car.setLocation(location);
+	            }
+	        }
+	        
+	        numberOfOpenSpots--;
+	        
+	        return true;            
         }
+        
         return false;
     }
 
