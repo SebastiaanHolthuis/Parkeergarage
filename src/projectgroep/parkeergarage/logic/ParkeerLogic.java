@@ -1,5 +1,6 @@
 package projectgroep.parkeergarage.logic;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
@@ -15,6 +16,8 @@ public class ParkeerLogic extends AbstractModel {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private Car[][][] cars;
+    private ArrayList<Location> parkingPassLocations = new ArrayList<>();
+    
     
     private int day = 0;
     private int hour = 0;
@@ -240,10 +243,31 @@ public class ParkeerLogic extends AbstractModel {
         }
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
-            cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
-            car.setLocation(location);
+            
+            
+            if(car instanceof ParkingPassCar) {
+            		if(parkingPassLocations.size() > 0) {
+            			if(location.getRow() < 2 && parkingPassLocations.contains(location)) {	            			
+	            			parkingPassLocations.remove(location);
+	            			cars[0][location.getRow()][location.getPlace()] = car;
+	                		car.setLocation(location);
+	                		System.out.println(parkingPassLocations.size());
+            			}
+            		} else if(location.getRow() > 1){
+	            		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
+	            		car.setLocation(location);
+            		}
+            }
+            
+            if(!(car instanceof ParkingPassCar)) {
+            		if(location.getRow() > 1) {
+	            		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
+	            		car.setLocation(location);
+            		}
+            }
             numberOfOpenSpots--;
             return true;
+            
         }
         return false;
     }
@@ -255,6 +279,10 @@ public class ParkeerLogic extends AbstractModel {
         Car car = getCarAt(location);
         if (car == null) {
             return null;
+        }
+        if(location.getRow() < 2 && location.getFloor() == 0) {
+        		parkingPassLocations.add(location);
+        		System.out.println(parkingPassLocations.size());
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
@@ -300,5 +328,12 @@ public class ParkeerLogic extends AbstractModel {
         }
         return true;
     }
-    
+
+	public ArrayList<Location> getParkingPassLocations() {
+		return parkingPassLocations;
+	}
+
+	public void setParkingPassLocations(ArrayList<Location> parkingPassLocations) {
+		this.parkingPassLocations = parkingPassLocations;
+	}
 }

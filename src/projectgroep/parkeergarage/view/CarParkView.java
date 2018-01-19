@@ -47,6 +47,9 @@ public class CarParkView extends AbstractView {
             for (int row = 0; row < model.getNumberOfRows(); row++) {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                 	Location location = new Location(floor, row, place);
+                		if(floor == 0 && row < 2) {
+                			model.getParkingPassLocations().add(location);
+                		}
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
                     drawPlace(graphics, location, color);

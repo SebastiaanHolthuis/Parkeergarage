@@ -7,12 +7,14 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.SettingsView;
+import projectgroep.parkeergarage.view.TextStatisticsView;
 
 public class Simulator {
 	
-	private ParkeerLogic 	parkeerLogic;
-	private CarParkView 	carParkView;
-	private SettingsView 	settingsView;
+	private ParkeerLogic 		parkeerLogic;
+	private CarParkView 		carParkView;
+	private SettingsView 		settingsView;
+	private TextStatisticsView 	textStatisticsView;
 	
 	private JFrame			screen;
 	private JFrame			settingsScreen;
@@ -34,25 +36,31 @@ public class Simulator {
 		
 		carParkView 			= new CarParkView(parkeerLogic);
 		settingsView 			= new SettingsView(parkeerLogic);
+		textStatisticsView		= new TextStatisticsView(parkeerLogic);
 		
 		parkeerLogic.addView(carParkView);
 		parkeerLogic.addView(settingsView);
+		parkeerLogic.addView(textStatisticsView);
 	}
 	
 	private void initializeFrame() {
 		screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-		screen.setPreferredSize(new Dimension(900, 600));
+		screen.setPreferredSize(new Dimension(1600, 600));
 		screen.setResizable(false);
 		screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		contentPane 	= screen.getContentPane();
-		contentPane.add(carParkView, BorderLayout.CENTER);
+		contentPane.setLayout(new GridLayout(0, 2));
+		
+		contentPane.add(textStatisticsView);
+		contentPane.add(carParkView);
 		
 		screen.pack();
 		screen.setLocationRelativeTo(null);
 		screen.setVisible(true);
 		
 		carParkView.updateView();
+		textStatisticsView.updateView();
 	}
 	
 	private void initializeSettingsFrame() {
