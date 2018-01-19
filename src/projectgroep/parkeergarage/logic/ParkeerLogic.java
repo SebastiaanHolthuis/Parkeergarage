@@ -333,5 +333,5 @@ public class ParkeerLogic extends AbstractModel {
 	public void setLocationLogic(LocationLogic locationLogic) {
 		this.locationLogic = locationLogic;
 	}
-    
 }
+
