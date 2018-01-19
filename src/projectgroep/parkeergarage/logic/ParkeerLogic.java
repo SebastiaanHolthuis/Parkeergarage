@@ -244,14 +244,13 @@ public class ParkeerLogic extends AbstractModel {
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
             
-            
             if(car instanceof ParkingPassCar) {
             		if(parkingPassLocations.size() > 0) {
             			if(location.getRow() < 2 && parkingPassLocations.contains(location)) {	            			
 	            			parkingPassLocations.remove(location);
 	            			cars[0][location.getRow()][location.getPlace()] = car;
 	                		car.setLocation(location);
-	                		System.out.println(parkingPassLocations.size());
+	                		System.out.println("Aankomen " + parkingPassLocations.size());
             			}
             		} else if(location.getRow() > 1){
 	            		cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
@@ -282,7 +281,7 @@ public class ParkeerLogic extends AbstractModel {
         }
         if(location.getRow() < 2 && location.getFloor() == 0) {
         		parkingPassLocations.add(location);
-        		System.out.println(parkingPassLocations.size());
+        		System.out.println("weggaan: " + parkingPassLocations.size());
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
