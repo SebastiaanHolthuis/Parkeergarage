@@ -60,11 +60,9 @@ public class Simulator {
 		settingsScreen.setResizable(false);
 		settingsScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
 		settingsContentPane 	= settingsScreen.getContentPane();
-		settingsContentPane.add(settingsView, BorderLayout.CENTER);
+		settingsContentPane.add(settingsView);
 		
-		settingsContentPane.add(settingsView, BorderLayout.CENTER);
 		settingsScreen.pack();
 		settingsScreen.setLocationRelativeTo(null);
 		settingsScreen.setVisible(true);
