@@ -257,10 +257,15 @@ public class ParkeerLogic extends AbstractModel {
         if (!locationIsValid(location)) {
             return null;
         }
+        
         Car car = getCarAt(location);
+        
+        location.setTaken(false);
+        
         if (car == null) {
             return null;
         }
+        
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
         numberOfOpenSpots++;
@@ -273,7 +278,7 @@ public class ParkeerLogic extends AbstractModel {
     	
     	for (int i = 0; i < locations.size(); i++) {
     		loc = locations.get(i);
-    		
+    		System.out.println(loc.toString());
     		if (getCarAt(loc) == null) {
     			if (car instanceof ParkingPassCar) {
     				if (loc.isForParkingPass() && !loc.isTaken()) {
