@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
@@ -74,6 +75,13 @@ public class Simulator {
 		settingsScreen.pack();
 		settingsScreen.setLocationRelativeTo(null);
 		settingsScreen.setVisible(true);
+		
+	}
+	
+	/**
+	 * Kills the simulator and restarts it with the new settings
+	 */
+	public void restart(Settings settings) {
 		
 	}
 	
