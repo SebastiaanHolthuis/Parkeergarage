@@ -335,5 +335,4 @@ public class ParkeerLogic extends AbstractModel {
 	public void setParkingPassLocations(ArrayList<Location> parkingPassLocations) {
 		this.parkingPassLocations = parkingPassLocations;
 	}
-    
 }
