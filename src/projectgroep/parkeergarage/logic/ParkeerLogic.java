@@ -338,4 +338,12 @@ public class ParkeerLogic extends AbstractModel {
 	public void setParkingPassLocations(ArrayList<Location> parkingPassLocations) {
 		this.parkingPassLocations = parkingPassLocations;
 	}
+
+	public Car[][][] getCars() {
+		return cars;
+	}
+
+	public void setCars(Car[][][] cars) {
+		this.cars = cars;
+	}
 }
