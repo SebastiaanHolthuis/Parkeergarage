@@ -25,12 +25,12 @@ public class Simulator {
 	public Simulator(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
 		createInstances(numberOfFloors, numberOfRows, numberOfPlaces);		
 		initializeFrame();		
-//		initializeSettingsFrame();
+		initializeSettingsFrame();
 	}
 	
 	private void createInstances(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
 		screen					= new JFrame();
-//		settingsScreen		    = new JFrame();
+		settingsScreen		    = new JFrame();
 		
 		parkeerLogic 			= new ParkeerLogic(numberOfFloors, numberOfRows, numberOfPlaces);
 		

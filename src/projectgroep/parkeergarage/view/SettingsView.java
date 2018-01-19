@@ -19,7 +19,7 @@ import projectgroep.parkeergarage.logic.Settings;
 
 
 public class SettingsView extends AbstractView {	
-	private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
+	private HashMap<String, JTextField> fields = new HashMap();
 	private JButton restartButton = new JButton("Restart");
 
 	public SettingsView(ParkeerLogic model) {
@@ -31,8 +31,8 @@ public class SettingsView extends AbstractView {
 	}
 	
 	private void initializeFields() {
-		(new Settings()).fieldNames().forEach(setting -> {
-			JTextField field = new JTextField();
+		(new Settings()).asMap().forEach((setting, value) -> {
+			JTextField field = new JTextField(value.toString());
 			JLabel label = new JLabel(setting);
 			add(label);
 			add(field);

@@ -2,6 +2,8 @@ package projectgroep.parkeergarage.logic;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -33,9 +35,20 @@ public class Settings {
 	/**
 	 * Instance methods
 	 */
-	public Stream<String> fieldNames() {
+	public HashMap<String, Integer> asMap() {
 		Field[] declaredFields =  getClass().getDeclaredFields();
-		return Arrays.asList(declaredFields).stream().map(f -> f.getName());
+		HashMap<String, Integer> result = new HashMap<>();
+		for (Field field : declaredFields) {
+			try {
+				result.put(field.getName(), (Integer) field.get(this));
+			} catch (IllegalArgumentException e) { } catch (IllegalAccessException e) { }
+		}
+		
+		return result;
+	}
+	
+	public Set<String> keys() {
+		return asMap().keySet();
 	}
 	
     /**
