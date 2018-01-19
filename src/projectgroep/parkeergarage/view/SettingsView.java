@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.logic.Settings;
 
 
 /**
@@ -20,18 +21,6 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class SettingsView extends AbstractView {	
 	private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
 	private JButton restartButton = new JButton("Restart");
-	static String[] settings = new String[] {
-		"numberOfFloors",
-		"numberOfRows",
-		"numberOfPlaces",
-		"weekDayArrivals",
-		"weekendArrivals",
-		"weekDayPassArrivals",
-		"weekendPassArrivals",
-		"enterSpeed",
-		"paymentSpeed",
-		"exitSpeed"
-	};
 
 	public SettingsView(ParkeerLogic model) {
 		super(model);
@@ -42,13 +31,13 @@ public class SettingsView extends AbstractView {
 	}
 	
 	private void initializeFields() {
-		for (String setting : settings) {
+		(new Settings()).fieldNames().forEach(setting -> {
 			JTextField field = new JTextField();
 			JLabel label = new JLabel(setting);
 			add(label);
 			add(field);
-			fields.put(setting, field);
-		}
+			fields.put(setting, field);		
+		});
 	}
 
 	private HashMap<String, Integer> getSettingsMap() {
