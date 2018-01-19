@@ -1,7 +1,9 @@
 package projectgroep.parkeergarage.view;
 
 import java.awt.GridLayout;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,7 +18,8 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 
 public class SettingsView extends AbstractView {	
-	private HashMap<String, JTextField> fields;
+	private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
+	private JButton restartButton = new JButton("Restart");
 	static String[] settings = new String[] {
 		"numberOfFloors",
 		"numberOfRows",
@@ -34,17 +37,26 @@ public class SettingsView extends AbstractView {
 		super(model);
 		setLayout(new GridLayout(0,2));
 		initializeFields();
-		add(new JButton("Restart"));
+		add(restartButton);
+		restartButton.addActionListener((e) -> getSettingsMap());
 	}
 	
-	// TODO: duplicatie opruimen?
 	private void initializeFields() {
 		for (String setting : settings) {
 			JTextField field = new JTextField();
 			JLabel label = new JLabel(setting);
 			add(label);
 			add(field);
+			fields.put(setting, field);
 		}
+	}
+
+	private HashMap<String, Integer> getSettingsMap() {
+		HashMap<String, Integer> results = new HashMap<String, Integer>();
+		fields.forEach((setting, field) -> 
+			results.put(setting, Integer.parseInt(field.getText())));
+		System.out.println(results.toString());
+		return results;
 	}
 	
 	@Override
