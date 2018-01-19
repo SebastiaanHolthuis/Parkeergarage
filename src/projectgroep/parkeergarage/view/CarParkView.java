@@ -44,12 +44,16 @@ public class CarParkView extends AbstractView {
         Graphics graphics = carParkImage.getGraphics();
         
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) {
+            for (int row = 0; row < model.getNumberOfRows(); row++) { 
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                 	Location location = new Location(floor, row, place);
-                		if(floor == 0 && row < 2) {
-                			model.getParkingPassLocations().add(location);
-                		}
+                	
+                	if (floor == 0 && row < 2 && !model.getParkingPassLocations().contains(location)) {
+                		model.getParkingPassLocations().add(location);
+                	}
+                	
+            		System.out.println("Floor: " + floor + " - Row: " + row + " - Place " + place);
+            		
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
                     drawPlace(graphics, location, color);
