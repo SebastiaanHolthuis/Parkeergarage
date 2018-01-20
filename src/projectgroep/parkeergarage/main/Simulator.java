@@ -22,17 +22,17 @@ public class Simulator {
 	private Container		contentPane;
 	private Container		settingsContentPane;
 
-	public Simulator(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-		createInstances(numberOfFloors, numberOfRows, numberOfPlaces);		
+	public Simulator(Settings settings) {
+		createInstances(settings);		
 		initializeFrame();		
 		initializeSettingsFrame();
 	}
 	
-	private void createInstances(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+	private void createInstances(Settings settings) {
 		screen					= new JFrame();
 		settingsScreen		    = new JFrame();
 		
-		parkeerLogic 			= new ParkeerLogic(numberOfFloors, numberOfRows, numberOfPlaces);
+		parkeerLogic 			= new ParkeerLogic(settings);
 		
 		carParkView 			= new CarParkView(parkeerLogic);
 		settingsView 			= new SettingsView(parkeerLogic);

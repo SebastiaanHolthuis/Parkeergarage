@@ -16,10 +16,9 @@ public class Settings {
 	/**
 	 * All settings fields
 	 */
-    int numberOfFloors;
-    int numberOfRows;
-    int numberOfPlaces;
-    int numberOfOpenSpots;
+    int numberOfFloors =3;
+    int numberOfRows = 6;
+    int numberOfPlaces = 30;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour

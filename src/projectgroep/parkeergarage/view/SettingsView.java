@@ -41,7 +41,7 @@ public class SettingsView extends AbstractView {
 	}
 
 	private HashMap<String, Integer> getSettingsMap() {
-		HashMap<String, Integer> results = new HashMap<String, Integer>();
+		HashMap<String, Integer> results = new HashMap();
 		fields.forEach((setting, field) -> 
 			results.put(setting, Integer.parseInt(field.getText())));
 		System.out.println(results.toString());
