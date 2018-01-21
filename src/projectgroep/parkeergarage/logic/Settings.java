@@ -1,5 +1,6 @@
 package projectgroep.parkeergarage.logic;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * FIXME: dirty catch blocks
  */
-public class Settings {
+public class Settings implements Serializable {
 	/**
 	 * All settings fields
 	 */
@@ -38,7 +39,9 @@ public class Settings {
 		    try {
 		    	Field field = getClass().getDeclaredField(k);
 				field.setInt(this, v);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {}
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+				
+			}
     	});
     }
 	

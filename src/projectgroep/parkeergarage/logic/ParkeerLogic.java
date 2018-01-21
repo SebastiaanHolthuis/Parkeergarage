@@ -9,7 +9,7 @@ import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 
 public class ParkeerLogic extends AbstractModel {
-	Settings settings; 
+	public Settings settings; 
 	
     private int numberOfOpenSpots;
     private Car[][][] cars;

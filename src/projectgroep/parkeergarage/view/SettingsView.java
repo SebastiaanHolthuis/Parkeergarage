@@ -36,7 +36,7 @@ public class SettingsView extends AbstractView {
 	}
 	
 	private void initializeFields() {
-		(new Settings()).asMap().forEach((setting, value) -> {
+		(sim.getParkeerLogic().settings).asMap().forEach((setting, value) -> {
 			JTextField field = new JTextField(value.toString());
 			JLabel label = new JLabel(setting);
 			add(label);
@@ -55,8 +55,7 @@ public class SettingsView extends AbstractView {
 	
 	// TODO: move to controller
 	private void handleRestart() {
-		SettingsRepository.saveSettings();
-		SimulatorRunner.restart();
+		SettingsRepository.saveSettings(new Settings(getSettingsMap()));
 	}
 	
 	@Override
