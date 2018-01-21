@@ -59,11 +59,4 @@ public class Settings {
 	public Set<String> keys() {
 		return asMap().keySet();
 	}
-	
-    /**
-     * Save/Load
-     */
-	static Settings getSavedSettings () {
-		return new Settings();
-	}
 }
