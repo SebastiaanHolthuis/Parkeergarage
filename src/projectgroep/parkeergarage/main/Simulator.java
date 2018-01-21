@@ -35,7 +35,7 @@ public class Simulator {
 		parkeerLogic 			= new ParkeerLogic(settings);
 		
 		carParkView 			= new CarParkView(parkeerLogic);
-		settingsView 			= new SettingsView(parkeerLogic);
+		settingsView 			= new SettingsView(parkeerLogic, this);
 		textStatisticsView		= new TextStatisticsView(parkeerLogic);
 		
 		parkeerLogic.addView(carParkView);
@@ -74,16 +74,17 @@ public class Simulator {
 		
 		settingsScreen.pack();
 		settingsScreen.setLocationRelativeTo(null);
-		settingsScreen.setVisible(true);
-		
+		settingsScreen.setVisible(true);	
 	}
 	
 	/**
 	 * Kills the simulator and restarts it with the new settings
 	 */
-	public void restart(Settings settings) {
-		
-	}
+//	public void restart(Settings settings) {
+//		screen.dispose();
+//		settingsScreen.dispose();
+//		new Simulator(settings);
+//	}
 	
 	public ParkeerLogic getParkeerLogic() {
 		return parkeerLogic;

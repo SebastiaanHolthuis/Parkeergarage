@@ -3,15 +3,14 @@ package projectgroep.parkeergarage.logic;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Stream;
 
-/**
- * Dit zou een singleton of een data object kunnen worden.
- * Hij wordt straks gebruikt door de ParkeerLogic en SettingsView.
- * @author reinvdwoerd
- */
 
+/**
+ * FIXME: dirty catch blocks
+ */
 public class Settings {
 	/**
 	 * All settings fields
@@ -29,10 +28,21 @@ public class Settings {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
     
-
+    /**
+     * Constructors
+     */
+    public Settings() {}
+    public Settings(HashMap<String, Integer> map) {
+    	map.forEach((k, v) -> {
+		    try {
+		    	Field field = getClass().getDeclaredField(k);
+				field.setInt(this, v);
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {}
+    	});
+    }
 	
 	/**
-	 * Instance methods
+	 * Getters
 	 */
 	public HashMap<String, Integer> asMap() {
 		Field[] declaredFields =  getClass().getDeclaredFields();

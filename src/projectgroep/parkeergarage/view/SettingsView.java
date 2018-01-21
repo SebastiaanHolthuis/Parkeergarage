@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
+import projectgroep.parkeergarage.main.Simulator;
+import projectgroep.parkeergarage.runner.SimulatorRunner;
 
 
 /**
@@ -21,13 +23,15 @@ import projectgroep.parkeergarage.logic.Settings;
 public class SettingsView extends AbstractView {	
 	private HashMap<String, JTextField> fields = new HashMap();
 	private JButton restartButton = new JButton("Restart");
-
-	public SettingsView(ParkeerLogic model) {
+	Simulator sim;
+	
+	public SettingsView(ParkeerLogic model, Simulator sim) {
 		super(model);
+		this.sim = sim;
 		setLayout(new GridLayout(0,2));
 		initializeFields();
 		add(restartButton);
-		restartButton.addActionListener((e) -> getSettingsMap());
+		restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
 	}
 	
 	private void initializeFields() {
@@ -46,6 +50,10 @@ public class SettingsView extends AbstractView {
 			results.put(setting, Integer.parseInt(field.getText())));
 		System.out.println(results.toString());
 		return results;
+	}
+	
+	private void handleRestart() {
+		SimulatorRunner.restart();
 	}
 	
 	@Override
