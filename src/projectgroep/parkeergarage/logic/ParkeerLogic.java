@@ -7,6 +7,7 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
+import projectgroep.parkeergarage.logic.cars.ReservedCar;
 
 public class ParkeerLogic extends AbstractModel {
 	public Settings settings; 
@@ -22,6 +23,7 @@ public class ParkeerLogic extends AbstractModel {
     
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
+	private static final String RESERVED = "3";
 
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -101,6 +103,8 @@ public class ParkeerLogic extends AbstractModel {
         addArrivingCars(numberOfCars, AD_HOC);    	
     	numberOfCars=getNumberOfCars(settings.weekDayPassArrivals, settings.weekendPassArrivals);
         addArrivingCars(numberOfCars, PASS);    	
+    	numberOfCars=getNumberOfCars(settings.weekDayResArrivals, settings.weekendResArrivals);
+        addArrivingCars(numberOfCars, RESERVED); 
     }
 
     private void carsEntering(CarQueue queue){
@@ -177,6 +181,11 @@ public class ParkeerLogic extends AbstractModel {
 	    	case PASS:
 	            for (int i = 0; i < numberOfCars; i++) {
 	            	entrancePassQueue.addCar(new ParkingPassCar());
+	            }
+	            break;	            
+	    	case RESERVED:
+	            for (int i = 0; i < numberOfCars; i++) {
+	            	entrancePassQueue.addCar(new ReservedCar());
 	            }
 	            break;	            
     	}
