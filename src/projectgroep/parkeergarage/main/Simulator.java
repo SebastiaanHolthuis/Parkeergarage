@@ -77,15 +77,6 @@ public class Simulator {
 		settingsScreen.setVisible(true);	
 	}
 	
-	/**
-	 * Kills the simulator and restarts it with the new settings
-	 */
-//	public void restart(Settings settings) {
-//		screen.dispose();
-//		settingsScreen.dispose();
-//		new Simulator(settings);
-//	}
-	
 	public ParkeerLogic getParkeerLogic() {
 		return parkeerLogic;
 	}

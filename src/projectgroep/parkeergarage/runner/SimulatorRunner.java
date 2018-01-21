@@ -11,6 +11,9 @@ public class SimulatorRunner {
         simulator.getParkeerLogic().run();
     }
     
+	/**
+	 * Kills the simulator and restarts it with the new settings
+	 */
     public static void restart() {
     	
     }

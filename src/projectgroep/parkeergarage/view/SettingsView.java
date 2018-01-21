@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.main.Simulator;
@@ -52,7 +53,9 @@ public class SettingsView extends AbstractView {
 		return results;
 	}
 	
+	// TODO: move to controller
 	private void handleRestart() {
+		SettingsRepository.saveSettings();
 		SimulatorRunner.restart();
 	}
 	
