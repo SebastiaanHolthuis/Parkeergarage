@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.Properties;
 
 
+/**
+ * Eigenlijk vind ik serialization best irritant, het is niet zo transparant.
+ * Maar dit werkte makkelijker dan INI voor nu.
+ * @author reinvdwoerd
+ *
+ */
 public class SettingsRepository {
 
 	public static void saveSettings(Settings s) {

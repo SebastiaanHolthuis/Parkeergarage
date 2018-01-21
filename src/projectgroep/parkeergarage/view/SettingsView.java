@@ -55,7 +55,7 @@ public class SettingsView extends AbstractView {
 	
 	// TODO: move to controller
 	private void handleRestart() {
-		SettingsRepository.saveSettings(new Settings(getSettingsMap()));
+		sim.restart(new Settings(getSettingsMap()));
 	}
 	
 	@Override

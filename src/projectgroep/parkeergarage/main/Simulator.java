@@ -3,6 +3,7 @@ package projectgroep.parkeergarage.main;
 import javax.swing.*;
 import java.awt.*;
 
+import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
@@ -75,6 +76,27 @@ public class Simulator {
 		settingsScreen.pack();
 		settingsScreen.setLocationRelativeTo(null);
 		settingsScreen.setVisible(true);	
+	}
+	
+    
+	/**
+	 * Disposes of the screens and reinitializes the simulator in a new changed
+	 * with the new settings
+	 */
+	public void restart(Settings settings) {
+		SettingsRepository.saveSettings(settings);
+		settingsScreen.dispose();
+		screen.dispose();
+		
+		Thread t = new Thread(() -> {
+			createInstances(settings);		
+			initializeFrame();		
+			initializeSettingsFrame();
+			parkeerLogic.run();
+		});
+		
+		t.start();
+
 	}
 	
 	public ParkeerLogic getParkeerLogic() {
