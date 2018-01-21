@@ -1,3 +1,5 @@
 /bin/
 /.idea/
 /target/
+/out/
+/settings
