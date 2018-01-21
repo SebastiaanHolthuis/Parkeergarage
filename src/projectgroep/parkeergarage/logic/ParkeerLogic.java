@@ -261,7 +261,7 @@ public class ParkeerLogic extends AbstractModel {
 
     public Location getFirstFreeLocation(Car car) {	    			
     	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = (!(car instanceof ParkingPassCar) && floor == 0) ? 2 : 0; row < getNumberOfRows(); row++) {
+            for (int row = (!(car instanceof ParkingPassCar) && floor == 0) ? settings.numberOfPassHolderRows : 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {

@@ -18,15 +18,16 @@ public class Settings {
     int numberOfFloors =3;
     int numberOfRows = 6;
     int numberOfPlaces = 30;
-
+    int numberOfPassHolderRows = 2;
+    
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
 
-    int enterSpeed = 3; // number of cars that can enter per minute
-    int paymentSpeed = 7; // number of cars that can pay per minute
-    int exitSpeed = 5; // number of cars that can leave per minute
+    int enterSpeed = 8; // number of cars that can enter per minute
+    int paymentSpeed = 5; // number of cars that can pay per minute
+    int exitSpeed = 7; // number of cars that can leave per minute
     
     /**
      * Constructors
