@@ -6,6 +6,10 @@ public class Location {
     private int row;
     private int place;
 
+    private Boolean forParkingPass;
+    private Boolean forReservation;
+    private Boolean taken;
+    
     /**
      * Constructor for objects of class Location
      */
@@ -13,6 +17,7 @@ public class Location {
         this.floor = floor;
         this.row = row;
         this.place = place;
+        this.taken = false;
     }
 
     /**
@@ -66,5 +71,35 @@ public class Location {
     public int getPlace() {
         return place;
     }
+
+	/**
+	 * @return the forParkingPass
+	 */
+	public Boolean isForParkingPass() {
+		return forParkingPass;
+	}
+
+	/**
+	 * @param forParkingPass the forParkingPass to set
+	 */
+	public void setForParkingPass(Boolean forParkingPass) {
+		this.forParkingPass = forParkingPass;
+	}
+
+	public Boolean isForReservation() {
+		return forReservation;
+	}
+
+	public void setForReservation(Boolean forReservation) {
+		this.forReservation = forReservation;
+	}
+
+	public Boolean isTaken() {
+		return taken;
+	}
+
+	public void setTaken(Boolean taken) {
+		this.taken = taken;
+	}
 
 }

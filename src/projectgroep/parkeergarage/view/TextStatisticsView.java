@@ -32,24 +32,27 @@ public class TextStatisticsView extends AbstractView {
 	}
 	
 	private void addComponents() {
+		Box box = Box.createVerticalBox();
+		add(box);
+		
 		JLabel parkeerstats = new JLabel("Parkeer garage statistics:");
 		parkeerstats.setFont(new Font("Ariel", Font.BOLD, 20));
-        add( parkeerstats );
+        box.add( parkeerstats );
 
         aantalauto = new JLabel("Aantal auto's: ");
-        add( aantalauto );
+        box.add( aantalauto );
         
         JLabel beschikbaar = new JLabel("Beschikbare plaatsen: ") ;
-        add( beschikbaar );
+        box.add( beschikbaar );
         
         JLabel passhouder = new JLabel("Aantal Passhouder plaatsen: " );
         add( passhouder );
         
         JLabel gemiddeld = new JLabel("Gemiddelde auto's per dag: ");
-        add( gemiddeld );
+        box.add( gemiddeld );
         
         JLabel omzet = new JLabel("Omzet per dag: "  );
-        add( omzet );
+        box.add( omzet );
         
         
 	

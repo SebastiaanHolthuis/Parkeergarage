@@ -3,6 +3,7 @@ package projectgroep.parkeergarage.main;
 import javax.swing.*;
 import java.awt.*;
 
+import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
@@ -22,20 +23,20 @@ public class Simulator {
 	private Container		contentPane;
 	private Container		settingsContentPane;
 
-	public Simulator(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-		createInstances(numberOfFloors, numberOfRows, numberOfPlaces);		
+	public Simulator(Settings settings) {
+		createInstances(settings);		
 		initializeFrame();		
-//		initializeSettingsFrame();
+		initializeSettingsFrame();
 	}
 	
-	private void createInstances(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+	private void createInstances(Settings settings) {
 		screen					= new JFrame();
-//		settingsScreen		    = new JFrame();
+		settingsScreen		    = new JFrame();
 		
-		parkeerLogic 			= new ParkeerLogic(numberOfFloors, numberOfRows, numberOfPlaces);
+		parkeerLogic 			= new ParkeerLogic(settings);
 		
 		carParkView 			= new CarParkView(parkeerLogic);
-		settingsView 			= new SettingsView(parkeerLogic);
+		settingsView 			= new SettingsView(parkeerLogic, this);
 		textStatisticsView		= new TextStatisticsView(parkeerLogic);
 		
 		parkeerLogic.addView(carParkView);
@@ -74,15 +75,28 @@ public class Simulator {
 		
 		settingsScreen.pack();
 		settingsScreen.setLocationRelativeTo(null);
-		settingsScreen.setVisible(true);
-		
+		settingsScreen.setVisible(true);	
 	}
 	
+    
 	/**
-	 * Kills the simulator and restarts it with the new settings
+	 * Disposes of the screens and reinitializes the simulator in a new changed
+	 * with the new settings
 	 */
 	public void restart(Settings settings) {
+		SettingsRepository.saveSettings(settings);
+		settingsScreen.dispose();
+		screen.dispose();
 		
+		Thread t = new Thread(() -> {
+			createInstances(settings);		
+			initializeFrame();		
+			initializeSettingsFrame();
+			parkeerLogic.run();
+		});
+		
+		t.start();
+
 	}
 	
 	public ParkeerLogic getParkeerLogic() {
