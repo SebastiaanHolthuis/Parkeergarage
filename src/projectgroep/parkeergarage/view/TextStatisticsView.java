@@ -42,11 +42,15 @@ public class TextStatisticsView extends AbstractView {
         JLabel beschikbaar = new JLabel("Beschikbare plaatsen: ") ;
         add( beschikbaar );
         
+        JLabel passhouder = new JLabel("Aantal Passhouder plaatsen: " );
+        add( passhouder );
+        
         JLabel gemiddeld = new JLabel("Gemiddelde auto's per dag: ");
         add( gemiddeld );
         
         JLabel omzet = new JLabel("Omzet per dag: "  );
         add( omzet );
+        
         
 	
 	}
