@@ -259,38 +259,19 @@ public class ParkeerLogic extends AbstractModel {
         return car;
     }
 
-    public Location getFirstFreeLocation(Car car) {
-    	ArrayList<Location> locations = (car instanceof ParkingPassCar) ? locationLogic.getLocations(PASS) : locationLogic.getLocations(AD_HOC);
-    	Location loc = null;
+    public Location getFirstFreeLocation(Car car) {	    			
+    	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = (!(car instanceof ParkingPassCar) && floor == 0) ? 2 : 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        return location;
+                    }
+                }
+            }
+        }
     	
-    	for (int i = 0; i < locations.size(); i++) {
-    		loc = locations.get(i);
-    		System.out.println(loc.toString());
-    		if (getCarAt(loc) == null) {
-    			if (car instanceof ParkingPassCar) {
-    				if (loc.isForParkingPass() && !loc.isTaken()) {
-    					loc.setTaken(true);
-		    			return loc;
-    				}
-    			} else {
-    				loc.setTaken(true);
-    				return loc;
-    			}
-    		}
-    	}
-    		
-//    	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-//            for (int row = 0; row < getNumberOfRows(); row++) {
-//                for (int place = 0; place < getNumberOfPlaces(); place++) {
-//                    Location location = new Location(floor, row, place);
-//                    if (getCarAt(location) == null) {
-//                        return location;
-//                    }
-//                }
-//            }
-//        }
-        
-    	return loc;
+    	return null;
     }
 
     public Car getFirstLeavingCar() {
