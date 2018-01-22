@@ -176,6 +176,10 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
 
+    public Stream<Car> getReservedCars() {
+        return getAllCars().filter((c) -> (c instanceof ReservedCar));
+    }
+
 
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();

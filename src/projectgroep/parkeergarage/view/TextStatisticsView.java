@@ -33,7 +33,7 @@ public class TextStatisticsView extends AbstractView {
         aantalauto.setText("Totaal aantal auto's: " + model.getAllCars().count());
         beschikbaar.setText("Beschikbare plaatsen: " + model.getNumberOfOpenSpots());
         pashouder.setText("Aantal pashouders: " + model.getParkingPassCars().count());
-        reservatie.setText("Aantal reservatie's: ");
+        reservatie.setText("Aantal reservatie's: " + model.getReservedCars().count());
         repaint();
     }
 
