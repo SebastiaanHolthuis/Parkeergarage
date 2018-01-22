@@ -1,7 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
@@ -162,6 +162,25 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
+    public Stream<Car> getAllCars() {
+        List<Car> results = new ArrayList<>();
+
+        for (Car[][] floor : cars)
+            for (Car[] row : floor)
+                for (Car car : row)
+                    if (car != null) results.add(car);
+        return results.stream();
+    }
+
+    public Stream<Car> getParkingPassCars() {
+        return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
+    }
+
+    public Stream<Car> getReservedCars() {
+        return getAllCars().filter((c) -> (c instanceof ReservedCar));
+    }
+
+
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
@@ -241,7 +260,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public boolean setCarAt(Location location, Car car) {
-        if (!locationIsValid(location)) {
+        if (location == null || !locationIsValid(location)) {
             return false;
         }
         Car oldCar = getCarAt(location);
