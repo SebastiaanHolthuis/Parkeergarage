@@ -36,8 +36,11 @@ public class Simulator {
         parkeerLogic = new ParkeerLogic(settings);
 
         carParkView = new CarParkView(parkeerLogic);
+        carParkView.setBounds(258, 0, 797, 571);
         settingsView = new SettingsView(parkeerLogic, this);
+        
         textStatisticsView = new TextStatisticsView(parkeerLogic);
+        textStatisticsView.setBounds(0, 0, 260, 571);
 
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
@@ -46,12 +49,12 @@ public class Simulator {
 
     private void initializeFrame() {
         screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-        screen.setPreferredSize(new Dimension(1600, 600));
+        screen.setPreferredSize(new Dimension(1100, 600));
         screen.setResizable(false);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         contentPane = screen.getContentPane();
-        contentPane.setLayout(new GridLayout(0, 2));
+        screen.getContentPane().setLayout(null);
 
         contentPane.add(textStatisticsView);
         contentPane.add(carParkView);
