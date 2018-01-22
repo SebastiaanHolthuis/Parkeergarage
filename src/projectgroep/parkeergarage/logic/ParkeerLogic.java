@@ -7,7 +7,6 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
-import projectgroep.parkeergarage.logic.cars.ReservedCar;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -176,10 +175,6 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
 
-    public Stream<Car> getReservedCars() {
-        return getAllCars().filter((c) -> (c instanceof ReservedCar));
-    }
-
 
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
@@ -206,11 +201,6 @@ public class ParkeerLogic extends AbstractModel {
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
                     entrancePassQueue.addCar(new ParkingPassCar());
-                }
-                break;
-            case RESERVED:
-                for (int i = 0; i < numberOfCars; i++) {
-                    entrancePassQueue.addCar(new ReservedCar());
                 }
                 break;
         }
