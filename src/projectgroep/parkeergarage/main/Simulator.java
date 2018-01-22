@@ -9,6 +9,7 @@ import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+import javax.swing.border.MatteBorder;
 
 public class Simulator {
 
@@ -31,16 +32,20 @@ public class Simulator {
 
     private void createInstances(Settings settings) {
         screen = new JFrame();
+        screen.getContentPane().setBackground(SystemColor.control);
         settingsScreen = new JFrame();
 
         parkeerLogic = new ParkeerLogic(settings);
 
         carParkView = new CarParkView(parkeerLogic);
-        carParkView.setBounds(258, 0, 797, 571);
+        carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        carParkView.setBackground(SystemColor.control);
+        carParkView.setBounds(261, 11, 848, 549);
         settingsView = new SettingsView(parkeerLogic, this);
         
         textStatisticsView = new TextStatisticsView(parkeerLogic);
-        textStatisticsView.setBounds(0, 0, 260, 571);
+        textStatisticsView.setBorder(null);
+        textStatisticsView.setBounds(10, 11, 241, 549);
 
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
@@ -49,7 +54,7 @@ public class Simulator {
 
     private void initializeFrame() {
         screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-        screen.setPreferredSize(new Dimension(1100, 600));
+        screen.setPreferredSize(new Dimension(1125, 600));
         screen.setResizable(false);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
