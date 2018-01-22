@@ -30,6 +30,7 @@ public class TextStatisticsView extends AbstractView {
 		table.getModel().setValueAt(model.getAllCars().count(), 1, 1);
 		table.getModel().setValueAt( model.getReservedCars().count(), 2, 1);
 		table.getModel().setValueAt( model.getParkingPassCars().count(), 3, 1);
+		
 		repaint();
 	}
 	
@@ -44,6 +45,7 @@ public class TextStatisticsView extends AbstractView {
 				{"Aantal auto's", new Integer(0)},
 				{"Aantal reservatie's", new Integer(0)},
 				{"Aantal pashouder's", new Integer(0)},
+				
 			},
 			new String[] {
 				"Variabele", "Waarde"
