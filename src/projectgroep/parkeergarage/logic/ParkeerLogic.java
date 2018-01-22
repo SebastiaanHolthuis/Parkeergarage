@@ -304,8 +304,8 @@ public class ParkeerLogic extends AbstractModel {
                 }
             }
         }
-
-        return null;
+    
+    	return null;
     }
 
     public Car getFirstLeavingCar() {
