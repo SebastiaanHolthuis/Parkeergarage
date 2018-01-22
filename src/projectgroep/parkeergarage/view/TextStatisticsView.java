@@ -29,8 +29,8 @@ public class TextStatisticsView extends AbstractView {
 	}
 	
 	public void updateView() {
-		table.getModel().setValueAt(model.getAllCars().count(), 0, 1);
-		table.getModel().setValueAt(model.getNumberOfOpenSpots(), 1, 1);
+		table.getModel().setValueAt(model.getNumberOfOpenSpots(), 0, 1);
+		table.getModel().setValueAt(model.getAllCars().count(), 1, 1);
 		table.getModel().setValueAt( model.getReservedCars().count(), 2, 1);
 		table.getModel().setValueAt( model.getParkingPassCars().count(), 3, 1);
 		repaint();
@@ -43,8 +43,8 @@ public class TextStatisticsView extends AbstractView {
 		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Aantal auto's", new Integer(0)},
 				{"Beschikbare plaatsen", new Integer(0)},
+				{"Aantal auto's", new Integer(0)},
 				{"Aantal reservatie's", new Integer(0)},
 				{"Aantal pashouder's", new Integer(0)},
 			},
