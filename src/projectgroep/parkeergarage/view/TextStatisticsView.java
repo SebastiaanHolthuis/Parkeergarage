@@ -16,7 +16,9 @@ public class TextStatisticsView extends AbstractView {
 
 	private Dimension 			size;
 				private JLabel aantalauto;
-				private JLabel aantalauto2;
+				private JLabel beschikbaar;
+				private JLabel pashouder;
+				private JLabel reservatie;
 	
 	public TextStatisticsView(ParkeerLogic model) {
 		super(model);
@@ -27,7 +29,10 @@ public class TextStatisticsView extends AbstractView {
 	}
 	
 	public void updateView() {
-		aantalauto.setText("Aantal auto's: " + (540 - model.getNumberOfOpenSpots()));
+		aantalauto.setText("Totaal aantal auto's: " + ((model.getNumberOfFloors()*model.getNumberOfPlaces()*model.getNumberOfRows()) - model.getNumberOfOpenSpots()));
+		beschikbaar.setText("Beschikbare plaatsen: " + model.getNumberOfOpenSpots());
+		pashouder.setText("Aantal pashouders: " );
+		reservatie.setText("Aantal reservatie's: " );
 		repaint();
 	}
 	
@@ -39,14 +44,17 @@ public class TextStatisticsView extends AbstractView {
 		parkeerstats.setFont(new Font("Ariel", Font.BOLD, 20));
         box.add( parkeerstats );
 
-        aantalauto = new JLabel("Aantal auto's: ");
+        aantalauto = new JLabel("Totaal aantal auto's: ");
         box.add( aantalauto );
         
-        JLabel beschikbaar = new JLabel("Beschikbare plaatsen: ") ;
+        beschikbaar = new JLabel("Beschikbare plaatsen: ") ;
         box.add( beschikbaar );
         
-        JLabel passhouder = new JLabel("Aantal Passhouder plaatsen: " );
-        add( passhouder );
+        pashouder = new JLabel("Aantal Pashouders: " );
+        box.add( pashouder );
+        
+        reservatie = new JLabel("Aantal reservatie's :");
+        box.add(reservatie);
         
         JLabel gemiddeld = new JLabel("Gemiddelde auto's per dag: ");
         box.add( gemiddeld );
