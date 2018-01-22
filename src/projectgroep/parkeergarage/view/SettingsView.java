@@ -21,45 +21,45 @@ import projectgroep.parkeergarage.runner.SimulatorRunner;
  */
 
 
-public class SettingsView extends AbstractView {	
-	private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
-	private JButton restartButton = new JButton("Restart");
-	Simulator sim;
-	
-	public SettingsView(ParkeerLogic model, Simulator sim) {
-		super(model);
-		this.sim = sim;
-		setLayout(new GridLayout(0,2));
-		initializeFields();
-		add(restartButton);
-		restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
-	}
-	
-	private void initializeFields() {
-		(sim.getParkeerLogic().settings).asMap().forEach((setting, value) -> {
-			JTextField field = new JTextField(value.toString());
-			JLabel label = new JLabel(setting);
-			add(label);
-			add(field);
-			fields.put(setting, field);		
-		});
-	}
+public class SettingsView extends AbstractView {
+    private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
+    private JButton restartButton = new JButton("Restart");
+    Simulator sim;
 
-	private HashMap<String, Integer> getSettingsMap() {
-		HashMap<String, Integer> results = new HashMap<String, Integer>();
-		fields.forEach((setting, field) -> 
-			results.put(setting, Integer.parseInt(field.getText())));
-		System.out.println(results.toString());
-		return results;
-	}
-	
-	// TODO: move to controller
-	private void handleRestart() {
-		sim.restart(new Settings(getSettingsMap()));
-	}
-	
-	@Override
-	public void updateView() {
-		repaint();
-	}
+    public SettingsView(ParkeerLogic model, Simulator sim) {
+        super(model);
+        this.sim = sim;
+        setLayout(new GridLayout(0, 2));
+        initializeFields();
+        add(restartButton);
+        restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
+    }
+
+    private void initializeFields() {
+        (sim.getParkeerLogic().settings).asMap().forEach((setting, value) -> {
+            JTextField field = new JTextField(value.toString());
+            JLabel label = new JLabel(setting);
+            add(label);
+            add(field);
+            fields.put(setting, field);
+        });
+    }
+
+    private HashMap<String, Integer> getSettingsMap() {
+        HashMap<String, Integer> results = new HashMap<String, Integer>();
+        fields.forEach((setting, field) ->
+                results.put(setting, Integer.parseInt(field.getText())));
+        System.out.println(results.toString());
+        return results;
+    }
+
+    // TODO: move to controller
+    private void handleRestart() {
+        sim.restart(new Settings(getSettingsMap()));
+    }
+
+    @Override
+    public void updateView() {
+        repaint();
+    }
 }
