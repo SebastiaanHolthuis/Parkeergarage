@@ -1,7 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
@@ -10,61 +10,68 @@ import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservedCar;
 
 public class ParkeerLogic extends AbstractModel {
-	Settings settings; 
-	
+    public Settings settings;
+
     private int numberOfOpenSpots;
     private Car[][][] cars;
-    
+
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
 
     private int tickPause = 100;
-    
-	private static final String AD_HOC = "1";
-	private static final String PASS = "2";
-	private static final String RESERVED = "3";
+    private boolean running;
 
-	private CarQueue entranceCarQueue;
+    private static final String AD_HOC = "1";
+    private static final String PASS = "2";
+    private static final String RESERVED = "3";
+
+    private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    
-    private LocationLogic locationLogic; 
-    
-    public ParkeerLogic(Settings settings) {   
+
+    private LocationLogic locationLogic;
+
+    public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        
+
         this.settings = settings;
-        this.numberOfOpenSpots =settings.numberOfFloors*settings.numberOfRows*settings.numberOfPlaces;
+        this.numberOfOpenSpots = settings.numberOfFloors * settings.numberOfRows * settings.numberOfPlaces;
         this.cars = new Car[settings.numberOfFloors][settings.numberOfRows][settings.numberOfPlaces];
         this.locationLogic = new LocationLogic(this);
     }
-    
+
     public void run() {
+        running = true;
         for (int i = 0; i < 10000; i++) {
+            if (!running) return;
             tickSimulator();
         }
     }
-    
-    private void tickSimulator() {
-    	advanceTime();
-    	handleExit();
-    	updateViews();
 
-    	try {
+    public void stop() {
+        running = false;
+    }
+
+    private void tickSimulator() {
+        advanceTime();
+        handleExit();
+        updateViews();
+
+        try {
             Thread.sleep(tickPause);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
-    	handleEntrance();
+
+        handleEntrance();
     }
-    
-    private void advanceTime(){
+
+    private void advanceTime() {
         // Advance the time by one minute.
         minute++;
         while (minute > 59) {
@@ -81,38 +88,38 @@ public class ParkeerLogic extends AbstractModel {
 
     }
 
-    private void handleEntrance(){
-    	carsArriving();
-    	carsEntering(entrancePassQueue);
-    	carsEntering(entranceCarQueue);  	
+    private void handleEntrance() {
+        carsArriving();
+        carsEntering(entrancePassQueue);
+        carsEntering(entranceCarQueue);
     }
-    
-    private void handleExit(){
+
+    private void handleExit() {
         carsReadyToLeave();
         carsPaying();
         carsLeaving();
     }
-    
-    private void updateViews(){
-    	tick();
+
+    private void updateViews() {
+        tick();
         notifyViews();
     }
-    
-    private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(settings.weekDayArrivals, settings.weekendArrivals);
-        addArrivingCars(numberOfCars, AD_HOC);    	
-    	numberOfCars=getNumberOfCars(settings.weekDayPassArrivals, settings.weekendPassArrivals);
-        addArrivingCars(numberOfCars, PASS);    	
-    	numberOfCars=getNumberOfCars(settings.weekDayResArrivals, settings.weekendResArrivals);
-        addArrivingCars(numberOfCars, RESERVED); 
+
+    private void carsArriving() {
+        int numberOfCars = getNumberOfCars(settings.weekDayArrivals, settings.weekendArrivals);
+        addArrivingCars(numberOfCars, AD_HOC);
+        numberOfCars = getNumberOfCars(settings.weekDayPassArrivals, settings.weekendPassArrivals);
+        addArrivingCars(numberOfCars, PASS);
+        numberOfCars = getNumberOfCars(settings.weekDayResArrivals, settings.weekendResArrivals);
+        addArrivingCars(numberOfCars, RESERVED);
     }
 
-    private void carsEntering(CarQueue queue){
-        int i=0;
+    private void carsEntering(CarQueue queue) {
+        int i = 0;
         // Remove car from the front of the queue and assign to a parking space.
-    	while (queue.carsInQueue()>0 && 
-    			getNumberOfOpenSpots()>0 && 
-    			i<settings.enterSpeed) {
+        while (queue.carsInQueue() > 0 &&
+                getNumberOfOpenSpots() > 0 &&
+                i < settings.enterSpeed) {
 
             Car car = queue.removeCar();
             Location freeLocation = getFirstFreeLocation(car);
@@ -120,43 +127,61 @@ public class ParkeerLogic extends AbstractModel {
             i++;
         }
     }
-    
-    private void carsReadyToLeave(){
+
+    private void carsReadyToLeave() {
         // Add leaving cars to the payment queue.
         Car car = getFirstLeavingCar();
-        while (car!=null) {
-        	if (car.getHasToPay()){
-	            car.setIsPaying(true);
-	            paymentCarQueue.addCar(car);
-        	}
-        	else {
-        		carLeavesSpot(car);
-        	}
+        while (car != null) {
+            if (car.getHasToPay()) {
+                car.setIsPaying(true);
+                paymentCarQueue.addCar(car);
+            } else {
+                carLeavesSpot(car);
+            }
             car = getFirstLeavingCar();
         }
     }
 
-    private void carsPaying(){
+    private void carsPaying() {
         // Let cars pay.
-    	int i=0;
-    	while (paymentCarQueue.carsInQueue()>0 && i < settings.paymentSpeed){
+        int i = 0;
+        while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
             // TODO Handle payment.
             carLeavesSpot(car);
-            i++;  
-    	}
+            i++;
+        }
     }
-    
-    private void carsLeaving(){
+
+    private void carsLeaving() {
         // Let cars leave.
-    	int i=0;
-    	while (exitCarQueue.carsInQueue()>0 && i < settings.exitSpeed){
+        int i = 0;
+        while (exitCarQueue.carsInQueue() > 0 && i < settings.exitSpeed) {
             exitCarQueue.removeCar();
             i++;
-    	}	
+        }
     }
-    
-    private int getNumberOfCars(int weekDay, int weekend){
+
+    public Stream<Car> getAllCars() {
+        List<Car> results = new ArrayList<>();
+
+        for (Car[][] floor : cars)
+            for (Car[] row : floor)
+                for (Car car : row)
+                    if (car != null) results.add(car);
+        return results.stream();
+    }
+
+    public Stream<Car> getParkingPassCars() {
+        return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
+    }
+
+    public Stream<Car> getReservedCars() {
+        return getAllCars().filter((c) -> (c instanceof ReservedCar));
+    }
+
+
+    private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
         // Get the average number of cars that arrive per hour.
@@ -167,36 +192,36 @@ public class ParkeerLogic extends AbstractModel {
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int)Math.round(numberOfCarsPerHour / 60);	
+        return (int) Math.round(numberOfCarsPerHour / 60);
     }
-    
-    private void addArrivingCars(int numberOfCars, String type){
+
+    private void addArrivingCars(int numberOfCars, String type) {
         // Add the cars to the back of the queue.
-    	switch(type) {
-	    	case AD_HOC: 
-	            for (int i = 0; i < numberOfCars; i++) {
-	            	entranceCarQueue.addCar(new AdHocCar());
-	            }
-	            break;
-	    	case PASS:
-	            for (int i = 0; i < numberOfCars; i++) {
-	            	entrancePassQueue.addCar(new ParkingPassCar());
-	            }
-	            break;	            
-	    	case RESERVED:
-	            for (int i = 0; i < numberOfCars; i++) {
-	            	entrancePassQueue.addCar(new ReservedCar());
-	            }
-	            break;	            
-    	}
+        switch (type) {
+            case AD_HOC:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entranceCarQueue.addCar(new AdHocCar());
+                }
+                break;
+            case PASS:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entrancePassQueue.addCar(new ParkingPassCar());
+                }
+                break;
+            case RESERVED:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entrancePassQueue.addCar(new ReservedCar());
+                }
+                break;
+        }
     }
-    
-    private void carLeavesSpot(Car car){
-    	removeCarAt(car.getLocation());
+
+    private void carLeavesSpot(Car car) {
+        removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
 
-    
+
     public void tick() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -210,8 +235,8 @@ public class ParkeerLogic extends AbstractModel {
             }
         }
     }
-    
-	public int getNumberOfFloors() {
+
+    public int getNumberOfFloors() {
         return settings.numberOfFloors;
     }
 
@@ -223,10 +248,10 @@ public class ParkeerLogic extends AbstractModel {
         return settings.numberOfPlaces;
     }
 
-    public int getNumberOfOpenSpots(){
-    	return numberOfOpenSpots;
+    public int getNumberOfOpenSpots() {
+        return numberOfOpenSpots;
     }
-    
+
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
@@ -235,7 +260,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public boolean setCarAt(Location location, Car car) {
-        if (!locationIsValid(location)) {
+        if (location == null || !locationIsValid(location)) {
             return false;
         }
         Car oldCar = getCarAt(location);
@@ -245,7 +270,7 @@ public class ParkeerLogic extends AbstractModel {
             numberOfOpenSpots--;
             return true;
         }
-        
+
         return false;
     }
 
@@ -253,23 +278,23 @@ public class ParkeerLogic extends AbstractModel {
         if (!locationIsValid(location)) {
             return null;
         }
-        
+
         Car car = getCarAt(location);
-        
+
         location.setTaken(false);
-        
+
         if (car == null) {
             return null;
         }
-        
+
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
         numberOfOpenSpots++;
         return car;
     }
 
-    public Location getFirstFreeLocation(Car car) {	    			
-    for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+    public Location getFirstFreeLocation(Car car) {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = (!(car instanceof ParkingPassCar) && floor == 0) ? settings.numberOfPassHolderRows : 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
@@ -308,12 +333,12 @@ public class ParkeerLogic extends AbstractModel {
         return true;
     }
 
-	public LocationLogic getLocationLogic() {
-		return locationLogic;
-	}
+    public LocationLogic getLocationLogic() {
+        return locationLogic;
+    }
 
-	public void setLocationLogic(LocationLogic locationLogic) {
-		this.locationLogic = locationLogic;
-	}
+    public void setLocationLogic(LocationLogic locationLogic) {
+        this.locationLogic = locationLogic;
+    }
 }
 
