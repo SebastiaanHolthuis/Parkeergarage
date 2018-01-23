@@ -7,7 +7,6 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
-import projectgroep.parkeergarage.logic.cars.ReservedCar;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -175,9 +174,9 @@ public class ParkeerLogic extends AbstractModel {
     public Stream<Car> getParkingPassCars() {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
-
-    public Stream<Car> getReservedCars() {
-        return getAllCars().filter((c) -> (c instanceof ReservedCar));
+    
+    public Stream<Car> getAdHocCars() {
+        return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
 
 
@@ -206,11 +205,6 @@ public class ParkeerLogic extends AbstractModel {
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
                     entrancePassQueue.addCar(new ParkingPassCar());
-                }
-                break;
-            case RESERVED:
-                for (int i = 0; i < numberOfCars; i++) {
-                    entrancePassQueue.addCar(new ReservedCar());
                 }
                 break;
         }
@@ -304,8 +298,8 @@ public class ParkeerLogic extends AbstractModel {
                 }
             }
         }
-
-        return null;
+    
+    	return null;
     }
 
     public Car getFirstLeavingCar() {

@@ -49,6 +49,15 @@ public class CarParkView extends AbstractView {
                 	Location location = new Location(floor, row, place);                	
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
+                    
+                    if (car == null && floor == 0 && row < 2) {
+                    	color = Color.decode("#BCE7FF");         	
+                    } else if (car == null) {
+                    	color = Color.decode("#FFBCBC");
+                    } else {
+                    	color = car.getColor();
+                    }
+                    
                     drawPlace(graphics, location, color);
                     
                     if (!model.getLocationLogic().existsInMap(location)) {
