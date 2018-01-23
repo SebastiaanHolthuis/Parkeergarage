@@ -31,7 +31,7 @@ public class TextStatisticsView extends AbstractView {
 	public void updateView() {
 		table.getModel().setValueAt(model.getNumberOfOpenSpots(), 0, 1);
 		table.getModel().setValueAt(model.getAllCars().count(), 1, 1);
-		table.getModel().setValueAt( model.getParkingPassCars().count(), 2, 1);
+		table.getModel().setValueAt(model.getParkingPassCars().count(), 2, 1);
 		table.getModel().setValueAt(model.getEntranceCarQueue().carsInQueue(), 3, 1);
 		table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 4, 1);
 		repaint();
