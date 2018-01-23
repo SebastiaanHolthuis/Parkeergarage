@@ -107,10 +107,10 @@ public class Simulator {
         textStatisticsView.setBounds(0, 0, 207, 549);
         panel.add(textStatisticsView);
         
-                textStatisticsView.setBorder(null);
-                parkeerLogic.addView(textStatisticsView);
-                textStatisticsView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-                textStatisticsView.updateView();
+        textStatisticsView.setBorder(null);
+        parkeerLogic.addView(textStatisticsView);
+        textStatisticsView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        textStatisticsView.updateView();
         contentPane.add(carParkView);
         
         Apply = new JButton("Apply");
