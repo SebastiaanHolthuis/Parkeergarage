@@ -27,7 +27,12 @@ public class ParkeerLogic extends AbstractModel {
 
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
-    private CarQueue paymentCarQueue;
+    
+    public CarQueue getEntrancePassQueue() {
+		return entrancePassQueue;
+	}
+
+	private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
@@ -127,7 +132,15 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
-    private void carsReadyToLeave() {
+    public CarQueue getEntranceCarQueue() {
+		return entranceCarQueue;
+	}
+
+	public void setEntranceCarQueue(CarQueue entranceCarQueue) {
+		this.entranceCarQueue = entranceCarQueue;
+	}
+
+	private void carsReadyToLeave() {
         // Add leaving cars to the payment queue.
         Car car = getFirstLeavingCar();
         while (car != null) {
