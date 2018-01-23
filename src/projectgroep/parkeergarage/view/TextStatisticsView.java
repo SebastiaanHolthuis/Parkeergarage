@@ -22,7 +22,7 @@ public class TextStatisticsView extends AbstractView {
 	public TextStatisticsView(ParkeerLogic model) {
 		super(model);
 		
-		size = new Dimension(0, 2);
+		size = new Dimension(0, 1);
 		setLayout(new GridLayout(0,1));
 		
 		addComponents();
@@ -37,8 +37,8 @@ public class TextStatisticsView extends AbstractView {
 	
 	private void addComponents() {      
 		table = new JTable();
-		table.setEnabled(false);
 		table.setFillsViewportHeight(true);
+		table.setEnabled(false);
 		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
