@@ -56,6 +56,10 @@ public class ParkeerLogic extends AbstractModel {
             tickSimulator();
         }
     }
+    
+    public void start() {
+    	run();
+    }
 
     public void stop() {
         running = false;
