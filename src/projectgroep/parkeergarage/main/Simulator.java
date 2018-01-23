@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,10 +20,15 @@ import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+
+import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
+import javax.swing.JPanel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class Simulator {
 
@@ -38,6 +45,8 @@ public class Simulator {
     private Container settingsContentPane;
     private JButton Apply;
     private JSlider slider;
+    private JPanel panel;
+    private JMenuItem mntmSettings;
 
     public Simulator(Settings settings) {
         createInstances(settings);
@@ -55,7 +64,7 @@ public class Simulator {
         carParkView = new CarParkView(parkeerLogic);
         carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         carParkView.setBackground(SystemColor.control);
-        carParkView.setBounds(227, 11, 865, 549);
+        carParkView.setBounds(227, 59, 865, 501);
         settingsView = new SettingsView(parkeerLogic, this);
         
         textStatisticsView = new TextStatisticsView(parkeerLogic);
@@ -67,12 +76,13 @@ public class Simulator {
         pieChartView = new PieChartView(parkeerLogic);
         pieChartView.setBackground(Color.WHITE);
         pieChartView.setBorder(new LineBorder(new Color(0, 0, 0)));
-        pieChartView.setBounds(1102, 11, 207, 549);
+        pieChartView.setBounds(1102, 59, 207, 501);
         
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
         textStatisticsView.setLayout(new GridLayout(1, 0, 0, 0));
+        
         parkeerLogic.addView(pieChartView);
     }
 
@@ -86,7 +96,21 @@ public class Simulator {
         screen.getContentPane().setLayout(null);
 
         contentPane.add(pieChartView);
-        contentPane.add(textStatisticsView);
+        
+        panel = new JPanel();
+        panel.setBounds(10, 59, 207, 501);
+        screen.getContentPane().add(panel);
+        panel.setLayout(null);
+        
+        textStatisticsView = new TextStatisticsView(parkeerLogic);
+        textStatisticsView.setBackground(SystemColor.control);
+        textStatisticsView.setBounds(0, 0, 207, 549);
+        panel.add(textStatisticsView);
+        
+        textStatisticsView.setBorder(null);
+        parkeerLogic.addView(textStatisticsView);
+        textStatisticsView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        textStatisticsView.updateView();
         contentPane.add(carParkView);
         
         Apply = new JButton("Apply");
@@ -97,13 +121,29 @@ public class Simulator {
         slider.setMinimum(1);
         slider.setBounds(10, 571, 207, 26);
         screen.getContentPane().add(slider);
+        
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(Color.LIGHT_GRAY);
+        menuBar.setBounds(0, 0, 1319, 36);
+        screen.getContentPane().add(menuBar);
+        
+        mntmSettings = new JMenuItem("Settings");
+        mntmSettings.setForeground(Color.WHITE);
+        mntmSettings.setBackground(Color.GRAY);
+        mntmSettings.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				settingsScreen.setVisible(true);		
+			}
+		});
+        
+        menuBar.add(mntmSettings);
 
         screen.pack();
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
 
         carParkView.updateView();
-        textStatisticsView.updateView();
         pieChartView.updateView();
     }
 
@@ -118,7 +158,7 @@ public class Simulator {
 
         settingsScreen.pack();
         settingsScreen.setLocationRelativeTo(null);
-        settingsScreen.setVisible(true);
+        settingsScreen.setVisible(false);
     }
 
 
