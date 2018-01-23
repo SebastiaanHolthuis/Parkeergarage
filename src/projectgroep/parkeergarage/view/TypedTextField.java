@@ -3,6 +3,9 @@ package projectgroep.parkeergarage.view;
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A type-aware and typesafe JTextField. In case the type cannot be created from a string, the initial value is returned.
+ */
 public class TypedTextField extends JTextField {
     Object initialValue;
 

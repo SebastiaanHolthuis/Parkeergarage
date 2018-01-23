@@ -32,7 +32,7 @@ public class SettingsView extends AbstractView {
         setLayout(new GridLayout(0, 2));
         initializeFields();
         add(restartButton);
-        restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
+        restartButton.addActionListener(e -> handleRestart());
     }
 
     private void initializeFields() {
