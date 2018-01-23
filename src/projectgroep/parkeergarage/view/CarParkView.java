@@ -11,80 +11,79 @@ import projectgroep.parkeergarage.logic.cars.Car;
 
 public class CarParkView extends AbstractView {
 
-	private Dimension 		size;
-	private Image			carParkImage;
-	
-	public CarParkView(ParkeerLogic model) {
-		super(model);
-		
-		size = new Dimension(0, 0);
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		if (carParkImage == null) {
+    private Dimension size;
+    private Image carParkImage;
+
+    public CarParkView(ParkeerLogic model) {
+        super(model);
+
+        size = new Dimension(0, 0);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        if (carParkImage == null) {
             return;
         }
 
         Dimension currentSize = getSize();
-        
+
         if (size.equals(currentSize)) {
             g.drawImage(carParkImage, 0, 0, null);
         } else {
             g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
         }
-	}
+    }
 
-	public void updateView() {
-		if (!size.equals(getSize())) {
+    public void updateView() {
+        if (!size.equals(getSize())) {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
         }
-		
+
         Graphics graphics = carParkImage.getGraphics();
-        
+
         for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) { 
+            for (int row = 0; row < model.getNumberOfRows(); row++) {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                	Location location = new Location(floor, row, place);                	
+                    Location location = new Location(floor, row, place);
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
-                    
+
                     if (car == null && floor == 0 && row < 2) {
-                    	color = Color.decode("#BCE7FF");         	
+                        color = Color.decode("#ADDAF7"); // Blue
                     } else if (car == null) {
-                    	color = Color.decode("#FFBCBC");
+                        color = Color.decode("#F0839E"); // Magenta
                     } else {
-                    	color = car.getColor();
+                        color = car.getColor();
                     }
-                    
+
                     drawPlace(graphics, location, color);
-                    
+
                     if (!model.getLocationLogic().existsInMap(location)) {
-	                    if (floor == 0 && row < 2) {
-	                    	model.getLocationLogic().addLocation(location, "2");
-	                    	location.setForParkingPass(true);
-	                    } else {
-	                    	model.getLocationLogic().addLocation(location, "1");
-	                    	location.setForParkingPass(false);
-	                    }
+                        if (floor == 0 && row < 2) {
+                            model.getLocationLogic().addLocation(location, "2");
+                            location.setForParkingPass(true);
+                        } else {
+                            model.getLocationLogic().addLocation(location, "1");
+                            location.setForParkingPass(false);
+                        }
                     }
                 }
             }
         }
-        
-        
-        
-        repaint();
-	}
-	
-	 private void drawPlace(Graphics graphics, Location location, Color color) {
-         graphics.setColor(color);
-         graphics.fillRect(
-                 location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
-                 60 + location.getPlace() * 10,
-                 20 - 1,
-                 10 - 1); // TODO use dynamic size or constants
 
-     }
+
+        repaint();
+    }
+
+    private void drawPlace(Graphics graphics, Location location, Color color) {
+        graphics.setColor(color);
+        graphics.fillRect(
+                location.getFloor() * 260 + (1 + (int) Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
+                60 + location.getPlace() * 10,
+                20 - 1,
+                10 - 1); // TODO use dynamic size or constants
+
+    }
 }
