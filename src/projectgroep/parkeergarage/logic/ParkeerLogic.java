@@ -7,6 +7,7 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
+import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -20,6 +21,8 @@ public class ParkeerLogic extends AbstractModel {
 
     private int tickPause = 100;
     private boolean running;
+    
+    private int totalEarned = 0;
 
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
@@ -55,6 +58,10 @@ public class ParkeerLogic extends AbstractModel {
             if (!running) return;
             tickSimulator();
         }
+    }
+    
+    public void start() {
+    	run();
     }
 
     public void stop() {
@@ -160,6 +167,7 @@ public class ParkeerLogic extends AbstractModel {
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
             // TODO Handle payment.
+            totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
@@ -188,6 +196,10 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
     
+    public Stream<Car> getReservationCars() {
+    	return getAllCars().filter((c) -> (c instanceof ReservationCar));
+    }
+    
     public Stream<Car> getAdHocCars() {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
@@ -212,12 +224,17 @@ public class ParkeerLogic extends AbstractModel {
         switch (type) {
             case AD_HOC:
                 for (int i = 0; i < numberOfCars; i++) {
-                    entranceCarQueue.addCar(new AdHocCar());
+                    entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
+                }
+                break;
+            case RESERVED:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
                 }
                 break;
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
-                    entrancePassQueue.addCar(new ParkingPassCar());
+                    entrancePassQueue.addCar(new ParkingPassCar(0));
                 }
                 break;
         }
@@ -347,5 +364,13 @@ public class ParkeerLogic extends AbstractModel {
     public void setLocationLogic(LocationLogic locationLogic) {
         this.locationLogic = locationLogic;
     }
+
+	public int getTotalEarned() {
+		return totalEarned;
+	}
+
+	public void setTotalEarned(int totalEarned) {
+		this.totalEarned = totalEarned;
+	}
 }
 
