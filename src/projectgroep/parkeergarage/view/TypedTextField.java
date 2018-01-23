@@ -1,6 +1,7 @@
 package projectgroep.parkeergarage.view;
 
 import javax.swing.*;
+import java.lang.reflect.InvocationTargetException;
 
 public class TypedTextField extends JTextField {
     Object initialValue;
@@ -11,12 +12,11 @@ public class TypedTextField extends JTextField {
     }
 
     public Object getValue() {
-        if (initialValue instanceof Integer) {
-            return new Integer(getText());
-        } else if (initialValue instanceof Double) {
-            return new Double(getText());
-        } else {
-            return getText();
+        try {
+            return initialValue.getClass().getDeclaredConstructor(String.class).newInstance(getText());
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+            return initialValue;
         }
     }
 }
