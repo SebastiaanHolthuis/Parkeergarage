@@ -29,6 +29,7 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 public class Simulator {
 
@@ -47,6 +48,8 @@ public class Simulator {
     private JSlider slider;
     private JPanel panel;
     private JMenuItem mntmSettings;
+    private JMenu mnSimulator;
+    private JMenuItem mntmStop;
 
     public Simulator(Settings settings) {
         createInstances(settings);
@@ -127,18 +130,43 @@ public class Simulator {
         menuBar.setBounds(0, 0, 1319, 36);
         screen.getContentPane().add(menuBar);
         
+        mnSimulator = new JMenu("Simulator");
+        mnSimulator.setBackground(Color.GRAY);
+        mnSimulator.setForeground(Color.WHITE);
+        menuBar.add(mnSimulator);
+        
+        mntmStop = new JMenuItem("Stop");
+        mntmStop.setForeground(Color.DARK_GRAY);
+        mntmStop.setBackground(Color.WHITE);
+        mnSimulator.add(mntmStop);
+        
         mntmSettings = new JMenuItem("Settings");
-        mntmSettings.setForeground(Color.WHITE);
-        mntmSettings.setBackground(Color.GRAY);
+        mnSimulator.add(mntmSettings);
+        mntmSettings.setForeground(Color.DARK_GRAY);
+        mntmSettings.setBackground(Color.WHITE);
+        
         mntmSettings.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				settingsScreen.setVisible(true);		
 			}
 		});
-        
-        menuBar.add(mntmSettings);
 
+        mntmStop.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parkeerLogic.stop();
+			}
+		});
+        
+        Apply.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parkeerLogic.run();
+			}
+		});
+        
         screen.pack();
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
