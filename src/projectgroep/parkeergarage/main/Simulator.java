@@ -5,7 +5,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JSlider;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import projectgroep.parkeergarage.SettingsRepository;
@@ -15,8 +18,6 @@ import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
-import java.awt.GridBagLayout;
-import javax.swing.border.LineBorder;
 
 public class Simulator {
 
@@ -31,6 +32,8 @@ public class Simulator {
 
     private Container contentPane;
     private Container settingsContentPane;
+    private JButton Apply;
+    private JSlider slider;
 
     public Simulator(Settings settings) {
         createInstances(settings);
@@ -52,6 +55,8 @@ public class Simulator {
         settingsView = new SettingsView(parkeerLogic, this);
         
         textStatisticsView = new TextStatisticsView(parkeerLogic);
+        textStatisticsView.setBounds(0, 0, 260, 328);
+
         textStatisticsView.setBorder(null);
         textStatisticsView.setBounds(10, 11, 207, 549);
         
@@ -79,6 +84,15 @@ public class Simulator {
         contentPane.add(textStatisticsView);
         contentPane.add(carParkView);
         
+        Apply = new JButton("Apply");
+        Apply.setBounds(80, 447, 89, 23);
+        screen.getContentPane().add(Apply);
+        
+        slider = new JSlider();
+        slider.setMinimum(1);
+        slider.setBounds(23, 382, 200, 26);
+        screen.getContentPane().add(slider);
+
         screen.pack();
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
