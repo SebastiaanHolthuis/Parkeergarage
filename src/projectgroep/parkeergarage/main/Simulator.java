@@ -20,6 +20,7 @@ import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+
 import java.awt.GridLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -66,6 +67,12 @@ public class Simulator {
         carParkView.setBounds(227, 59, 865, 501);
         settingsView = new SettingsView(parkeerLogic, this);
         
+        textStatisticsView = new TextStatisticsView(parkeerLogic);
+        textStatisticsView.setBounds(10, 11, 207, 276);
+
+        textStatisticsView.setBorder(null);
+        textStatisticsView.setBounds(10, 11, 207, 549);
+        
         pieChartView = new PieChartView(parkeerLogic);
         pieChartView.setBackground(Color.WHITE);
         pieChartView.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -73,12 +80,15 @@ public class Simulator {
         
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
+        parkeerLogic.addView(textStatisticsView);
+        textStatisticsView.setLayout(new GridLayout(1, 0, 0, 0));
+        
         parkeerLogic.addView(pieChartView);
     }
 
     private void initializeFrame() {
         screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-        screen.setPreferredSize(new Dimension(1325, 600));
+        screen.setPreferredSize(new Dimension(1325, 800));
         screen.setResizable(false);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -104,12 +114,12 @@ public class Simulator {
         contentPane.add(carParkView);
         
         Apply = new JButton("Apply");
-        Apply.setBounds(80, 447, 89, 23);
+        Apply.setBounds(10, 608, 207, 23);
         screen.getContentPane().add(Apply);
         
         slider = new JSlider();
         slider.setMinimum(1);
-        slider.setBounds(23, 382, 200, 26);
+        slider.setBounds(10, 571, 207, 26);
         screen.getContentPane().add(slider);
         
         JMenuBar menuBar = new JMenuBar();

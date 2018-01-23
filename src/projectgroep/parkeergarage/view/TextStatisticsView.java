@@ -21,7 +21,6 @@ public class TextStatisticsView extends AbstractView {
 	@SuppressWarnings("serial")
 	public TextStatisticsView(ParkeerLogic model) {
 		super(model);
-				
 		addComponents();
 	}
 	
@@ -29,6 +28,8 @@ public class TextStatisticsView extends AbstractView {
 		table.getModel().setValueAt(model.getNumberOfOpenSpots(), 0, 1);
 		table.getModel().setValueAt(model.getAllCars().count(), 1, 1);
 		table.getModel().setValueAt( model.getParkingPassCars().count(), 2, 1);
+		table.getModel().setValueAt(model.getEntranceCarQueue().carsInQueue(), 3, 1);
+		table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 4, 1);
 		repaint();
 	}
 	
@@ -41,7 +42,8 @@ public class TextStatisticsView extends AbstractView {
 				{"Beschikbare plaatsen", new Integer(0)},
 				{"Aantal auto's", new Integer(0)},
 				{"Aantal pashouder's", new Integer(0)},
-				
+				{"Auto's in queue", new Integer(0)},
+				{"Pashouders in queue", new Integer(0)},
 			},
 			new String[] {
 				"Variabele", "Waarde"
