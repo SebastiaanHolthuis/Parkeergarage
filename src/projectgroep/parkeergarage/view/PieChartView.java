@@ -62,5 +62,9 @@ public class PieChartView extends AbstractView {
 		// Ad Hoc
 		g.setColor(Color.decode("#DB2929"));
 		g.fillArc(12, 10, 180, 180, 0, (int) model.getAdHocCars().count());
+		
+		// Reservatie auto
+		g.setColor(Color.decode("#FFFF00"));
+		g.fillArc(12, 10, 180, 180, 0, (int) model.getReservationCars().count());
 	}
 }
