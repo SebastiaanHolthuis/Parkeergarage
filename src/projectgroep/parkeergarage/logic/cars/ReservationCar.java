@@ -6,7 +6,7 @@ import java.awt.*;
 public class ReservationCar extends Car {
     public static final Color COLOR = Color.decode("#34D1BF");
 
-    public ReservationCar(int priceToPay) {
+    public ReservationCar(double priceToPay) {
         super(priceToPay);
 
         Random random = new Random();

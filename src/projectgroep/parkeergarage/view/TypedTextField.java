@@ -3,14 +3,20 @@ package projectgroep.parkeergarage.view;
 import javax.swing.*;
 
 public class TypedTextField extends JTextField {
-    public Class type;
+    Object initialValue;
 
     TypedTextField(Object value) {
         super(value.toString());
-        type = value.getClass();
+        initialValue = value;
     }
 
-    public Integer getValue() {
-        return Integer.parseInt(getText());
+    public Object getValue() {
+        if (initialValue instanceof Integer) {
+            return new Integer(getText());
+        } else if (initialValue instanceof Double) {
+            return new Double(getText());
+        } else {
+            return getText();
+        }
     }
 }
