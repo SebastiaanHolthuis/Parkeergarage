@@ -21,6 +21,8 @@ public class ParkeerLogic extends AbstractModel {
 
     private int tickPause = 100;
     private boolean running;
+    
+    private int totalEarned = 0;
 
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
@@ -161,6 +163,7 @@ public class ParkeerLogic extends AbstractModel {
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
             // TODO Handle payment.
+            totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
@@ -353,5 +356,13 @@ public class ParkeerLogic extends AbstractModel {
     public void setLocationLogic(LocationLogic locationLogic) {
         this.locationLogic = locationLogic;
     }
+
+	public int getTotalEarned() {
+		return totalEarned;
+	}
+
+	public void setTotalEarned(int totalEarned) {
+		this.totalEarned = totalEarned;
+	}
 }
 
