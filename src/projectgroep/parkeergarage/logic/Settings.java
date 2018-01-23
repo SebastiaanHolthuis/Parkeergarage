@@ -22,6 +22,7 @@ public class Settings implements Serializable {
     int numberOfPassHolderRows = 2;
     int numberOfResFloors = 1;
     int numberOfResRows = 2;
+    int defaultPrice = 4;
 
     int weekDayArrivals = 100; // average number of arriving AdHoc cars per hour
     int weekendArrivals = 200; // average number of arriving AdHoc cars per hour
