@@ -163,7 +163,7 @@ public class Simulator {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parkeerLogic.run();
+				parkeerLogic.start();
 			}
 		});
         
@@ -179,7 +179,7 @@ public class Simulator {
         settingsScreen.setTitle("Settings");
         settingsScreen.setPreferredSize(new Dimension(900, 600));
         settingsScreen.setResizable(false);
-        settingsScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        settingsScreen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         settingsContentPane = settingsScreen.getContentPane();
         settingsContentPane.add(settingsView);

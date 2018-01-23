@@ -7,6 +7,7 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
+import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -55,6 +56,10 @@ public class ParkeerLogic extends AbstractModel {
             if (!running) return;
             tickSimulator();
         }
+    }
+    
+    public void start() {
+    	run();
     }
 
     public void stop() {
@@ -212,12 +217,17 @@ public class ParkeerLogic extends AbstractModel {
         switch (type) {
             case AD_HOC:
                 for (int i = 0; i < numberOfCars; i++) {
-                    entranceCarQueue.addCar(new AdHocCar());
+                    entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
+                }
+                break;
+            case RESERVED:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
                 }
                 break;
             case PASS:
                 for (int i = 0; i < numberOfCars; i++) {
-                    entrancePassQueue.addCar(new ParkingPassCar());
+                    entrancePassQueue.addCar(new ParkingPassCar(0));
                 }
                 break;
         }
