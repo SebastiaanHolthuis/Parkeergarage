@@ -22,6 +22,8 @@ public class Simulator {
 
     private Container contentPane;
     private Container settingsContentPane;
+    private JButton Apply;
+    private JSlider slider;
 
     public Simulator(Settings settings) {
         createInstances(settings);
@@ -40,7 +42,7 @@ public class Simulator {
         settingsView = new SettingsView(parkeerLogic, this);
         
         textStatisticsView = new TextStatisticsView(parkeerLogic);
-        textStatisticsView.setBounds(0, 0, 260, 571);
+        textStatisticsView.setBounds(0, 0, 260, 328);
 
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
@@ -58,6 +60,15 @@ public class Simulator {
 
         contentPane.add(textStatisticsView);
         contentPane.add(carParkView);
+        
+        Apply = new JButton("Apply");
+        Apply.setBounds(80, 447, 89, 23);
+        screen.getContentPane().add(Apply);
+        
+        slider = new JSlider();
+        slider.setMinimum(1);
+        slider.setBounds(23, 382, 200, 26);
+        screen.getContentPane().add(slider);
 
         screen.pack();
         screen.setLocationRelativeTo(null);
