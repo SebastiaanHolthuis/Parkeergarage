@@ -193,6 +193,10 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
     
+    public Stream<Car> getReservationCars() {
+    	return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
+    }
+    
     public Stream<Car> getAdHocCars() {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
