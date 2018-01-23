@@ -47,22 +47,26 @@ public class PieChartView extends AbstractView {
         drawChart(graphics);
 
         repaint();
-    }
-
-    public void drawChart(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1000, 1000);
-
-        // Cirkel
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillArc(12, 10, 180, 180, 0, 360);
-
-        // Parking pass
-        g.setColor(ParkingPassCar.COLOR);
-        g.fillArc(12, 10, 180, 180, 0, (int) model.getParkingPassCars().count() - (int) model.getAdHocCars().count());
-
-        // Ad Hoc
-        g.setColor(AdHocCar.COLOR);
-        g.fillArc(12, 10, 180, 180, 0, (int) model.getAdHocCars().count());
-    }
+	}
+	
+	public void drawChart(Graphics g) {	
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 1000, 1000);
+		
+		// Cirkel
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillArc(12, 10, 180, 180, 0, 360);
+		
+		// Parking pass
+		g.setColor(ParkingPassCar.COLOR);
+		g.fillArc(12, 10, 180, 180, 0, (int) model.getParkingPassCars().count() - (int) model.getAdHocCars().count());
+		
+		// Ad Hoc
+		g.setColor(AdHocCar.COLOR);
+		g.fillArc(12, 10, 180, 180, 0, (int) model.getAdHocCars().count());
+		
+		// Reservatie auto
+		g.setColor(Color.decode("#FFFF00"));
+		g.fillArc(12, 10, 180, 180, 0, (int) model.getReservationCars().count());
+	}
 }
