@@ -19,8 +19,9 @@ public class ParkeerLogic extends AbstractModel {
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
+    private int week = 0;
 
-    private int tickPause = 100;
+    private int tickPause = 0;
     private boolean running;
 
     private double totalEarned = 0;
@@ -28,6 +29,8 @@ public class ParkeerLogic extends AbstractModel {
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
     private static final String RESERVED = "3";
+
+    private List<Car> skippedCars = new ArrayList<>();
 
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -55,7 +58,8 @@ public class ParkeerLogic extends AbstractModel {
 
     public void run() {
         running = true;
-        for (int i = 0; i < 10000; i++) {
+
+        for (int i = 0; i < 100000; i++) {
             if (!running) return;
             tickSimulator();
         }
@@ -96,10 +100,34 @@ public class ParkeerLogic extends AbstractModel {
         }
         while (day > 6) {
             day -= 7;
+            week++;
         }
-
+        
+//        System.out.println("Dag: " + day + " - Uur: " + hour + " - Minuut: " +minute);
     }
+    
 
+    public String translateDay(int day) {
+    	
+	    	switch(day) {
+	    		case 0: return "Monday";
+	    		case 1: return "Tuesday";
+	    		case 2: return "Wednesday";
+	    		case 3: return "Thursday";
+	    		case 4: return "Friday";
+	    		case 5: return "Saturday";
+	    		case 6: return "Sunday";
+	    		default: return "";
+	    	}
+    
+    }
+    
+    public String translateTime(int hour, int minute) {
+    		
+    		return hour + ":" + minute;
+    }
+    
+    
     private void handleEntrance() {
         carsArriving();
         carsEntering(entrancePassQueue);
@@ -220,29 +248,46 @@ public class ParkeerLogic extends AbstractModel {
         return (int) Math.round(numberOfCarsPerHour / 60);
     }
 
-    private boolean queueTooLongFor(Car car) {
-        if (car instanceof ParkingPassCar)
+    private boolean queueTooLongFor(String type) {
+        if (type == PASS)
             return entrancePassQueue.carsInQueue() >= settings.maxQueue;
         else
             return entranceCarQueue.carsInQueue() >= settings.maxQueue;
     }
 
+    private boolean fuckThatQueue() {
+        boolean result = (new Random()).nextDouble() < settings.skipChance;
+        return result;
+    }
+
     private void addArrivingCars(int numberOfCars, String type) {
-        // Add the cars to the back of the queue.
+
         IntStream.range(0, numberOfCars).forEach(i -> {
+            Car newCar;
             switch (type) {
-                case AD_HOC:
-                    entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                    break;
                 case RESERVED:
-                    entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
+                    newCar = new ReservationCar(settings.defaultPrice + 2);
                     break;
                 case PASS:
-                    entrancePassQueue.addCar(new ParkingPassCar(0));
+                    newCar = new ParkingPassCar(0);
+                    break;
+                case AD_HOC:
+                default:
+                    newCar = new AdHocCar(settings.defaultPrice);
                     break;
             }
+
+            if (queueTooLongFor(type) && fuckThatQueue())
+                skippedCars.add(newCar);
+            else
+                entranceCarQueue.addCar(newCar);
         });
     }
+
+    public int getSkipCount() {
+        return skippedCars.size();
+    }
+
 
     private void carLeavesSpot(Car car) {
         removeCarAt(car.getLocation());

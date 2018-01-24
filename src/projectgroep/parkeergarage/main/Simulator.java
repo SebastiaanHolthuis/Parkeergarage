@@ -1,9 +1,6 @@
 package projectgroep.parkeergarage.main;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -16,8 +13,6 @@ import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
 import projectgroep.parkeergarage.controller.ButtonController;
-
-import javax.swing.GroupLayout.Alignment;
 
 public class Simulator {
 
@@ -35,8 +30,8 @@ public class Simulator {
     private JPanel panel;
     private JMenuItem mntmSettings;
     private JMenu mnSimulator;
-    private JMenuItem mntmStop;
-
+    private ButtonController buttonController;
+    
     public Simulator(Settings settings) {
         createInstances(settings);
         initializeFrame();
@@ -49,7 +44,8 @@ public class Simulator {
         settingsScreen = new JFrame();
 
         parkeerLogic = new ParkeerLogic(settings);
-
+        buttonController = new ButtonController(this, parkeerLogic);
+        
         carParkView = new CarParkView(parkeerLogic);
         carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         carParkView.setBackground(SystemColor.control);
@@ -90,7 +86,7 @@ public class Simulator {
         panel.setBounds(10, 59, 207, 501);
         screen.getContentPane().add(panel);
         panel.setLayout(null);
-
+        
         textStatisticsView = new TextStatisticsView(parkeerLogic);
         textStatisticsView.setBackground(SystemColor.control);
         textStatisticsView.setBounds(0, 0, 207, 549);
@@ -101,8 +97,8 @@ public class Simulator {
         textStatisticsView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         textStatisticsView.updateView();
         contentPane.add(carParkView);
+        contentPane.add(buttonController);
 
-      
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.LIGHT_GRAY);
         menuBar.setBounds(0, 0, 1319, 36);
@@ -118,12 +114,8 @@ public class Simulator {
         mnSimulator.add(mntmSettings);
         mntmSettings.setForeground(Color.DARK_GRAY);
         mntmSettings.setBackground(Color.WHITE);
-        
-     
-       
+
         mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
-      
-     
 
         screen.pack();
         screen.setLocationRelativeTo(null);
@@ -181,5 +173,8 @@ public class Simulator {
     
     }
   
+    public JFrame getScreen() {
+    	return screen;
+    }
     
 }

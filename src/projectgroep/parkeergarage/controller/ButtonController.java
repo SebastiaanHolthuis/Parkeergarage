@@ -1,50 +1,55 @@
 package projectgroep.parkeergarage.controller;
 
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.view.SettingsView;
+import projectgroep.parkeergarage.main.Simulator;
 
-
-public class ButtonController extends AbstractController  {
-	private JButton Apply;
-	private JButton Stop;
-	private JFrame screen;
-	private ParkeerLogic parkeerlogic;
-	
-	public void AddButtons(){
-	
-		   JButton OneStep = new JButton("+1");
-	        OneStep.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        	}
-	        });
-	 Apply = new JButton("Start");
-     Apply.setBounds(10, 574, 73, 23);
-     screen.getContentPane().add(Apply);
-
-     Stop = new JButton("Stop");
-     Stop.setBounds(141, 572,73, 26);
-     
-     screen.getContentPane().add(Stop);
-     OneStep.setBounds(144, 624, 73, 23);
-     screen.getContentPane().add(OneStep);
-     
+@SuppressWarnings("serial")
+public class ButtonController extends AbstractController {
+	 JButton Apply = new JButton("Start");
+	 JButton OneStep = new JButton("+1");
+     JButton Stop = new JButton("Stop");     
      JButton StepBack = new JButton("-1");
-     StepBack.setBounds(10, 624, 73, 23);
-     screen.getContentPane().add(StepBack);
      
      JButton Reset = new JButton("Reset");
-     Reset.setBounds(66, 681, 89, 23);
-     screen.getContentPane().add(Reset);
+     ParkeerLogic parkeerLogic;
+     Simulator sim;
+     
+	public ButtonController(Simulator simulator, ParkeerLogic parkeerLogic) {
+		this.parkeerLogic = parkeerLogic;
+		this.sim = simulator;
+		 Apply.setBounds(10, 572, 73, 26);
+		 simulator.getScreen().getContentPane().add(Apply);
+		 Apply.addActionListener(this);
+		 
+	     Stop.setBounds(141, 572,73, 26);
+	     simulator.getScreen().getContentPane().add(Stop);
+	     Stop.addActionListener(this);
 
+	     OneStep.setBounds(144, 624, 73, 23);
+	     simulator.getScreen().getContentPane().add(OneStep);
+	    
+	     StepBack.setBounds(10, 624, 73, 23);
+	     simulator.getScreen().getContentPane().add(StepBack);
+	     
+	     Reset.setBounds(66, 681, 89, 23);
+	     simulator.getScreen().getContentPane().add(Reset);
+	     Reset.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-	if (e.getSource() == Stop) {
-		parkeerlogic.stop();
-	}
-      //Apply.addActionListener(e -> parkeerlogic.run());
+		if (e.getSource() == Stop) {
+			parkeerLogic.stop();
+		}
+		if (e.getSource() == Reset) {
+			sim.restart(parkeerLogic.settings);
+		}
+		if (e.getSource() == Apply) {
+			parkeerLogic.start();
+		}
+
 	}
 }

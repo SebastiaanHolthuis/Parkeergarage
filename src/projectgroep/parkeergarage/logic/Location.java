@@ -1,5 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
+import projectgroep.parkeergarage.logic.cars.Car;
+
 public class Location {
 
     private int floor;
@@ -9,6 +11,8 @@ public class Location {
     private Boolean forParkingPass;
     private Boolean forReservation;
     private Boolean taken;
+    
+    private Car reservationCar;
     
     /**
      * Constructor for objects of class Location
@@ -100,6 +104,28 @@ public class Location {
 
 	public void setTaken(Boolean taken) {
 		this.taken = taken;
+	}
+	
+	public void reserve(Car car) {
+		if (!isForReservation()) {
+			setForReservation(true);
+			setReservationCar(car);
+		}
+	}
+	
+	public void unreserve() {
+		if (isForReservation()) {
+			setForReservation(false);
+			setReservationCar(null);
+		}
+	}
+
+	public Car getReservationCar() {
+		return reservationCar;
+	}
+
+	public void setReservationCar(Car reservationCar) {
+		this.reservationCar = reservationCar;
 	}
 
 }
