@@ -220,27 +220,35 @@ public class ParkeerLogic extends AbstractModel {
         return (int) Math.round(numberOfCarsPerHour / 60);
     }
 
-    private boolean queueTooLongFor(Car car) {
-        if (car instanceof ParkingPassCar)
+    private boolean queueTooLongFor(String type) {
+        if (type == PASS)
             return entrancePassQueue.carsInQueue() >= settings.maxQueue;
         else
             return entranceCarQueue.carsInQueue() >= settings.maxQueue;
     }
 
+    private boolean fuckThatQueue() {
+        boolean result = (new Random()).nextDouble() < settings.skipChance;
+        return result;
+    }
+
     private void addArrivingCars(int numberOfCars, String type) {
         // Add the cars to the back of the queue.
         IntStream.range(0, numberOfCars).forEach(i -> {
-            switch (type) {
-                case AD_HOC:
-                    entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                    break;
-                case RESERVED:
-                    entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
-                    break;
-                case PASS:
-                    entrancePassQueue.addCar(new ParkingPassCar(0));
-                    break;
-            }
+            if (queueTooLongFor(type) && fuckThatQueue())
+                return;
+            else
+                switch (type) {
+                    case AD_HOC:
+                        entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
+                        break;
+                    case RESERVED:
+                        entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
+                        break;
+                    case PASS:
+                        entrancePassQueue.addCar(new ParkingPassCar(0));
+                        break;
+                }
         });
     }
 

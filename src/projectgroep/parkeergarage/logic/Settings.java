@@ -32,6 +32,7 @@ public class Settings implements Serializable {
     int weekendResArrivals = 10; // average number of arriving Reserved cars per hour
 
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
+    double skipChance = 0.5; // 0 to 1
 
     int enterSpeed = 8; // number of cars that can enter per minute
     int paymentSpeed = 5; // number of cars that can pay per minute
