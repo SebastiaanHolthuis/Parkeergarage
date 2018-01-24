@@ -30,6 +30,8 @@ public class ParkeerLogic extends AbstractModel {
     private static final String PASS = "2";
     private static final String RESERVED = "3";
 
+    private List<Car> skippedCars = new ArrayList<>();
+
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
 
@@ -56,6 +58,7 @@ public class ParkeerLogic extends AbstractModel {
 
     public void run() {
         running = true;
+
         for (int i = 0; i < 100000; i++) {
             if (!running) return;
             tickSimulator();
@@ -99,8 +102,10 @@ public class ParkeerLogic extends AbstractModel {
             day -= 7;
             week++;
         }
-
+        
+//        System.out.println("Dag: " + day + " - Uur: " + hour + " - Minuut: " +minute);
     }
+    
 
     public String translateDay(int day) {
     	
@@ -256,24 +261,33 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private void addArrivingCars(int numberOfCars, String type) {
-        // Add the cars to the back of the queue.
+
         IntStream.range(0, numberOfCars).forEach(i -> {
+            Car newCar;
+            switch (type) {
+                case RESERVED:
+                    newCar = new ReservationCar(settings.defaultPrice + 2);
+                    break;
+                case PASS:
+                    newCar = new ParkingPassCar(0);
+                    break;
+                case AD_HOC:
+                default:
+                    newCar = new AdHocCar(settings.defaultPrice);
+                    break;
+            }
+
             if (queueTooLongFor(type) && fuckThatQueue())
-                return;
+                skippedCars.add(newCar);
             else
-                switch (type) {
-                    case AD_HOC:
-                        entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                        break;
-                    case RESERVED:
-                        entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
-                        break;
-                    case PASS:
-                        entrancePassQueue.addCar(new ParkingPassCar(0));
-                        break;
-                }
+                entranceCarQueue.addCar(newCar);
         });
     }
+
+    public int getSkipCount() {
+        return skippedCars.size();
+    }
+
 
     private void carLeavesSpot(Car car) {
         removeCarAt(car.getLocation());
