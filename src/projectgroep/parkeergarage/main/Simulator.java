@@ -178,5 +178,8 @@ public class Simulator {
 
     public Container getContentPane() {
         return screen.getContentPane();
+    
     }
+  
+    
 }
