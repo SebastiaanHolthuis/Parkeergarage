@@ -135,7 +135,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public String getDate() {
-        String result = (day + " " + translateTime(hour, minute));
+        String result = (translateDay(day % 7) + " " + day + " " + translateTime(hour, minute));
         System.out.println(result);
         return result;
     }
