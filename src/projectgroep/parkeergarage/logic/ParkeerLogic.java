@@ -229,7 +229,6 @@ public class ParkeerLogic extends AbstractModel {
 
     private boolean dontFeelLikeWaiting() {
         boolean result = (new Random()).nextDouble() < settings.skipChance;
-        System.out.println(result);
         return result;
     }
 
