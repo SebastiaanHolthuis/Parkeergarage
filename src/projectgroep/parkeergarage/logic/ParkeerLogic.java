@@ -219,7 +219,16 @@ public class ParkeerLogic extends AbstractModel {
         return (int) Math.round(numberOfCarsPerHour / 60);
     }
 
+    private boolean queueTooLongFor(Car car) {
+        if (car instanceof ParkingPassCar)
+            return entrancePassQueue.carsInQueue() >= settings.maxQueue;
+        else
+            return entranceCarQueue.carsInQueue() >= settings.maxQueue;
+    }
+
     private void addArrivingCars(int numberOfCars, String type) {
+
+
         // Add the cars to the back of the queue.
         switch (type) {
             case AD_HOC:
