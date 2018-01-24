@@ -104,7 +104,7 @@ public class Simulator {
         textStatisticsView.updateView();
         contentPane.add(carParkView);
 
-        Apply = new JButton("Apply");
+        Apply = new JButton("Start");
         Apply.setBounds(10, 574, 73, 23);
         screen.getContentPane().add(Apply);
 
@@ -147,6 +147,7 @@ public class Simulator {
         mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
         Stop.addActionListener(e -> parkeerLogic.stop());
         Apply.addActionListener(e -> parkeerLogic.run());
+     
 
         screen.pack();
         screen.setLocationRelativeTo(null);
