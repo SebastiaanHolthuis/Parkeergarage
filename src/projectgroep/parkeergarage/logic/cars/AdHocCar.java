@@ -6,7 +6,7 @@ import java.awt.*;
 public class AdHocCar extends Car {
     public static final Color COLOR = Color.decode("#D1345B");
 
-    public AdHocCar(int priceToPay) {
+    public AdHocCar(double priceToPay) {
         super(priceToPay);
 
         Random random = new Random();
@@ -14,8 +14,8 @@ public class AdHocCar extends Car {
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
     }
-    
-    public Color getColor(){
-    	return COLOR;
+
+    public Color getColor() {
+        return COLOR;
     }
 }

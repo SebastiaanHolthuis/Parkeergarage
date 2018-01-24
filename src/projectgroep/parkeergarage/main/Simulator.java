@@ -1,15 +1,10 @@
 package projectgroep.parkeergarage.main;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.SystemColor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
@@ -21,15 +16,7 @@ import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
 
-import java.awt.GridLayout;
-import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
-import javax.swing.JPanel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 
 public class Simulator {
 
@@ -38,13 +25,14 @@ public class Simulator {
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
     private PieChartView pieChartView;
-    
+
     private JFrame screen;
     private JFrame settingsScreen;
 
     private Container contentPane;
     private Container settingsContentPane;
     private JButton Apply;
+    private JButton Stop;
     private JSlider slider;
     private JPanel panel;
     private JMenuItem mntmSettings;
@@ -63,29 +51,29 @@ public class Simulator {
         settingsScreen = new JFrame();
 
         parkeerLogic = new ParkeerLogic(settings);
-        
+
         carParkView = new CarParkView(parkeerLogic);
         carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         carParkView.setBackground(SystemColor.control);
         carParkView.setBounds(227, 59, 865, 501);
         settingsView = new SettingsView(parkeerLogic, this);
-        
+
         textStatisticsView = new TextStatisticsView(parkeerLogic);
         textStatisticsView.setBounds(10, 11, 207, 276);
 
         textStatisticsView.setBorder(null);
         textStatisticsView.setBounds(10, 11, 207, 549);
-        
+
         pieChartView = new PieChartView(parkeerLogic);
         pieChartView.setBackground(Color.WHITE);
         pieChartView.setBorder(new LineBorder(new Color(0, 0, 0)));
         pieChartView.setBounds(1102, 59, 207, 501);
-        
+
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
         textStatisticsView.setLayout(new GridLayout(1, 0, 0, 0));
-        
+
         parkeerLogic.addView(pieChartView);
     }
 
@@ -99,74 +87,67 @@ public class Simulator {
         screen.getContentPane().setLayout(null);
 
         contentPane.add(pieChartView);
-        
+
         panel = new JPanel();
         panel.setBounds(10, 59, 207, 501);
         screen.getContentPane().add(panel);
         panel.setLayout(null);
-        
+
         textStatisticsView = new TextStatisticsView(parkeerLogic);
         textStatisticsView.setBackground(SystemColor.control);
         textStatisticsView.setBounds(0, 0, 207, 549);
         panel.add(textStatisticsView);
-        
+
         textStatisticsView.setBorder(null);
         parkeerLogic.addView(textStatisticsView);
         textStatisticsView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         textStatisticsView.updateView();
         contentPane.add(carParkView);
-        
+
         Apply = new JButton("Apply");
-        Apply.setBounds(10, 608, 207, 23);
+        Apply.setBounds(10, 574, 73, 23);
         screen.getContentPane().add(Apply);
-        
-        slider = new JSlider();
-        slider.setMinimum(1);
-        slider.setBounds(10, 571, 207, 26);
-        screen.getContentPane().add(slider);
-        
+
+        Stop = new JButton("Stop");
+        Stop.setBounds(141, 572,73, 26);
+        screen.getContentPane().add(Stop);
+
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.LIGHT_GRAY);
         menuBar.setBounds(0, 0, 1319, 36);
         screen.getContentPane().add(menuBar);
-        
+
         mnSimulator = new JMenu("Simulator");
         mnSimulator.setBackground(Color.GRAY);
         mnSimulator.setForeground(Color.WHITE);
         menuBar.add(mnSimulator);
-        
-        mntmStop = new JMenuItem("Stop");
-        mntmStop.setForeground(Color.DARK_GRAY);
-        mntmStop.setBackground(Color.WHITE);
-        mnSimulator.add(mntmStop);
-        
+
+
         mntmSettings = new JMenuItem("Settings");
         mnSimulator.add(mntmSettings);
         mntmSettings.setForeground(Color.DARK_GRAY);
         mntmSettings.setBackground(Color.WHITE);
         
-        mntmSettings.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				settingsScreen.setVisible(true);		
-			}
-		});
+        JButton OneStep = new JButton("+1");
+        OneStep.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        OneStep.setBounds(144, 624, 73, 23);
+        screen.getContentPane().add(OneStep);
+        
+        JButton StepBack = new JButton("-1");
+        StepBack.setBounds(10, 624, 73, 23);
+        screen.getContentPane().add(StepBack);
+        
+        JButton Reset = new JButton("Reset");
+        Reset.setBounds(66, 681, 89, 23);
+        screen.getContentPane().add(Reset);
 
-        mntmStop.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				parkeerLogic.stop();
-			}
-		});
-        
-        Apply.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				parkeerLogic.run();
-			}
-		});
-        
+        mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
+        Stop.addActionListener(e -> parkeerLogic.stop());
+        Apply.addActionListener(e -> parkeerLogic.run());
+
         screen.pack();
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
@@ -208,7 +189,6 @@ public class Simulator {
         });
 
         t.start();
-
     }
 
     public ParkeerLogic getParkeerLogic() {

@@ -32,7 +32,7 @@ public class SettingsView extends AbstractView {
         setLayout(new GridLayout(0, 2));
         initializeFields();
         add(restartButton);
-        restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
+        restartButton.addActionListener(e -> handleRestart());
     }
 
     private void initializeFields() {
@@ -45,8 +45,8 @@ public class SettingsView extends AbstractView {
         });
     }
 
-    private HashMap<String, Integer> getSettingsMap() {
-        HashMap<String, Integer> results = new HashMap<String, Integer>();
+    private HashMap<String, Object> getSettingsMap() {
+        HashMap<String, Object> results = new HashMap<>();
         fields.forEach((setting, field) ->
                 results.put(setting, field.getValue()));
         System.out.println(results.toString());
