@@ -28,6 +28,8 @@ public class ParkeerLogic extends AbstractModel {
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
     private static final String RESERVED = "3";
+    
+    private int skipCount = 0;
 
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -238,8 +240,11 @@ public class ParkeerLogic extends AbstractModel {
     private void addArrivingCars(int numberOfCars, String type) {
         // Add the cars to the back of the queue.
         IntStream.range(0, numberOfCars).forEach(i -> {
-            if (queueTooLongFor(type) && fuckThatQueue())
-                return;
+            if (queueTooLongFor(type) && fuckThatQueue()) {
+                skipCount++;
+            	return;            	
+            }
+
             else
                 switch (type) {
                     case AD_HOC:
@@ -255,7 +260,15 @@ public class ParkeerLogic extends AbstractModel {
         });
     }
 
-    private void carLeavesSpot(Car car) {
+    public int getSkipCount() {
+		return skipCount;
+	}
+
+	public void setSkipCount(int skipCount) {
+		this.skipCount = skipCount;
+	}
+
+	private void carLeavesSpot(Car car) {
         removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
