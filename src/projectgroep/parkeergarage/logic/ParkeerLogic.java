@@ -28,8 +28,8 @@ public class ParkeerLogic extends AbstractModel {
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
     private static final String RESERVED = "3";
-    
-    private int skipCount = 0;
+
+    private List<Car> skippedCars = new ArrayList<>();
 
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -235,37 +235,35 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private void addArrivingCars(int numberOfCars, String type) {
-        // Add the cars to the back of the queue.
+
         IntStream.range(0, numberOfCars).forEach(i -> {
-            if (queueTooLongFor(type) && fuckThatQueue()) {
-                skipCount++;
-            	return;            	
+            Car newCar;
+            switch (type) {
+                case RESERVED:
+                    newCar = new ReservationCar(settings.defaultPrice + 2);
+                    break;
+                case PASS:
+                    newCar = new ParkingPassCar(0);
+                    break;
+                case AD_HOC:
+                default:
+                    newCar = new AdHocCar(settings.defaultPrice);
+                    break;
             }
 
+            if (queueTooLongFor(type) && fuckThatQueue())
+                skippedCars.add(newCar);
             else
-                switch (type) {
-                    case AD_HOC:
-                        entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                        break;
-                    case RESERVED:
-                        entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
-                        break;
-                    case PASS:
-                        entrancePassQueue.addCar(new ParkingPassCar(0));
-                        break;
-                }
+                entranceCarQueue.addCar(newCar);
         });
     }
 
     public int getSkipCount() {
-		return skipCount;
-	}
+        return skippedCars.size();
+    }
 
-	public void setSkipCount(int skipCount) {
-		this.skipCount = skipCount;
-	}
 
-	private void carLeavesSpot(Car car) {
+    private void carLeavesSpot(Car car) {
         removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
