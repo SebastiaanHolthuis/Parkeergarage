@@ -122,10 +122,6 @@ public class Simulator {
         mnSimulator.setForeground(Color.WHITE);
         menuBar.add(mnSimulator);
 
-        mntmStop = new JMenuItem("Stop");
-        mntmStop.setForeground(Color.DARK_GRAY);
-        mntmStop.setBackground(Color.WHITE);
-        mnSimulator.add(mntmStop);
 
         mntmSettings = new JMenuItem("Settings");
         mnSimulator.add(mntmSettings);
@@ -149,7 +145,7 @@ public class Simulator {
         screen.getContentPane().add(Reset);
 
         mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
-        mntmStop.addActionListener(e -> parkeerLogic.stop());
+        Stop.addActionListener(e -> parkeerLogic.stop());
         Apply.addActionListener(e -> parkeerLogic.run());
 
         screen.pack();
