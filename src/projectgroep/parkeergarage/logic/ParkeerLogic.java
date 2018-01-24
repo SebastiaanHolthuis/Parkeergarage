@@ -1,6 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
@@ -227,26 +228,20 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private void addArrivingCars(int numberOfCars, String type) {
-
-
         // Add the cars to the back of the queue.
-        switch (type) {
-            case AD_HOC:
-                for (int i = 0; i < numberOfCars; i++) {
+        IntStream.range(0, numberOfCars).forEach(i -> {
+            switch (type) {
+                case AD_HOC:
                     entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                }
-                break;
-            case RESERVED:
-                for (int i = 0; i < numberOfCars; i++) {
+                    break;
+                case RESERVED:
                     entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
-                }
-                break;
-            case PASS:
-                for (int i = 0; i < numberOfCars; i++) {
+                    break;
+                case PASS:
                     entrancePassQueue.addCar(new ParkingPassCar(0));
-                }
-                break;
-        }
+                    break;
+            }
+        });
     }
 
     private void carLeavesSpot(Car car) {
