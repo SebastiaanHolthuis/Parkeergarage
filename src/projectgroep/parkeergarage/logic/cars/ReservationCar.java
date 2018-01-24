@@ -4,7 +4,7 @@ import java.util.Random;
 import java.awt.*;
 
 public class ReservationCar extends Car {
-    public static final Color COLOR = Color.decode("#34D1BF");
+    public static final Color COLOR = Color.decode("#008000");
 
     public ReservationCar(double priceToPay) {
         super(priceToPay);
