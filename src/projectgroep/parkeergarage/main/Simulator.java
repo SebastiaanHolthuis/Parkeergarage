@@ -145,27 +145,9 @@ public class Simulator {
         mntmSettings.setForeground(Color.DARK_GRAY);
         mntmSettings.setBackground(Color.WHITE);
 
-        mntmSettings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                settingsScreen.setVisible(true);
-            }
-        });
-
-        mntmStop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parkeerLogic.stop();
-            }
-        });
-
-        Apply.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parkeerLogic.run();
-            }
-        });
+        mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
+        mntmStop.addActionListener(e -> parkeerLogic.stop());
+        Apply.addActionListener(e -> parkeerLogic.run());
 
         screen.pack();
         screen.setLocationRelativeTo(null);
