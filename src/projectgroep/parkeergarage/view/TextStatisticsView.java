@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 
 public class TextStatisticsView extends AbstractView {
 
+
 	private Dimension 			size;
 	private JTable table;
 	
@@ -35,7 +36,7 @@ public class TextStatisticsView extends AbstractView {
 		table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 5, 1);
 		table.getModel().setValueAt("€" + model.getTotalEarned(), 6, 1);
 		table.getModel().setValueAt(model.getSkipCount(), 7, 1);
-		//table.getModel().setValueAt(, 7, 1);
+		table.getModel().setValueAt("0", 7, 1);
 		repaint();
 	}
 	
@@ -72,4 +73,5 @@ public class TextStatisticsView extends AbstractView {
 		
 		add(table);
 	}
+
 }

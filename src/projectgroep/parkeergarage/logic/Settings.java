@@ -24,11 +24,11 @@ public class Settings implements Serializable {
     int numberOfResRows = 2;
     double defaultPrice = 4;
 
-    int weekDayArrivals = 100; // average number of arriving AdHoc cars per hour
-    int weekendArrivals = 200; // average number of arriving AdHoc cars per hour
+    int weekDayArrivals = 80; // average number of arriving AdHoc cars per hour
+    int weekendArrivals = 110; // average number of arriving AdHoc cars per hour
     int weekDayPassArrivals = 50; // average number of arriving Passholder cars per hour
-    int weekendPassArrivals = 5; // average number of arriving Passholder cars per hour
-    int weekDayResArrivals = 25; // average number of arriving Reserved cars per hour
+    int weekendPassArrivals = 25; // average number of arriving Passholder cars per hour
+    int weekDayResArrivals = 30; // average number of arriving Reserved cars per hour
     int weekendResArrivals = 10; // average number of arriving Reserved cars per hour
 
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
