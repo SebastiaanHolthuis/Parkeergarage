@@ -57,7 +57,8 @@ public class ParkeerLogic extends AbstractModel {
 
     public void run() {
         running = true;
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1000000; i++) {
+        	System.out.println(i);
             if (!running) return;
             tickSimulator();
         }
@@ -99,8 +100,10 @@ public class ParkeerLogic extends AbstractModel {
         while (day > 6) {
             day -= 7;
         }
-
+        
+//        System.out.println("Dag: " + day + " - Uur: " + hour + " - Minuut: " +minute);
     }
+    
 
     private void handleEntrance() {
         carsArriving();
