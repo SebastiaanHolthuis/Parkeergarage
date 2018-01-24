@@ -35,6 +35,7 @@ public class TextStatisticsView extends AbstractView {
 		table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 5, 1);
 		table.getModel().setValueAt("€" + model.getTotalEarned(), 6, 1);
 		table.getModel().setValueAt(model.getSkipCount(), 7, 1);
+		//table.getModel().setValueAt(, 7, 1);
 		repaint();
 	}
 	
@@ -46,12 +47,13 @@ public class TextStatisticsView extends AbstractView {
 			new Object[][] {
 				{"Beschikbare plaatsen", new Integer(0)},
 				{"Aantal auto's", new Integer(0)},
-				{"Aantal pashouder's", new Integer(0)},
-				{"Aantal reservatie's", new Integer(0)},
+				{"Aantal pashouders", new Integer(0)},
+				{"Aantal reservaties", new Integer(0)},
 				{"Auto's in queue", new Integer(0)},
 				{"Pashouders in queue", new Integer(0)},
-				{"Totaal verdient", new Integer(0)},
+				{"Totaal verdiend", new Integer(0)},
 				{"Skippende auto's", new Integer(0)},
+				//{"Tijd", new Integer(0)},
 			},
 			new String[] {
 				"Variabele", "Waarde"
