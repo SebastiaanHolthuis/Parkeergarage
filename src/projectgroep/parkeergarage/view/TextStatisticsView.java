@@ -36,7 +36,8 @@ public class TextStatisticsView extends AbstractView {
         table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 5, 1);
         table.getModel().setValueAt("€" + model.getTotalEarned(), 6, 1);
         table.getModel().setValueAt(model.getSkipCount(), 7, 1);
-        table.getModel().setValueAt(model.getDate(), 8, 1);
+        table.getModel().setValueAt("€" + model.getSkipCount() * 4, 8, 1);// price to pay ophalen.
+        table.getModel().setValueAt(model.getDate(), 9, 1);
         repaint();
     }
 
@@ -45,28 +46,28 @@ public class TextStatisticsView extends AbstractView {
         table.setEnabled(false);
         table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         table.setModel(new DefaultTableModel(
-                new Object[][]{
-                        {"Beschikbare plaatsen", new Integer(0)},
-                        {"Aantal auto's", new Integer(0)},
-                        {"Aantal pashouders", new Integer(0)},
-                        {"Aantal reservaties", new Integer(0)},
-                        {"Auto's in queue", new Integer(0)},
-                        {"Pashouders in queue", new Integer(0)},
-                        {"Totaal verdiend", new Integer(0)},
-                        {"Skippende auto's", new Integer(0)},
-                        {"Tijd", new Integer(0)},
-                },
-                new String[]{
-                        "Variabele", "Waarde"
-                }
+        	new Object[][] {
+        		{"Beschikbare plaatsen", new Integer(0)},
+        		{"Aantal auto's", new Integer(0)},
+        		{"Aantal pashouders", new Integer(0)},
+        		{"Aantal reservaties", new Integer(0)},
+        		{"Auto's in queue", new Integer(0)},
+        		{"Pashouders in queue", new Integer(0)},
+        		{"Totaal verdiend", new Integer(0)},
+        		{"Skippende auto's", new Integer(0)},
+        		{"Misgelopen omzet", new Integer(0)},
+        		{"Tijd", new Integer(0)},
+        	},
+        	new String[] {
+        		"Variabele", "Waarde"
+        	}
         ) {
-            boolean[] columnEditables = new boolean[]{
-                    true, false
-            };
-
-            public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
-            }
+        	boolean[] columnEditables = new boolean[] {
+        		true, false
+        	};
+        	public boolean isCellEditable(int row, int column) {
+        		return columnEditables[column];
+        	}
         });
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(125);
