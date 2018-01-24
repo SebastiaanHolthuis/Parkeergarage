@@ -1,6 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
@@ -22,18 +23,20 @@ public class ParkeerLogic extends AbstractModel {
     private int tickPause = 100;
     private boolean running;
 
+    private double totalEarned = 0;
+
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
     private static final String RESERVED = "3";
 
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
-    
-    public CarQueue getEntrancePassQueue() {
-		return entrancePassQueue;
-	}
 
-	private CarQueue paymentCarQueue;
+    public CarQueue getEntrancePassQueue() {
+        return entrancePassQueue;
+    }
+
+    private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
@@ -57,9 +60,9 @@ public class ParkeerLogic extends AbstractModel {
             tickSimulator();
         }
     }
-    
+
     public void start() {
-    	run();
+        run();
     }
 
     public void stop() {
@@ -138,14 +141,14 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public CarQueue getEntranceCarQueue() {
-		return entranceCarQueue;
-	}
+        return entranceCarQueue;
+    }
 
-	public void setEntranceCarQueue(CarQueue entranceCarQueue) {
-		this.entranceCarQueue = entranceCarQueue;
-	}
+    public void setEntranceCarQueue(CarQueue entranceCarQueue) {
+        this.entranceCarQueue = entranceCarQueue;
+    }
 
-	private void carsReadyToLeave() {
+    private void carsReadyToLeave() {
         // Add leaving cars to the payment queue.
         Car car = getFirstLeavingCar();
         while (car != null) {
@@ -165,6 +168,7 @@ public class ParkeerLogic extends AbstractModel {
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
             // TODO Handle payment.
+            totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
@@ -192,7 +196,11 @@ public class ParkeerLogic extends AbstractModel {
     public Stream<Car> getParkingPassCars() {
         return getAllCars().filter((c) -> (c instanceof ParkingPassCar));
     }
-    
+
+    public Stream<Car> getReservationCars() {
+        return getAllCars().filter((c) -> (c instanceof ReservationCar));
+    }
+
     public Stream<Car> getAdHocCars() {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
@@ -212,25 +220,28 @@ public class ParkeerLogic extends AbstractModel {
         return (int) Math.round(numberOfCarsPerHour / 60);
     }
 
+    private boolean queueTooLongFor(Car car) {
+        if (car instanceof ParkingPassCar)
+            return entrancePassQueue.carsInQueue() >= settings.maxQueue;
+        else
+            return entranceCarQueue.carsInQueue() >= settings.maxQueue;
+    }
+
     private void addArrivingCars(int numberOfCars, String type) {
         // Add the cars to the back of the queue.
-        switch (type) {
-            case AD_HOC:
-                for (int i = 0; i < numberOfCars; i++) {
+        IntStream.range(0, numberOfCars).forEach(i -> {
+            switch (type) {
+                case AD_HOC:
                     entranceCarQueue.addCar(new AdHocCar(settings.defaultPrice));
-                }
-                break;
-            case RESERVED:
-                for (int i = 0; i < numberOfCars; i++) {
+                    break;
+                case RESERVED:
                     entranceCarQueue.addCar(new ReservationCar(settings.defaultPrice + 2));
-                }
-                break;
-            case PASS:
-                for (int i = 0; i < numberOfCars; i++) {
+                    break;
+                case PASS:
                     entrancePassQueue.addCar(new ParkingPassCar(0));
-                }
-                break;
-        }
+                    break;
+            }
+        });
     }
 
     private void carLeavesSpot(Car car) {
@@ -321,8 +332,8 @@ public class ParkeerLogic extends AbstractModel {
                 }
             }
         }
-    
-    	return null;
+
+        return null;
     }
 
     public Car getFirstLeavingCar() {
@@ -356,6 +367,14 @@ public class ParkeerLogic extends AbstractModel {
 
     public void setLocationLogic(LocationLogic locationLogic) {
         this.locationLogic = locationLogic;
+    }
+
+    public double getTotalEarned() {
+        return totalEarned;
+    }
+
+    public void setTotalEarned(double totalEarned) {
+        this.totalEarned = totalEarned;
     }
 }
 

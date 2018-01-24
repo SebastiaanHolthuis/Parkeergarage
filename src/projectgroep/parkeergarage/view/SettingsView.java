@@ -22,7 +22,7 @@ import projectgroep.parkeergarage.runner.SimulatorRunner;
 
 
 public class SettingsView extends AbstractView {
-    private HashMap<String, JTextField> fields = new HashMap<String, JTextField>();
+    private HashMap<String, TypedTextField> fields = new HashMap<>();
     private JButton restartButton = new JButton("Restart");
     Simulator sim;
 
@@ -32,12 +32,12 @@ public class SettingsView extends AbstractView {
         setLayout(new GridLayout(0, 2));
         initializeFields();
         add(restartButton);
-        restartButton.addActionListener(e -> handleRestart()); // TODO: naar contr
+        restartButton.addActionListener(e -> handleRestart());
     }
 
     private void initializeFields() {
         (sim.getParkeerLogic().settings).asMap().forEach((setting, value) -> {
-            JTextField field = new JTextField(value.toString());
+            TypedTextField field = new TypedTextField(value);
             JLabel label = new JLabel(setting);
             add(label);
             add(field);
@@ -45,10 +45,10 @@ public class SettingsView extends AbstractView {
         });
     }
 
-    private HashMap<String, Integer> getSettingsMap() {
-        HashMap<String, Integer> results = new HashMap<String, Integer>();
+    private HashMap<String, Object> getSettingsMap() {
+        HashMap<String, Object> results = new HashMap<>();
         fields.forEach((setting, field) ->
-                results.put(setting, Integer.parseInt(field.getText())));
+                results.put(setting, field.getValue()));
         System.out.println(results.toString());
         return results;
     }

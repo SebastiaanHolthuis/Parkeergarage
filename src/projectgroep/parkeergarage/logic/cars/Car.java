@@ -10,13 +10,15 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
-    private int priceToPay;
-    
+    private double priceToPay;
+
     /**
      * Constructor for objects of class Car
+     *
+     * @param priceToPay
      */
-    public Car(int priceToPay) {
-    	this.priceToPay = priceToPay;
+    public Car(double priceToPay) {
+        this.priceToPay = priceToPay;
     }
 
     public Location getLocation() {
@@ -34,7 +36,7 @@ public abstract class Car {
     public void setMinutesLeft(int minutesLeft) {
         this.minutesLeft = minutesLeft;
     }
-    
+
     public boolean getIsPaying() {
         return isPaying;
     }
@@ -54,14 +56,14 @@ public abstract class Car {
     public void tick() {
         minutesLeft--;
     }
-    
+
     public abstract Color getColor();
 
-	public int getPriceToPay() {
-		return priceToPay;
-	}
+    public double getPriceToPay() {
+        return priceToPay;
+    }
 
-	public void setPriceToPay(int priceToPay) {
-		this.priceToPay = priceToPay;
-	}
+    public void setPriceToPay(double priceToPay) {
+        this.priceToPay = priceToPay;
+    }
 }
