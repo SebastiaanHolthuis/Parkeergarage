@@ -15,6 +15,7 @@ import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+import projectgroep.parkeergarage.controller.ButtonController;
 
 import javax.swing.GroupLayout.Alignment;
 
@@ -31,9 +32,6 @@ public class Simulator {
 
     private Container contentPane;
     private Container settingsContentPane;
-    private JButton Apply;
-    private JButton Stop;
-    private JSlider slider;
     private JPanel panel;
     private JMenuItem mntmSettings;
     private JMenu mnSimulator;
@@ -104,14 +102,7 @@ public class Simulator {
         textStatisticsView.updateView();
         contentPane.add(carParkView);
 
-        Apply = new JButton("Start");
-        Apply.setBounds(10, 574, 73, 23);
-        screen.getContentPane().add(Apply);
-
-        Stop = new JButton("Stop");
-        Stop.setBounds(141, 572,73, 26);
-        screen.getContentPane().add(Stop);
-
+      
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.LIGHT_GRAY);
         menuBar.setBounds(0, 0, 1319, 36);
@@ -128,25 +119,10 @@ public class Simulator {
         mntmSettings.setForeground(Color.DARK_GRAY);
         mntmSettings.setBackground(Color.WHITE);
         
-        JButton OneStep = new JButton("+1");
-        OneStep.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        OneStep.setBounds(144, 624, 73, 23);
-        screen.getContentPane().add(OneStep);
-        
-        JButton StepBack = new JButton("-1");
-        StepBack.setBounds(10, 624, 73, 23);
-        screen.getContentPane().add(StepBack);
-        
-        JButton Reset = new JButton("Reset");
-        Reset.setBounds(66, 681, 89, 23);
-        screen.getContentPane().add(Reset);
-
+     
+       
         mntmSettings.addActionListener(e -> settingsScreen.setVisible(true));
-        Stop.addActionListener(e -> parkeerLogic.stop());
-        Apply.addActionListener(e -> parkeerLogic.run());
+      
      
 
         screen.pack();
