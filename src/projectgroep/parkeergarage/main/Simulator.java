@@ -32,6 +32,7 @@ public class Simulator {
     private Container contentPane;
     private Container settingsContentPane;
     private JButton Apply;
+    private JButton Stop;
     private JSlider slider;
     private JPanel panel;
     private JMenuItem mntmSettings;
@@ -104,13 +105,12 @@ public class Simulator {
         contentPane.add(carParkView);
 
         Apply = new JButton("Apply");
-        Apply.setBounds(10, 608, 207, 23);
+        Apply.setBounds(10, 574, 207, 23);
         screen.getContentPane().add(Apply);
 
-        slider = new JSlider();
-        slider.setMinimum(1);
-        slider.setBounds(10, 571, 207, 26);
-        screen.getContentPane().add(slider);
+        Stop = new JButton("Stop");
+        Stop.setBounds(10, 608,207, 26);
+        screen.getContentPane().add(Stop);
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.LIGHT_GRAY);
