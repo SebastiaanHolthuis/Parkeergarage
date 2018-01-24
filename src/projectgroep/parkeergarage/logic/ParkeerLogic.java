@@ -227,7 +227,7 @@ public class ParkeerLogic extends AbstractModel {
             return entranceCarQueue.carsInQueue() >= settings.maxQueue;
     }
 
-    private boolean dontFeelLikeWaiting() {
+    private boolean fuckThatQueue() {
         boolean result = (new Random()).nextDouble() < settings.skipChance;
         return result;
     }
@@ -235,7 +235,7 @@ public class ParkeerLogic extends AbstractModel {
     private void addArrivingCars(int numberOfCars, String type) {
         // Add the cars to the back of the queue.
         IntStream.range(0, numberOfCars).forEach(i -> {
-            if (queueTooLongFor(type) && dontFeelLikeWaiting())
+            if (queueTooLongFor(type) && fuckThatQueue())
                 return;
             else
                 switch (type) {
