@@ -17,8 +17,14 @@ public class ReservationLogic {
 	
 	public void addReservation(Car car, Location location) {
 		if (!reservations.containsKey(car)) {
+			int[] time = new int[3];
+			time[0] = model.getHour();
+			time[1] = model.getMinute();
+			
+			System.out.println(time);
 			reservations.put(car, location);
 			location.reserve(car);
+			car.setEntranceTime(time);
 		}
 	}
 	
@@ -39,4 +45,21 @@ public class ReservationLogic {
 		return toReturn;
 	}
 	
+	public ArrayList<Car> getReservationCars() {
+		ArrayList<Car> toReturn = new ArrayList<Car>();
+		
+		for (Car car : reservations.keySet()) {
+			toReturn.add(car);
+		}
+		
+		return toReturn;
+	}
+
+	public HashMap<Car, Location> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(HashMap<Car, Location> reservations) {
+		this.reservations = reservations;
+	}
 }

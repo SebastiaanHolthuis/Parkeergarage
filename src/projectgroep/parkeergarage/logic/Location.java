@@ -22,6 +22,8 @@ public class Location {
         this.row = row;
         this.place = place;
         this.taken = false;
+        this.forReservation = false;
+        this.forParkingPass = false;
     }
 
     /**
@@ -110,6 +112,7 @@ public class Location {
 		if (!isForReservation()) {
 			setForReservation(true);
 			setReservationCar(car);
+			System.out.println("gereserveerd");
 		}
 	}
 	

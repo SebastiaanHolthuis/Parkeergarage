@@ -105,25 +105,54 @@ public class ParkeerLogic extends AbstractModel {
        
     }
     
-
     public String translateDay(int day) {
-    	
-	    	switch(day) {
-	    		case 0: return "Monday";
-	    		case 1: return "Tuesday";
-	    		case 2: return "Wednesday";
-	    		case 3: return "Thursday";
-	    		case 4: return "Friday";
-	    		case 5: return "Saturday";
-	    		case 6: return "Sunday";
-	    		default: return "";
-	    	}
-    
+
+        switch (day) {
+            case 0:
+                return "Monday";
+            case 1:
+                return "Tuesday";
+            case 2:
+                return "Wednesday";
+            case 3:
+                return "Thursday";
+            case 4:
+                return "Friday";
+            case 5:
+                return "Saturday";
+            case 6:
+                return "Sunday";
+            default:
+                return "";
+        }
+
     }
-    
+
     public String translateTime(int hour, int minute) {
-    		
-    		return hour + ":" + minute;
+
+        return hour + ":" + minute;
+    }    
+    
+    public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
+
+	public int getMinute() {
+		return minute;
+	}
+
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+    public String getDate() {
+        String result = (translateDay(day % 7) + " " + day + " " + translateTime(hour, minute));
+        System.out.println(result);
+        return result;
     }
     
     

@@ -8,6 +8,7 @@ import java.awt.Image;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
+import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class CarParkView extends AbstractView {
 
@@ -49,7 +50,7 @@ public class CarParkView extends AbstractView {
                     Location location = new Location(floor, row, place);
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
-
+                    
                     if (car == null && floor == 0 && row < 2) {
                         color = Color.decode("#ADDAF7"); // Blue
                     } else if (car == null) {
@@ -60,15 +61,7 @@ public class CarParkView extends AbstractView {
 
                     drawPlace(graphics, location, color);
 
-                    if (!model.getLocationLogic().existsInMap(location)) {
-                        if (floor == 0 && row < 2) {
-                            model.getLocationLogic().addLocation(location, "2");
-                            location.setForParkingPass(true);
-                        } else {
-                            model.getLocationLogic().addLocation(location, "1");
-                            location.setForParkingPass(false);
-                        }
-                    }
+                  
                 }
             }
         }
