@@ -57,6 +57,7 @@ public class PieChartView extends AbstractView {
 		
 		// Cirkel
 		g.setColor(Color.LIGHT_GRAY);
+		//fillArc(int x(12), int y(10), int width(180), int height(180), int startAngle(0), int arcAngle)
 		g.fillArc(12, 10, 180, 180, 0, (int) model.getAllCars().count() + model.getNumberOfOpenSpots());
 		
 		// Parking pass

@@ -21,7 +21,7 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 0;
+    private int tickPause = 1;
     private boolean running;
 
     private double totalEarned = 0;
@@ -102,8 +102,7 @@ public class ParkeerLogic extends AbstractModel {
             day -= 7;
             week++;
         }
-        
-//        System.out.println("Dag: " + day + " - Uur: " + hour + " - Minuut: " +minute);
+       
     }
     
 
