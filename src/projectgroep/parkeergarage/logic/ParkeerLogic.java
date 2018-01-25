@@ -21,8 +21,10 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 1;
+    private int tickPause = 100;
     private boolean running;
+    private int tickfor = 10;
+    private int tickback = -10;
 
     private double totalEarned = 0;
 
@@ -43,7 +45,9 @@ public class ParkeerLogic extends AbstractModel {
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
-
+    
+    public HashMap<String, Object> history = new HashMap<String, Object>();
+    
     public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -73,8 +77,26 @@ public class ParkeerLogic extends AbstractModel {
         running = false;
     }
 
-    private void tickSimulator() {
-        advanceTime();
+    public void CreateHistory() {
+    	history.clear();
+    	history.put("entranceCarQueue", entranceCarQueue);
+    	history.put("entrancePassQueue", entrancePassQueue);
+    	history.put("paymentCarQueue", paymentCarQueue);
+    	history.put("exitCarQueue", exitCarQueue);
+    	history.put("numberOfOpenSpots", numberOfOpenSpots);
+    	history.put("locationLogic", locationLogic);
+    	history.put("skippedCars", skippedCars);
+    	history.put("totalEarned", totalEarned);
+    	history.put("cars", cars);
+    	history.put("dateTime", new int[week][day][hour][minute]);
+    	entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
+ 		System.out.println(entranceCarQueue.toString());
+    	
+    }
+    public void tickSimulator() {
+
+        CreateHistory();
+    	advanceTime();
         handleExit();
         updateViews();
 
@@ -449,5 +471,6 @@ public class ParkeerLogic extends AbstractModel {
     public void setTotalEarned(double totalEarned) {
         this.totalEarned = totalEarned;
     }
+   
 }
 

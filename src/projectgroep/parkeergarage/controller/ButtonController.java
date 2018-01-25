@@ -17,6 +17,8 @@ public class ButtonController extends AbstractController {
      JButton Reset = new JButton("Reset");
      ParkeerLogic parkeerLogic;
      Simulator sim;
+     ParkeerLogic tickfor;
+     ParkeerLogic tickback;
      
 	public ButtonController(Simulator simulator, ParkeerLogic parkeerLogic) {
 		this.parkeerLogic = parkeerLogic;
@@ -31,9 +33,11 @@ public class ButtonController extends AbstractController {
 
 	     OneStep.setBounds(144, 624, 73, 23);
 	     simulator.getScreen().getContentPane().add(OneStep);
+	     OneStep.addActionListener(this);
 	    
 	     StepBack.setBounds(10, 624, 73, 23);
 	     simulator.getScreen().getContentPane().add(StepBack);
+	     StepBack.addActionListener(this);
 	     
 	     Reset.setBounds(66, 681, 89, 23);
 	     simulator.getScreen().getContentPane().add(Reset);
@@ -50,6 +54,11 @@ public class ButtonController extends AbstractController {
 		if (e.getSource() == Apply) {
 			parkeerLogic.start();
 		}
-
+		if (e.getSource() == OneStep) {
+			parkeerLogic.tickSimulator();
+		}
+		if (e.getSource() == StepBack) {
+			parkeerLogic.tickSimulator();
+		}
 	}
 }
