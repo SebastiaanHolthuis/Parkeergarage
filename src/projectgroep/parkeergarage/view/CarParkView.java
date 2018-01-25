@@ -51,14 +51,18 @@ public class CarParkView extends AbstractView {
                     Car car = model.getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
                     
-                    if (car == null && floor == 0 && row < 2) {
-                        color = Color.decode("#ADDAF7"); // Blue
-                    } else if (car == null) {
-                        color = Color.decode("#F0839E"); // Magenta
+                    if (!location.isForReservation()) {
+	                    if (car == null && floor == 0 && row < 2) {
+	                        color = Color.decode("#ADDAF7"); // Blue
+	                    } else if (car == null) {
+	                        color = Color.decode("#F0839E"); // Magenta
+	                    } else {
+	                        color = car.getColor();
+	                    }
                     } else {
-                        color = car.getColor();
+                    	color = Color.WHITE;
                     }
-
+                    
                     drawPlace(graphics, location, color);
 
                   
