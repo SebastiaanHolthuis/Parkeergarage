@@ -48,7 +48,7 @@ public class ButtonController extends AbstractController {
 			sim.restart(parkeerLogic.settings);
 		}
 		if (e.getSource() == Apply) {
-			parkeerLogic.start();
+			parkeerLogic.run();
 		}
 
 	}

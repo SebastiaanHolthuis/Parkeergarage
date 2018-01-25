@@ -1,6 +1,8 @@
 package projectgroep.parkeergarage.logic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -21,7 +23,7 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 1;
+    private int tickPause = 100;
     private boolean running;
 
     private double totalEarned = 0;
@@ -43,7 +45,8 @@ public class ParkeerLogic extends AbstractModel {
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
-
+    private ReservationLogic reservationLogic;
+    
     public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -53,7 +56,9 @@ public class ParkeerLogic extends AbstractModel {
         this.settings = settings;
         this.numberOfOpenSpots = settings.numberOfFloors * settings.numberOfRows * settings.numberOfPlaces;
         this.cars = new Car[settings.numberOfFloors][settings.numberOfRows][settings.numberOfPlaces];
+        
         this.locationLogic = new LocationLogic(this);
+        this.reservationLogic = new ReservationLogic(this);
     }
 
     public void run() {
@@ -63,10 +68,6 @@ public class ParkeerLogic extends AbstractModel {
             if (!running) return;
             tickSimulator();
         }
-    }
-
-    public void start() {
-        run();
     }
 
     public void stop() {
@@ -129,7 +130,6 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public String translateTime(int hour, int minute) {
-
         return hour + ":" + minute;
     }    
     
@@ -289,7 +289,6 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private void addArrivingCars(int numberOfCars, String type) {
-
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
             switch (type) {
@@ -305,10 +304,15 @@ public class ParkeerLogic extends AbstractModel {
                     break;
             }
 
-            if (queueTooLongFor(type) && fuckThatQueue())
+            if (queueTooLongFor(type) && fuckThatQueue()) {
                 skippedCars.add(newCar);
-            else
-                entranceCarQueue.addCar(newCar);
+            } else {
+                if (newCar instanceof ParkingPassCar) {
+                	entrancePassQueue.addCar(newCar);
+                } else {
+                	entranceCarQueue.addCar(newCar);
+                }
+            }
         });
     }
 
