@@ -527,13 +527,9 @@ public class ParkeerLogic extends AbstractModel {
 	            }
             }
         });
-        
-        int[] currentTime = new int[2];
-    	currentTime[0] = getHour();
-    	currentTime[1] = getMinute();
     	
     	for (Car car : reservationLogic.getReservationCars()) {
-	    	if (car.getEntranceTime()[0] == currentTime[0] && car.getEntranceTime()[1] == currentTime[1]) {    	
+	    	if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {    	
 	    		entranceCarQueue.addCar(car);
 	    	}
     	}        
