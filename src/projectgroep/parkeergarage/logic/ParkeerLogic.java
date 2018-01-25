@@ -108,6 +108,7 @@ public class ParkeerLogic extends AbstractModel {
             e.printStackTrace();
         }
 
+        handleReservations();
         handleEntrance();
     }
 
@@ -290,7 +291,6 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
 
-
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
@@ -317,6 +317,18 @@ public class ParkeerLogic extends AbstractModel {
         return result;
     }
 
+    private void handleReservations() {
+    	Random random = new Random();
+    	int chance = random.nextInt(100);
+    	
+    	if (chance < 10) {
+    		ReservationCar car = new ReservationCar(6);
+    		Location location = getFirstFreeLocation(car);
+    		reservationLogic.addReservation(car, location);    		
+    	}
+    	
+    }
+    
     private void addArrivingCars(int numberOfCars, String type) {
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
@@ -332,15 +344,27 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new AdHocCar(settings.defaultPrice);
                     break;
             }
-
-            if (queueTooLongFor(type) && fuckThatQueue()) {
-                skippedCars.add(newCar);
+            
+            if (!(newCar instanceof ReservationCar)) {
+	            if (queueTooLongFor(type) && fuckThatQueue()) {
+	                skippedCars.add(newCar);
+	            } else {
+	                if (newCar instanceof ParkingPassCar) {
+	                	entrancePassQueue.addCar(newCar);
+	                } else {
+	                	entranceCarQueue.addCar(newCar);
+	                }
+	            }
             } else {
-                if (newCar instanceof ParkingPassCar) {
-                	entrancePassQueue.addCar(newCar);
-                } else {
-                	entranceCarQueue.addCar(newCar);
-                }
+            	int[] currentTime = new int[2];
+            	currentTime[0] = getHour();
+            	currentTime[1] = getMinute();
+            	
+            	for (Car car : reservationLogic.getReservationCars()) {
+        	    	if (car.getEntranceTime()[0] == currentTime[0] && car.getEntranceTime()[1] == currentTime[1]) {
+        	    		entranceCarQueue.addCar(car);
+        	    	}
+            	}            	
             }
         });
     }
