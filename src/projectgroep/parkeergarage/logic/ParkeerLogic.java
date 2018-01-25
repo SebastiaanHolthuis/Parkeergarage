@@ -83,7 +83,7 @@ public class ParkeerLogic extends AbstractModel {
         updateViews();
         
         try {
-            Thread.sleep(tickPause);
+            Thread.sleep(settings.tickPause);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -134,31 +134,38 @@ public class ParkeerLogic extends AbstractModel {
             day -= 7;
             week++;
         }
-        
+
 //        System.out.println("Dag: " + day + " - Uur: " + hour + " - Minuut: " +minute);
     }
-    
+
 
     public String translateDay(int day) {
-    	
-	    	switch(day) {
-	    		case 0: return "Monday";
-	    		case 1: return "Tuesday";
-	    		case 2: return "Wednesday";
-	    		case 3: return "Thursday";
-	    		case 4: return "Friday";
-	    		case 5: return "Saturday";
-	    		case 6: return "Sunday";
-	    		default: return "";
-	    	}
-    
+
+        switch (day) {
+            case 0:
+                return "Monday";
+            case 1:
+                return "Tuesday";
+            case 2:
+                return "Wednesday";
+            case 3:
+                return "Thursday";
+            case 4:
+                return "Friday";
+            case 5:
+                return "Saturday";
+            case 6:
+                return "Sunday";
+            default:
+                return "";
+        }
+
     }
-    
+
     public String translateTime(int hour, int minute) {
-    		
-    		return hour + ":" + minute;
-    }
-    
+
+        return hour + ":" + minute;
+    }    
     
     public int getHour() {
 		return hour;
@@ -176,7 +183,14 @@ public class ParkeerLogic extends AbstractModel {
 		this.minute = minute;
 	}
 
-	private void handleEntrance() {
+    public String getDate() {
+        String result = (translateDay(day % 7) + " " + day + " " + translateTime(hour, minute));
+        System.out.println(result);
+        return result;
+    }
+
+
+    private void handleEntrance() {
         carsArriving();
         carsEntering(entrancePassQueue);
         carsEntering(entranceCarQueue);

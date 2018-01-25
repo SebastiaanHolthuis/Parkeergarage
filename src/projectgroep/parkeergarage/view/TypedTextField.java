@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 public class TypedTextField extends JTextField {
     Object initialValue;
 
-    TypedTextField(Object value) {
+    public TypedTextField(Object value) {
         super(value.toString());
         initialValue = value;
     }

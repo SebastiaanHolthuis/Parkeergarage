@@ -21,6 +21,7 @@ import projectgroep.parkeergarage.runner.SimulatorRunner;
  */
 
 
+
 public class SettingsView extends AbstractView {
     private HashMap<String, TypedTextField> fields = new HashMap<>();
     private JButton restartButton = new JButton("Restart");
