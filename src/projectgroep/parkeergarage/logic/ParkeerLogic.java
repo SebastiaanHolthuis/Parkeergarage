@@ -23,7 +23,7 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 100;
+    private int tickPause = 50;
     private boolean running;
 
     private double totalEarned = 0;
@@ -149,8 +149,14 @@ public class ParkeerLogic extends AbstractModel {
 		this.minute = minute;
 	}
 
-    public String getDate() {
-        String result = (translateDay(day % 7) + " " + day + " " + translateTime(hour, minute));
+    public String getDay() {
+        String result = (translateDay(day % 7));
+        System.out.println(result);
+        return result;
+    }
+    
+    public String getTime() {
+    	String result = (translateTime(hour, minute));
         System.out.println(result);
         return result;
     }
