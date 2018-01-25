@@ -11,7 +11,8 @@ public abstract class Car {
     private boolean isPaying;
     private boolean hasToPay;
     private double priceToPay;
-
+    private int[] entranceTime;
+    
     /**
      * Constructor for objects of class Car
      *
@@ -66,4 +67,12 @@ public abstract class Car {
     public void setPriceToPay(double priceToPay) {
         this.priceToPay = priceToPay;
     }
+
+	public int[] getEntranceTime() {
+		return entranceTime;
+	}
+
+	public void setEntranceTime(int[] entranceTime) {
+		this.entranceTime = entranceTime;
+	}
 }
