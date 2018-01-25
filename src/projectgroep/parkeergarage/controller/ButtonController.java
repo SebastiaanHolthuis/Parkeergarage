@@ -12,7 +12,7 @@ public class ButtonController extends AbstractController {
 	 JButton Apply = new JButton("Start");
 	 JButton OneStep = new JButton("+1");
      JButton Stop = new JButton("Stop");     
-     JButton StepBack = new JButton("-1");
+     JButton StepBack = new JButton("Vorige stap");
      
      JButton Reset = new JButton("Reset");
      ParkeerLogic parkeerLogic;
@@ -58,7 +58,7 @@ public class ButtonController extends AbstractController {
 			parkeerLogic.tickSimulator();
 		}
 		if (e.getSource() == StepBack) {
-			parkeerLogic.tickSimulator();
+			parkeerLogic.GetHistory();
 		}
 	}
 }

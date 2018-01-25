@@ -90,14 +90,35 @@ public class ParkeerLogic extends AbstractModel {
     	history.put("skippedCars", skippedCars);
     	history.put("totalEarned", totalEarned);
     	history.put("cars", cars);
-    	history.put("dateTime", new int[week][day][hour][minute]);
-    	entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
+    	history.put("week", week);
+    	history.put("day", day);
+    	history.put("hour", hour);
+    	history.put("minute", minute);
+    	history.put("reservationLogic", reservationLogic);
  		System.out.println(entranceCarQueue.toString());
     	
     }
+    public void GetHistory() {
+    	entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
+    	entrancePassQueue = (CarQueue) history.get("entrancePassQueue");
+    	paymentCarQueue = (CarQueue) history.get("paymentCarQueue");
+    	exitCarQueue = (CarQueue) history.get("exitCarQueue");
+    	numberOfOpenSpots = (int) history.get("numberOfOpenSpots");
+    	locationLogic = (LocationLogic) history.get("locationLogic");
+    	skippedCars = (List) history.get("skippedCars");
+    	totalEarned = (double) history.get("totalEarned");
+    	cars =  (Car[][][]) history.get("cars");
+    	week = (int) history.get("week");
+    	day = (int) history.get("day");
+    	hour = (int) history.get("hour");
+    	minute = (int) history.get("minute");
+    	reservationLogic = (ReservationLogic) history.get("reservationLogic");
+    	updateViews();
+    			
+    } 
     public void tickSimulator() {
 
-        CreateHistory();
+        
     	advanceTime();
         handleExit();
         updateViews();
@@ -109,6 +130,7 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
+        CreateHistory();
     }
 
     private void advanceTime() {
