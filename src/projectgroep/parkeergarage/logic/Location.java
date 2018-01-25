@@ -112,7 +112,6 @@ public class Location {
 		if (!isForReservation()) {
 			setForReservation(true);
 			setReservationCar(car);
-			System.out.println("gereserveerd");
 		}
 	}
 	

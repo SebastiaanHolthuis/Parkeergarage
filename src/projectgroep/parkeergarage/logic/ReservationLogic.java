@@ -19,9 +19,13 @@ public class ReservationLogic {
 		if (!reservations.containsKey(car)) {
 			int[] time = new int[3];
 			time[0] = model.getHour();
-			time[1] = model.getMinute();
+			time[1] = model.getMinute() + 15;
 			
-			System.out.println(time);
+			if (time[1] > 59) {
+				time[0] = model.getHour() + 1;
+				time[1] = 14;
+			}
+			
 			reservations.put(car, location);
 			location.reserve(car);
 			car.setEntranceTime(time);
