@@ -23,7 +23,7 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 50;
+    private int tickPause = 100;
     private boolean running;
 
     private double totalEarned = 0;
