@@ -9,24 +9,26 @@ import projectgroep.parkeergarage.main.Simulator;
 
 @SuppressWarnings("serial")
 public class ButtonController extends AbstractController {
-    JButton Play = new JButton("Play") {{
-        setBounds(10, 572, 73, 26);
-        addActionListener(e -> parkeerLogic.play());
-    }};
+    int width = 80;
 
     JButton OneStep = new JButton("+1") {{
-        setBounds(141, 572, 73, 26);
+        setBounds(141, 572, width, 26);
         addActionListener(e -> parkeerLogic.tickSimulator());
     }};
 
-    JButton Pause = new JButton("pause") {{
-        setBounds(144, 624, 73, 23);
-        addActionListener(e -> parkeerLogic.pause());
+    JButton StepBack = new JButton("-1") {{
+        setBounds(10, 572, width, 26);
+        addActionListener(e -> parkeerLogic.GetHistory());
     }};
 
-    JButton StepBack = new JButton("Vorige stap") {{
-        setBounds(10, 624, 73, 23);
-        addActionListener(e -> parkeerLogic.GetHistory());
+    JButton Play = new JButton("Play") {{
+        setBounds(10, 624, width, 23);
+        addActionListener(e -> parkeerLogic.play());
+    }};
+
+    JButton Pause = new JButton("Pause") {{
+        setBounds(144, 624, width, 23);
+        addActionListener(e -> parkeerLogic.pause());
     }};
 
     JButton Reset = new JButton("Reset") {{
