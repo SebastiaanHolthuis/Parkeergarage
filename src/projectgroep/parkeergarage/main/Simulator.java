@@ -42,11 +42,17 @@ public class Simulator {
         initializeFrame();
     }
 
-    private void createInstances(Settings settings) {
-        screen = new JFrame();
-        screen.getContentPane().setBackground(SystemColor.control);
-        settingsScreen = new JFrame();
+    void createInstances(Settings settings) {
+        screen = new JFrame() {{
+            setTitle("Parkeergarage simulator - ITV1C groep C");
+            setPreferredSize(new Dimension(1325, 800));
+            setResizable(false);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+            contentPane = getContentPane();
+            contentPane.setBackground(SystemColor.control);
+            contentPane.setLayout(null);
+        }};
 
         parkeerLogic = new ParkeerLogic(settings);
         buttonController = new ButtonController(this, parkeerLogic);
@@ -55,9 +61,26 @@ public class Simulator {
         initializePieChart();
         initializeStatistics();
         initializeSettings();
+        initializePanel();
+        initializeTabs();
+        initializeMenu();
+
+        initializeFrame();
 
         addViews();
     }
+
+    private void initializeFrame() {
+        addElementsToContentPane();
+
+        screen.pack();
+        screen.setLocationRelativeTo(null);
+        screen.setVisible(true);
+
+        carParkView.updateView();
+        pieChartView.updateView();
+    }
+
 
     void addViews() {
         parkeerLogic.addView(carParkView);
@@ -137,36 +160,13 @@ public class Simulator {
         contentPane.add(carParkView);
         contentPane.add(buttonController);
         contentPane.add(panel);
+// Menu bar voor nu gedeactiveerd
 //        contentPane.add(menuBar);
     }
 
-    private void initializeFrame() {
-        screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-        screen.setPreferredSize(new Dimension(1325, 800));
-        screen.setResizable(false);
-        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        contentPane = screen.getContentPane();
-        screen.getContentPane().setLayout(null);
-
-
-        initializePanel();
-        initializeTabs();
-        initializeMenu();
-
-        addElementsToContentPane();
-
-        screen.pack();
-        screen.setLocationRelativeTo(null);
-        screen.setVisible(true);
-
-        carParkView.updateView();
-        pieChartView.updateView();
-    }
 
     private void initializeSettings() {
         settingsView = new SettingsView(parkeerLogic, this);
-
     }
 
 
@@ -176,14 +176,12 @@ public class Simulator {
      */
     public void restart(Settings settings) {
         SettingsRepository.saveSettings(settings);
-        settingsScreen.dispose();
         screen.dispose();
         parkeerLogic.stop();
 
         Thread t = new Thread(() -> {
             createInstances(settings);
             initializeFrame();
-            initializeSettings();
             parkeerLogic.run();
         });
 
