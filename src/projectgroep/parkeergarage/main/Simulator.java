@@ -35,7 +35,12 @@ public class Simulator {
 
     private JTabbedPane tabbedPane;
 
-    private int yOffset = 10;
+    private int
+            yOffset = 10,
+            gap = 20,
+            panelWidth = 300,
+            carParkWidth = 865,
+            pieChartWidth = 207;
 
     public Simulator(Settings settings) {
         createInstances(settings);
@@ -45,7 +50,7 @@ public class Simulator {
     void createInstances(Settings settings) {
         screen = new JFrame() {{
             setTitle("Parkeergarage simulator - ITV1C groep C");
-            setPreferredSize(new Dimension(1325, 800));
+            setPreferredSize(new Dimension((gap * 3) + panelWidth + carParkWidth + pieChartWidth, 800));
             setResizable(false);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -70,7 +75,7 @@ public class Simulator {
         addViews();
     }
 
-    private void initializeFrame() {
+    void initializeFrame() {
         addElementsToContentPane();
 
         screen.pack();
@@ -93,7 +98,7 @@ public class Simulator {
         textStatisticsView = new TextStatisticsView(parkeerLogic) {{
             setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
             updateView();
-            setBounds(10, 11, 207, 276);
+            setBounds(10, 11, panelWidth, 276);
             setBorder(null);
             setLayout(new GridLayout(1, yOffset, 0, 0));
         }};
@@ -103,7 +108,7 @@ public class Simulator {
         carParkView = new CarParkView(parkeerLogic) {{
             setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
             setBackground(SystemColor.control);
-            setBounds(227, yOffset, 865, 501);
+            setBounds(panelWidth + gap, yOffset, carParkWidth, 501);
         }};
     }
 
@@ -111,7 +116,7 @@ public class Simulator {
         pieChartView = new PieChartView(parkeerLogic) {{
             setBackground(Color.WHITE);
             setBorder(new LineBorder(new Color(0, 0, 0)));
-            setBounds(1102, yOffset, 207, 501);
+            setBounds(panelWidth + carParkWidth + gap * 2, yOffset, pieChartWidth, 501);
         }};
     }
 
@@ -120,7 +125,7 @@ public class Simulator {
             addTab("Statistics", textStatisticsView);
             addTab("Settings", settingsView);
             setEnabled(true);
-            setBounds(0, 0, 207, 501);
+            setBounds(0, 0, panelWidth, 501);
         }};
 
         panel.add(tabbedPane);
@@ -150,7 +155,7 @@ public class Simulator {
 
     void initializePanel() {
         panel = new JPanel() {{
-            setBounds(10, yOffset, 207, 501);
+            setBounds(10, yOffset, panelWidth, 501);
             setLayout(null);
         }};
     }
@@ -160,8 +165,8 @@ public class Simulator {
         contentPane.add(carParkView);
         contentPane.add(buttonController);
         contentPane.add(panel);
-// Menu bar voor nu gedeactiveerd
-//        contentPane.add(menuBar);
+        // Menu bar voor nu gedeactiveerd
+        // contentPane.add(menuBar);
     }
 
 
