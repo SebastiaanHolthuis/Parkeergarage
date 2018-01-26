@@ -68,15 +68,21 @@ public class ParkeerLogic extends AbstractModel {
     public void run() {
         running = true;
 
-        for (int i = 0; i < 100000; i++) {
-            if (!running) return;
-            tickSimulator();
+        while (true) {
+            System.out.print("");
+            if (running)
+                tickSimulator();
         }
     }
 
     public void stop() {
         running = false;
     }
+
+    public void start() {
+        running = true;
+    }
+
 
     public void CreateHistory() {
         history.clear();

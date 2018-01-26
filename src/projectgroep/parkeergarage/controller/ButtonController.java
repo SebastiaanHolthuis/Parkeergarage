@@ -12,7 +12,7 @@ import projectgroep.parkeergarage.main.Simulator;
 public class ButtonController extends AbstractController {
     JButton Apply = new JButton("Start") {{
         setBounds(10, 572, 73, 26);
-        addActionListener(e -> parkeerLogic.run());
+        addActionListener(e -> parkeerLogic.start());
     }};
 
     JButton OneStep = new JButton("+1") {{
