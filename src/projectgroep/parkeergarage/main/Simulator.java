@@ -98,7 +98,7 @@ public class Simulator {
         textStatisticsView = new TextStatisticsView(parkeerLogic) {{
             setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
             updateView();
-            setBounds(10, 11, panelWidth, 276);
+            setBounds(gap, 11, panelWidth, 276);
             setBorder(null);
             setLayout(new GridLayout(1, yOffset, 0, 0));
         }};
