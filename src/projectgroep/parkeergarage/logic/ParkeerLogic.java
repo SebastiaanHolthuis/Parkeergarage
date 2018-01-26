@@ -46,6 +46,8 @@ public class ParkeerLogic extends AbstractModel {
 
     private LocationLogic locationLogic;
 
+    public int tickPause = 100;
+
     public HashMap<String, Object> history = new HashMap<String, Object>();
     private ReservationLogic reservationLogic;
 
@@ -131,7 +133,7 @@ public class ParkeerLogic extends AbstractModel {
         updateViews();
 
         try {
-            Thread.sleep(settings.tickPause);
+            Thread.sleep(tickPause);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

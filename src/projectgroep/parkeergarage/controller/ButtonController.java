@@ -36,9 +36,9 @@ public class ButtonController extends AbstractController {
         addActionListener(e -> sim.restart(parkeerLogic.settings));
     }};
 
-    JSlider TickPauseSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, parkeerLogic.settings.tickPause) {{
+    JSlider TickPauseSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1) {{
         setBounds(10, 681, 200, 23);
-        addChangeListener(e -> parkeerLogic.settings.tickPause = 100 - getValue());
+        addChangeListener(e -> parkeerLogic.tickPause = 100 - getValue());
         setPaintTicks(true);
         setPaintLabels(true);
     }};
@@ -59,5 +59,7 @@ public class ButtonController extends AbstractController {
         contentPane.add(StepBack);
         contentPane.add(Reset);
         contentPane.add(TickPauseSlider);
+
+        TickPauseSlider.setValue(100 - parkeerLogic.tickPause);
     }
 }
