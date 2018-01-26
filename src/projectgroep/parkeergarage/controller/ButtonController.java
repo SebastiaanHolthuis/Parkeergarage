@@ -11,12 +11,12 @@ import projectgroep.parkeergarage.main.Simulator;
 public class ButtonController extends AbstractController {
     int width = 80;
 
-    JButton OneStep = new JButton("+1") {{
+    JButton OneStep = new JButton("+10") {{
         setBounds(141, 572, width, 26);
-        addActionListener(e -> parkeerLogic.tickSimulator());
+        addActionListener(e -> parkeerLogic.tickMany(10));
     }};
 
-    JButton StepBack = new JButton("-1") {{
+    JButton StepBack = new JButton("-10") {{
         setBounds(10, 572, width, 26);
         addActionListener(e -> parkeerLogic.GetHistory());
     }};
@@ -39,8 +39,6 @@ public class ButtonController extends AbstractController {
 
     ParkeerLogic parkeerLogic;
     Simulator sim;
-    ParkeerLogic tickfor;
-    ParkeerLogic tickback;
 
     public ButtonController(Simulator simulator, ParkeerLogic parkeerLogic) {
         this.parkeerLogic = parkeerLogic;

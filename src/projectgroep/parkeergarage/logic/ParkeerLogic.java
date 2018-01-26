@@ -121,6 +121,12 @@ public class ParkeerLogic extends AbstractModel {
 
     }
 
+
+    public void tickMany(int i) {
+        IntStream.range(0, i).forEach(j -> tickSimulator());
+    }
+
+
     public void tickSimulator() {
         advanceTime();
         handleExit();
