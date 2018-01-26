@@ -27,6 +27,7 @@ public class Simulator {
 
     private Container contentPane;
     private Container settingsContentPane;
+
     private JPanel panel;
     private JMenuItem mntmSettings;
     private JMenu mnSimulator;
@@ -93,7 +94,6 @@ public class Simulator {
         tabbedPane = new JTabbedPane() {{
             addTab("Statistics", textStatisticsView);
             addTab("Settings", settingsView);
-
             setEnabled(true);
             setBounds(0, 0, 207, 549);
         }};
