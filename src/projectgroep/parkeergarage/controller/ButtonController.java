@@ -32,13 +32,13 @@ public class ButtonController extends AbstractController {
     }};
 
     JButton Reset = new JButton("Reset") {{
-        setBounds(66, 681, 89, 23);
+        setBounds(66, 725, 89, 23);
         addActionListener(e -> sim.restart(parkeerLogic.settings));
     }};
 
-    JSlider TickPauseSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 100) {{
-        setBounds(66, 725, 89, 23);
-        addChangeListener(e -> parkeerLogic.settings.tickPause = getValue());
+    JSlider TickPauseSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, parkeerLogic.settings.tickPause) {{
+        setBounds(10, 681, 200, 23);
+        addChangeListener(e -> parkeerLogic.settings.tickPause = 100 - getValue());
         setPaintTicks(true);
         setPaintLabels(true);
     }};
