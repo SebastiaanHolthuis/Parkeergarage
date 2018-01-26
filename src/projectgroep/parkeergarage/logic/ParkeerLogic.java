@@ -25,8 +25,6 @@ public class ParkeerLogic extends AbstractModel {
     private int week = 0;
 
     private boolean running;
-    private int tickfor = 10;
-    private int tickback = -10;
 
     private double totalEarned = 0;
 
