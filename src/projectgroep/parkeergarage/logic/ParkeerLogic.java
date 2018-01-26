@@ -75,11 +75,11 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
-    public void stop() {
+    public void pause() {
         running = false;
     }
 
-    public void start() {
+    public void play() {
         running = true;
     }
 

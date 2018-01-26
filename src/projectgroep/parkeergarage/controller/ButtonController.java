@@ -1,7 +1,6 @@
 package projectgroep.parkeergarage.controller;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -10,9 +9,9 @@ import projectgroep.parkeergarage.main.Simulator;
 
 @SuppressWarnings("serial")
 public class ButtonController extends AbstractController {
-    JButton Apply = new JButton("Start") {{
+    JButton Play = new JButton("Play") {{
         setBounds(10, 572, 73, 26);
-        addActionListener(e -> parkeerLogic.start());
+        addActionListener(e -> parkeerLogic.play());
     }};
 
     JButton OneStep = new JButton("+1") {{
@@ -20,9 +19,9 @@ public class ButtonController extends AbstractController {
         addActionListener(e -> parkeerLogic.tickSimulator());
     }};
 
-    JButton Stop = new JButton("Stop") {{
+    JButton Pause = new JButton("pause") {{
         setBounds(144, 624, 73, 23);
-        addActionListener(e -> parkeerLogic.stop());
+        addActionListener(e -> parkeerLogic.pause());
     }};
 
     JButton StepBack = new JButton("Vorige stap") {{
@@ -47,8 +46,8 @@ public class ButtonController extends AbstractController {
 
         Container contentPane = simulator.getScreen().getContentPane();
 
-        contentPane.add(Apply);
-        contentPane.add(Stop);
+        contentPane.add(Play);
+        contentPane.add(Pause);
         contentPane.add(OneStep);
         contentPane.add(StepBack);
         contentPane.add(Reset);

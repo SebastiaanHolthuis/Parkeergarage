@@ -182,7 +182,7 @@ public class Simulator {
     public void restart(Settings settings) {
         SettingsRepository.saveSettings(settings);
         screen.dispose();
-        parkeerLogic.stop();
+        parkeerLogic.pause();
 
         Thread t = new Thread(() -> {
             createInstances(settings);
