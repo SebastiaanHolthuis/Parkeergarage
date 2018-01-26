@@ -35,6 +35,8 @@ public class Simulator {
 
     private JTabbedPane tabbedPane;
 
+    private int yOffset = 10;
+
     public Simulator(Settings settings) {
         createInstances(settings);
         initializeFrame();
@@ -70,7 +72,7 @@ public class Simulator {
             updateView();
             setBounds(10, 11, 207, 276);
             setBorder(null);
-            setLayout(new GridLayout(1, 0, 0, 0));
+            setLayout(new GridLayout(1, yOffset, 0, 0));
         }};
     }
 
@@ -78,7 +80,7 @@ public class Simulator {
         carParkView = new CarParkView(parkeerLogic) {{
             setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
             setBackground(SystemColor.control);
-            setBounds(227, 59, 865, 501);
+            setBounds(227, yOffset, 865, 501);
         }};
     }
 
@@ -86,7 +88,7 @@ public class Simulator {
         pieChartView = new PieChartView(parkeerLogic) {{
             setBackground(Color.WHITE);
             setBorder(new LineBorder(new Color(0, 0, 0)));
-            setBounds(1102, 59, 207, 501);
+            setBounds(1102, yOffset, 207, 501);
         }};
     }
 
@@ -95,7 +97,7 @@ public class Simulator {
             addTab("Statistics", textStatisticsView);
             addTab("Settings", settingsView);
             setEnabled(true);
-            setBounds(0, 0, 207, 549);
+            setBounds(0, 0, 207, 501);
         }};
 
         panel.add(tabbedPane);
@@ -119,13 +121,23 @@ public class Simulator {
             addActionListener(e -> settingsScreen.setVisible(true));
         }};
 
-        screen.getContentPane().add(menuBar);
         mnSimulator.add(mntmSettings);
         menuBar.add(mnSimulator);
     }
 
     void initializePanel() {
+        panel = new JPanel() {{
+            setBounds(10, yOffset, 207, 501);
+            setLayout(null);
+        }};
+    }
 
+    void addElementsToContentPane() {
+        contentPane.add(pieChartView);
+        contentPane.add(carParkView);
+        contentPane.add(buttonController);
+        contentPane.add(panel);
+//        contentPane.add(menuBar);
     }
 
     private void initializeFrame() {
@@ -137,27 +149,12 @@ public class Simulator {
         contentPane = screen.getContentPane();
         screen.getContentPane().setLayout(null);
 
-        contentPane.add(pieChartView);
 
-
-        panel = new JPanel();
-        panel.setBounds(10, 59, 207, 501);
-        screen.getContentPane().add(panel);
-        panel.setLayout(null);
-//
-//        textStatisticsView = new TextStatisticsView(parkeerLogic);
-//        textStatisticsView.setBackground(SystemColor.control);
-//
-
+        initializePanel();
         initializeTabs();
-
-//        textStatisticsView.setBorder(null);
-//        parkeerLogic.addView(textStatisticsView);
-
-        contentPane.add(carParkView);
-        contentPane.add(buttonController);
-
         initializeMenu();
+
+        addElementsToContentPane();
 
         screen.pack();
         screen.setLocationRelativeTo(null);
