@@ -31,11 +31,12 @@ public class Simulator {
     private JMenuItem mntmSettings;
     private JMenu mnSimulator;
     private ButtonController buttonController;
-    
+
+    private JTabbedPane tabbedPane;
+
     public Simulator(Settings settings) {
         createInstances(settings);
         initializeFrame();
-        initializeSettingsFrame();
     }
 
     private void createInstances(Settings settings) {
@@ -43,9 +44,10 @@ public class Simulator {
         screen.getContentPane().setBackground(SystemColor.control);
         settingsScreen = new JFrame();
 
+
         parkeerLogic = new ParkeerLogic(settings);
         buttonController = new ButtonController(this, parkeerLogic);
-        
+
         carParkView = new CarParkView(parkeerLogic);
         carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         carParkView.setBackground(SystemColor.control);
@@ -82,11 +84,18 @@ public class Simulator {
 
         contentPane.add(pieChartView);
 
+
+//        JTabbedPane jtp = new JTabbedPane() {{
+//            addTab("Statistics", );
+//            addTab("Settigns");
+//        }};
+
+
         panel = new JPanel();
         panel.setBounds(10, 59, 207, 501);
         screen.getContentPane().add(panel);
         panel.setLayout(null);
-        
+
         textStatisticsView = new TextStatisticsView(parkeerLogic);
         textStatisticsView.setBackground(SystemColor.control);
         textStatisticsView.setBounds(0, 0, 207, 549);
@@ -126,22 +135,12 @@ public class Simulator {
     }
 
     private void initializeSettingsFrame() {
-        settingsScreen.setTitle("Settings");
-        settingsScreen.setPreferredSize(new Dimension(900, 600));
-        settingsScreen.setResizable(false);
-        settingsScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        settingsContentPane = settingsScreen.getContentPane();
-        settingsContentPane.add(settingsView);
-
-        settingsScreen.pack();
-        settingsScreen.setLocationRelativeTo(null);
-        settingsScreen.setVisible(false);
     }
 
 
     /**
-     * Disposes of the screens and reinitializes the simulator in a new changed
+     * Disposes of the screens and reinitializes the simulator in a new thread
      * with the new settings
      */
     public void restart(Settings settings) {
@@ -170,11 +169,11 @@ public class Simulator {
 
     public Container getContentPane() {
         return screen.getContentPane();
-    
+
     }
-  
+
     public JFrame getScreen() {
-    	return screen;
+        return screen;
     }
-    
+
 }
