@@ -34,8 +34,6 @@ public class Settings implements Serializable {
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
     double skipChance = 0.5; // 0 to 1
 
-    int tickPause = 100;
-
     int enterSpeed = 8; // number of cars that can enter per minute
     int paymentSpeed = 5; // number of cars that can pay per minute
     int exitSpeed = 7; // number of cars that can leave per minute

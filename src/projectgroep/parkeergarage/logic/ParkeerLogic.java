@@ -24,10 +24,7 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
-    private int tickPause = 100;
     private boolean running;
-    private int tickfor = 10;
-    private int tickback = -10;
 
     private double totalEarned = 0;
 
@@ -48,10 +45,12 @@ public class ParkeerLogic extends AbstractModel {
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
-    
+
+    public int tickPause = 100;
+
     public HashMap<String, Object> history = new HashMap<String, Object>();
     private ReservationLogic reservationLogic;
-    
+
     public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -61,7 +60,7 @@ public class ParkeerLogic extends AbstractModel {
         this.settings = settings;
         this.numberOfOpenSpots = settings.numberOfFloors * settings.numberOfRows * settings.numberOfPlaces;
         this.cars = new Car[settings.numberOfFloors][settings.numberOfRows][settings.numberOfPlaces];
-        
+
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
     }
@@ -69,54 +68,67 @@ public class ParkeerLogic extends AbstractModel {
     public void run() {
         running = true;
 
-        for (int i = 0; i < 100000; i++) {
-            if (!running) return;
-            tickSimulator();
+        while (true) {
+            System.out.print("");
+            if (running)
+                tickSimulator();
         }
     }
 
-    public void stop() {
+    public void pause() {
         running = false;
     }
 
-    public void CreateHistory() {
-    	history.clear();
-    	history.put("entranceCarQueue", entranceCarQueue);
-    	history.put("entrancePassQueue", entrancePassQueue);
-    	history.put("paymentCarQueue", paymentCarQueue);
-    	history.put("exitCarQueue", exitCarQueue);
-    	history.put("numberOfOpenSpots", numberOfOpenSpots);
-    	history.put("locationLogic", locationLogic);
-    	history.put("skippedCars", skippedCars);
-    	history.put("totalEarned", totalEarned);
-    	history.put("cars", cars);
-    	history.put("week", week);
-    	history.put("day", day);
-    	history.put("hour", hour);
-    	history.put("minute", minute);
-    	history.put("reservationLogic", reservationLogic);    	
+    public void play() {
+        running = true;
     }
+
+
+    public void CreateHistory() {
+        history.clear();
+        history.put("entranceCarQueue", entranceCarQueue);
+        history.put("entrancePassQueue", entrancePassQueue);
+        history.put("paymentCarQueue", paymentCarQueue);
+        history.put("exitCarQueue", exitCarQueue);
+        history.put("numberOfOpenSpots", numberOfOpenSpots);
+        history.put("locationLogic", locationLogic);
+        history.put("skippedCars", skippedCars);
+        history.put("totalEarned", totalEarned);
+        history.put("cars", cars);
+        history.put("week", week);
+        history.put("day", day);
+        history.put("hour", hour);
+        history.put("minute", minute);
+        history.put("reservationLogic", reservationLogic);
+    }
+
     public void GetHistory() {
-    	entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
-    	entrancePassQueue = (CarQueue) history.get("entrancePassQueue");
-    	paymentCarQueue = (CarQueue) history.get("paymentCarQueue");
-    	exitCarQueue = (CarQueue) history.get("exitCarQueue");
-    	numberOfOpenSpots = (int) history.get("numberOfOpenSpots");
-    	locationLogic = (LocationLogic) history.get("locationLogic");
-    	skippedCars = (List) history.get("skippedCars");
-    	totalEarned = (double) history.get("totalEarned");
-    	cars =  (Car[][][]) history.get("cars");
-    	week = (int) history.get("week");
-    	day = (int) history.get("day");
-    	hour = (int) history.get("hour");
-    	minute = (int) history.get("minute");
-    	reservationLogic = (ReservationLogic) history.get("reservationLogic");
-    	updateViews();
-    			
-    } 
-    
+        entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
+        entrancePassQueue = (CarQueue) history.get("entrancePassQueue");
+        paymentCarQueue = (CarQueue) history.get("paymentCarQueue");
+        exitCarQueue = (CarQueue) history.get("exitCarQueue");
+        numberOfOpenSpots = (int) history.get("numberOfOpenSpots");
+        locationLogic = (LocationLogic) history.get("locationLogic");
+        skippedCars = (List) history.get("skippedCars");
+        totalEarned = (double) history.get("totalEarned");
+        cars = (Car[][][]) history.get("cars");
+        week = (int) history.get("week");
+        day = (int) history.get("day");
+        hour = (int) history.get("hour");
+        minute = (int) history.get("minute");
+        reservationLogic = (ReservationLogic) history.get("reservationLogic");
+        updateViews();
+
+    }
+
+
+    public void tickMany(int ticks) {
+        IntStream.range(0, ticks).forEach(tick -> tickSimulator());
+    }
+
+
     public void tickSimulator() {
-    	advanceTime();
+        advanceTime();
         handleExit();
         updateViews();
 
@@ -145,9 +157,9 @@ public class ParkeerLogic extends AbstractModel {
             day -= 7;
             week++;
         }
-       
+
     }
-    
+
     public String translateDay(int day) {
 
         switch (day) {
@@ -173,35 +185,35 @@ public class ParkeerLogic extends AbstractModel {
 
     public String translateTime(int hour, int minute) {
         return hour + ":" + minute;
-    }    
-    
+    }
+
     public int getHour() {
-		return hour;
-	}
+        return hour;
+    }
 
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
 
-	public int getMinute() {
-		return minute;
-	}
+    public int getMinute() {
+        return minute;
+    }
 
-	public void setMinute(int minute) {
-		this.minute = minute;
-	}
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
 
     public String getDay() {
         String result = (translateDay(day % 7));
         return result;
     }
-    
+
     public String getTime() {
-    	String result = (translateTime(hour, minute));
+        String result = (translateTime(hour, minute));
         return result;
     }
-    
-    
+
+
     private void handleEntrance() {
         carsArriving();
         carsEntering(entrancePassQueue);
@@ -236,19 +248,19 @@ public class ParkeerLogic extends AbstractModel {
                 i < settings.enterSpeed) {
 
             Car car = queue.removeCar();
-            
+
             Location freeLocation = null;
-            
+
             if (getReservationLogic().getReservations().containsKey(car)) {
-            	System.out.println("Auto hoort bij een reservatie");
-            	freeLocation = getReservationLogic().getReservations().get(car);
-            	setCarAt(freeLocation, car);
-            	getReservationLogic().getReservations().remove(car);
-            	freeLocation.unreserve();
+                System.out.println("Auto hoort bij een reservatie");
+                freeLocation = getReservationLogic().getReservations().get(car);
+                setCarAt(freeLocation, car);
+                getReservationLogic().getReservations().remove(car);
+                freeLocation.unreserve();
             } else {
                 freeLocation = getFirstFreeLocation(car);
             }
-            
+
             setCarAt(freeLocation, car);
             i++;
         }
@@ -399,7 +411,7 @@ public class ParkeerLogic extends AbstractModel {
             return false;
         }
         Car oldCar = getCarAt(location);
-        
+
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
@@ -436,7 +448,7 @@ public class ParkeerLogic extends AbstractModel {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
                         if (!reservationLogic.getReservations().values().contains(location)) {
-                        	return location;
+                            return location;
                         }
                     }
                 }
@@ -527,12 +539,24 @@ public class ParkeerLogic extends AbstractModel {
         }); 
     }
 
-	public ReservationLogic getReservationLogic() {
-		return reservationLogic;
-	}
+    private void handleReservations() {
+        Random random = new Random();
+        int chance = random.nextInt(100);
 
-	public void setReservationLogic(ReservationLogic reservationLogic) {
-		this.reservationLogic = reservationLogic;
-	}
-   
+        if (chance < 10) {
+            ReservationCar car = new ReservationCar(6);
+            Location location = getFirstFreeLocation(car);
+            reservationLogic.addReservation(car, location);
+        }
+    }
+
+
+    public ReservationLogic getReservationLogic() {
+        return reservationLogic;
+    }
+
+    public void setReservationLogic(ReservationLogic reservationLogic) {
+        this.reservationLogic = reservationLogic;
+    }
+
 }
