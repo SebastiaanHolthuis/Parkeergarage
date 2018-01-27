@@ -126,7 +126,6 @@ public class ParkeerLogic extends AbstractModel {
             e.printStackTrace();
         }
 
-        handleReservations();
         handleEntrance();
         CreateHistory();
     }
@@ -488,27 +487,16 @@ public class ParkeerLogic extends AbstractModel {
         this.totalEarned = totalEarned;
     }
     
-    private void handleReservations() {
-    	Random random = new Random();
-    	int chance = random.nextInt(100);
-    	
-    	if (chance < 10) {
-    		ReservationCar car = new ReservationCar(6); 		
-    		Location location = getFirstFreeLocation(car);
-    		reservationLogic.addReservation(car, location);    		
-    	}
-    }
-    
     private void addArrivingCars(int numberOfCars, String type) {
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
             switch (type) {
-                case RESERVED:
-                    newCar = new ReservationCar(settings.defaultPrice + 2);
-                    break;
                 case PASS:
                     newCar = new ParkingPassCar(0);
                     break;
+                case RESERVED:
+    	    		newCar = new ReservationCar(6); 		
+    	    		break;
                 case AD_HOC:
                 default:
                     newCar = new AdHocCar(settings.defaultPrice);
@@ -525,14 +513,18 @@ public class ParkeerLogic extends AbstractModel {
 	                	entranceCarQueue.addCar(newCar);
 	                }
 	            }
+            } else {
+	    		Location location = getFirstFreeLocation(newCar);
+	    		reservationLogic.addReservation(newCar, location); 
+            	System.out.println("ayyy");
+
+            	for (Car car : reservationLogic.getReservationCars()) {
+        	    	if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {            	    		
+        	    		entranceCarQueue.addCar(car);
+        	    	}
+            	}       
             }
-        });
-    	
-    	for (Car car : reservationLogic.getReservationCars()) {
-	    	if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {    	
-	    		entranceCarQueue.addCar(car);
-	    	}
-    	}        
+        }); 
     }
 
 	public ReservationLogic getReservationLogic() {
