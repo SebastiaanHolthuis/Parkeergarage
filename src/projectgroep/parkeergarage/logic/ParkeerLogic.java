@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -86,7 +85,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
 
-    public void createSnapshot() {
+    public void saveSnapshot() {
         Snapshot sn = new Snapshot();
 
         sn.entranceCarQueue = (CarQueue) deepClone(entranceCarQueue);
@@ -124,7 +123,7 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
-    public void getSnapshot() {
+    public void stepBack() {
         /**
          * Get rid of earlier snapshots
          */
@@ -170,7 +169,7 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
-        createSnapshot();
+        saveSnapshot();
     }
 
     private void advanceTime() {
