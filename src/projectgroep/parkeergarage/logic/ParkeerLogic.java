@@ -124,11 +124,11 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
-    public void stepBack() {
+    public void stepBack(int steps) {
         /**
          * Get rid of earlier snapshots
          */
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < steps - 1; i++)
             if (!history.isEmpty())
                 history.pop();
 
