@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -128,25 +129,18 @@ public class ParkeerLogic extends AbstractModel {
          * Get rid of earlier snapshots
          */
         for (int i = 0; i < 9; i++)
-            history.pop();
+            if (!history.isEmpty())
+                history.pop();
 
         Snapshot lastStep = history.pop();
 
-        entranceCarQueue = lastStep.entranceCarQueue;
-        entrancePassQueue = lastStep.entrancePassQueue;
-        paymentCarQueue = lastStep.paymentCarQueue;
-        exitCarQueue = lastStep.exitCarQueue;
-        cars = lastStep.cars;
-        numberOfOpenSpots = lastStep.numberOfOpenSpots;
-        day = lastStep.day;
-        hour = lastStep.hour;
-        minute = lastStep.minute;
-        week = lastStep.week;
-        locationLogic = lastStep.locationLogic;
-        reservationLogic = lastStep.reservationLogic;
-        skippedCars = lastStep.skippedCars;
-        totalEarned = lastStep.totalEarned;
-
+        lastStep.asMap().forEach((k, v) -> {
+            try {
+                Field field = getClass().getDeclaredField(k);
+                field.set(this, v);
+            } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            }
+        });
 
         updateViews();
     }
