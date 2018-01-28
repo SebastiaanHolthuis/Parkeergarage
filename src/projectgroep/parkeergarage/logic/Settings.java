@@ -35,6 +35,11 @@ public class Settings extends MapLike {
     int exitSpeed = 7; // number of cars that can leave per minute
     String demo = "hello"; // number of cars that can leave per minute
 
+
+    public Settings() {
+
+    }
+
     public Settings(HashMap<String, Object> map) {
         map.forEach((k, v) -> {
             try {
