@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
@@ -29,8 +27,6 @@ public class ParkeerLogic extends AbstractModel {
     private int week = 0;
 
     private boolean running;
-
-    Gson gson = (new GsonBuilder()).create();
 
     private double totalEarned = 0;
 
@@ -93,10 +89,10 @@ public class ParkeerLogic extends AbstractModel {
     public void createSnapshot() {
         Snapshot sn = new Snapshot();
 
-        sn.entranceCarQueue = entranceCarQueue;
-        sn.entrancePassQueue = entrancePassQueue;
-        sn.paymentCarQueue = paymentCarQueue;
-        sn.exitCarQueue = exitCarQueue;
+        sn.entranceCarQueue = (CarQueue) deepClone(entranceCarQueue);
+        sn.entrancePassQueue = (CarQueue) deepClone(entrancePassQueue);
+        sn.paymentCarQueue = (CarQueue) deepClone(paymentCarQueue);
+        sn.exitCarQueue = (CarQueue) deepClone(exitCarQueue);
         sn.cars = (Car[][][]) deepClone(cars);
         sn.numberOfOpenSpots = numberOfOpenSpots;
         sn.day = day;
@@ -129,6 +125,12 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public void getSnapshot() {
+        /**
+         * Get rid of earlier snapshots
+         */
+        for (int i = 0; i < 9; i++)
+            history.pop();
+
         Snapshot lastStep = history.pop();
 
         entranceCarQueue = lastStep.entranceCarQueue;

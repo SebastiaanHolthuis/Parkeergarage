@@ -3,6 +3,10 @@ package projectgroep.parkeergarage.logic;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 public class Snapshot extends MapLike {
@@ -26,4 +30,6 @@ public class Snapshot extends MapLike {
     List<Car> skippedCars;
 
     double totalEarned;
+
+
 }
