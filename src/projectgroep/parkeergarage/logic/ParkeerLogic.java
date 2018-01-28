@@ -1,9 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.lang.reflect.Field;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -48,7 +46,7 @@ public class ParkeerLogic extends AbstractModel {
 
     public int tickPause = 100;
 
-    public HashMap<String, Object> history = new HashMap<String, Object>();
+    public Queue<Snapshot> history = new LinkedList<>();
     private ReservationLogic reservationLogic;
 
     public ParkeerLogic(Settings settings) {
@@ -84,41 +82,37 @@ public class ParkeerLogic extends AbstractModel {
     }
 
 
-    public void CreateHistory() {
-        history.clear();
-        history.put("entranceCarQueue", entranceCarQueue);
-        history.put("entrancePassQueue", entrancePassQueue);
-        history.put("paymentCarQueue", paymentCarQueue);
-        history.put("exitCarQueue", exitCarQueue);
-        history.put("numberOfOpenSpots", numberOfOpenSpots);
-        history.put("locationLogic", locationLogic);
-        history.put("skippedCars", skippedCars);
-        history.put("totalEarned", totalEarned);
-        history.put("cars", cars);
-        history.put("week", week);
-        history.put("day", day);
-        history.put("hour", hour);
-        history.put("minute", minute);
-        history.put("reservationLogic", reservationLogic);
+    public void createSnapshot() {
+        ParkeerLogic self = this;
+        history.add(new Snapshot() {{
+            entranceCarQueue = self.entranceCarQueue;
+            entrancePassQueue = self.entrancePassQueue;
+            paymentCarQueue = self.paymentCarQueue;
+            exitCarQueue = self.exitCarQueue;
+            cars = self.cars;
+            numberOfOpenSpots = self.numberOfOpenSpots;
+            day = self.day;
+            hour = self.hour;
+            minute = self.minute;
+            week = self.week;
+            locationLogic = self.locationLogic;
+            reservationLogic = self.reservationLogic;
+            skippedCars = self.skippedCars;
+            totalEarned = self.totalEarned;
+        }});
+
     }
 
-    public void GetHistory() {
-        entranceCarQueue = (CarQueue) history.get("entranceCarQueue");
-        entrancePassQueue = (CarQueue) history.get("entrancePassQueue");
-        paymentCarQueue = (CarQueue) history.get("paymentCarQueue");
-        exitCarQueue = (CarQueue) history.get("exitCarQueue");
-        numberOfOpenSpots = (int) history.get("numberOfOpenSpots");
-        locationLogic = (LocationLogic) history.get("locationLogic");
-        skippedCars = (List) history.get("skippedCars");
-        totalEarned = (double) history.get("totalEarned");
-        cars = (Car[][][]) history.get("cars");
-        week = (int) history.get("week");
-        day = (int) history.get("day");
-        hour = (int) history.get("hour");
-        minute = (int) history.get("minute");
-        reservationLogic = (ReservationLogic) history.get("reservationLogic");
+    public void getSnapshot() {
+        Snapshot lastStep = history.poll();
+        lastStep.asMap().forEach((k, v) -> {
+            try {
+                Field field = getClass().getDeclaredField(k);
+                field.set(this, v);
+            } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            }
+        });
         updateViews();
-
     }
 
 
@@ -139,7 +133,7 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
-        CreateHistory();
+        createSnapshot();
     }
 
     private void advanceTime() {
@@ -498,7 +492,7 @@ public class ParkeerLogic extends AbstractModel {
     public void setTotalEarned(double totalEarned) {
         this.totalEarned = totalEarned;
     }
-    
+
     private void addArrivingCars(int numberOfCars, String type) {
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
@@ -507,36 +501,36 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new ParkingPassCar(0);
                     break;
                 case RESERVED:
-    	    		newCar = new ReservationCar(6); 		
-    	    		break;
+                    newCar = new ReservationCar(6);
+                    break;
                 case AD_HOC:
                 default:
                     newCar = new AdHocCar(settings.defaultPrice);
                     break;
             }
-            
-            if (!(newCar instanceof ReservationCar)) {
-	            if (queueTooLongFor(type) && fuckThatQueue()) {
-	                skippedCars.add(newCar);
-	            } else {
-	                if (newCar instanceof ParkingPassCar) {
-	                	entrancePassQueue.addCar(newCar);
-	                } else {
-	                	entranceCarQueue.addCar(newCar);
-	                }
-	            }
-            } else {
-	    		Location location = getFirstFreeLocation(newCar);
-	    		reservationLogic.addReservation(newCar, location); 
-            	System.out.println("ayyy");
 
-            	for (Car car : reservationLogic.getReservationCars()) {
-        	    	if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {            	    		
-        	    		entranceCarQueue.addCar(car);
-        	    	}
-            	}       
+            if (!(newCar instanceof ReservationCar)) {
+                if (queueTooLongFor(type) && fuckThatQueue()) {
+                    skippedCars.add(newCar);
+                } else {
+                    if (newCar instanceof ParkingPassCar) {
+                        entrancePassQueue.addCar(newCar);
+                    } else {
+                        entranceCarQueue.addCar(newCar);
+                    }
+                }
+            } else {
+                Location location = getFirstFreeLocation(newCar);
+                reservationLogic.addReservation(newCar, location);
+                System.out.println("ayyy");
+
+                for (Car car : reservationLogic.getReservationCars()) {
+                    if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {
+                        entranceCarQueue.addCar(car);
+                    }
+                }
             }
-        }); 
+        });
     }
 
     private void handleReservations() {

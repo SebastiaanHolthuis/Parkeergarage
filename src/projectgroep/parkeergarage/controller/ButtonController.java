@@ -18,7 +18,7 @@ public class ButtonController extends AbstractController {
 
     JButton StepBack = new JButton("-10") {{
         setBounds(10, 572, width, 26);
-        addActionListener(e -> parkeerLogic.GetHistory());
+        addActionListener(e -> parkeerLogic.getSnapshot());
     }};
 
     JButton Play = new JButton("Play") {{

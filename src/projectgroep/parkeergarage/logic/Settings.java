@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * FIXME: dirty catch blocks
  */
-public class Settings implements Serializable {
+public class Settings extends MapLike implements Serializable {
     /**
      * All settings fields
      */
@@ -58,19 +58,6 @@ public class Settings implements Serializable {
     /**
      * Getters
      */
-    public HashMap<String, Object> asMap() {
-        Field[] declaredFields = getClass().getDeclaredFields();
-        HashMap<String, Object> result = new HashMap<>();
-        for (Field field : declaredFields) {
-            try {
-                result.put(field.getName(), field.get(this));
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-            }
-        }
-
-        return result;
-    }
-
     public Set<String> keys() {
         return asMap().keySet();
     }

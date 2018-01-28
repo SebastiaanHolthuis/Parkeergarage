@@ -1,25 +1,16 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.GridLayout;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.main.Simulator;
-import projectgroep.parkeergarage.runner.SimulatorRunner;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Tijdelijk 'restart' button
  */
-
 
 
 public class SettingsView extends AbstractView {
