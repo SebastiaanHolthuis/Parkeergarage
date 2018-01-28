@@ -2,7 +2,9 @@ package projectgroep.parkeergarage.logic;
 
 import projectgroep.parkeergarage.logic.cars.Car;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 
     private int floor;
     private int row;
@@ -11,9 +13,9 @@ public class Location {
     private Boolean forParkingPass;
     private Boolean forReservation;
     private Boolean taken;
-    
+
     private Car reservationCar;
-    
+
     /**
      * Constructor for objects of class Location
      */
@@ -30,17 +32,17 @@ public class Location {
      * Implement content equality.
      */
     public boolean equals(Object obj) {
-        if(obj instanceof Location) {
+        if (obj instanceof Location) {
             Location other = (Location) obj;
             return floor == other.getFloor() && row == other.getRow() && place == other.getPlace();
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
      * Return a string of the form floor,row,place.
+     *
      * @return A string representation of the location.
      */
     public String toString() {
@@ -51,6 +53,7 @@ public class Location {
      * Use the 10 bits for each of the floor, row and place
      * values. Except for very big car parks, this should give
      * a unique hash code for each (floor, row, place) tupel.
+     *
      * @return A hashcode for the location.
      */
     public int hashCode() {
@@ -78,56 +81,56 @@ public class Location {
         return place;
     }
 
-	/**
-	 * @return the forParkingPass
-	 */
-	public Boolean isForParkingPass() {
-		return forParkingPass;
-	}
+    /**
+     * @return the forParkingPass
+     */
+    public Boolean isForParkingPass() {
+        return forParkingPass;
+    }
 
-	/**
-	 * @param forParkingPass the forParkingPass to set
-	 */
-	public void setForParkingPass(Boolean forParkingPass) {
-		this.forParkingPass = forParkingPass;
-	}
+    /**
+     * @param forParkingPass the forParkingPass to set
+     */
+    public void setForParkingPass(Boolean forParkingPass) {
+        this.forParkingPass = forParkingPass;
+    }
 
-	public Boolean isForReservation() {
-		return forReservation;
-	}
+    public Boolean isForReservation() {
+        return forReservation;
+    }
 
-	public void setForReservation(Boolean forReservation) {
-		this.forReservation = forReservation;
-	}
+    public void setForReservation(Boolean forReservation) {
+        this.forReservation = forReservation;
+    }
 
-	public Boolean isTaken() {
-		return taken;
-	}
+    public Boolean isTaken() {
+        return taken;
+    }
 
-	public void setTaken(Boolean taken) {
-		this.taken = taken;
-	}
-	
-	public void reserve(Car car) {
-		if (!isForReservation()) {
-			setForReservation(true);
-			setReservationCar(car);
-		}
-	}
-	
-	public void unreserve() {
-		if (isForReservation()) {
-			setForReservation(false);
-			setReservationCar(null);
-		}
-	}
+    public void setTaken(Boolean taken) {
+        this.taken = taken;
+    }
 
-	public Car getReservationCar() {
-		return reservationCar;
-	}
+    public void reserve(Car car) {
+        if (!isForReservation()) {
+            setForReservation(true);
+            setReservationCar(car);
+        }
+    }
 
-	public void setReservationCar(Car reservationCar) {
-		this.reservationCar = reservationCar;
-	}
+    public void unreserve() {
+        if (isForReservation()) {
+            setForReservation(false);
+            setReservationCar(null);
+        }
+    }
+
+    public Car getReservationCar() {
+        return reservationCar;
+    }
+
+    public void setReservationCar(Car reservationCar) {
+        this.reservationCar = reservationCar;
+    }
 
 }

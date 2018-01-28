@@ -1,9 +1,10 @@
 package projectgroep.parkeergarage.logic;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
-public abstract class MapLike {
+public abstract class MapLike implements Serializable {
     public HashMap<String, Object> asMap() {
         Field[] declaredFields = getClass().getDeclaredFields();
         HashMap<String, Object> result = new HashMap<>();

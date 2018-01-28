@@ -1,10 +1,16 @@
 package projectgroep.parkeergarage.logic;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
@@ -23,6 +29,8 @@ public class ParkeerLogic extends AbstractModel {
     private int week = 0;
 
     private boolean running;
+
+    Gson gson = (new GsonBuilder()).create();
 
     private double totalEarned = 0;
 
@@ -46,7 +54,7 @@ public class ParkeerLogic extends AbstractModel {
 
     public int tickPause = 100;
 
-    public Queue<Snapshot> history = new LinkedList<>();
+    public Stack<Snapshot> history = new Stack<>();
     private ReservationLogic reservationLogic;
 
     public ParkeerLogic(Settings settings) {
@@ -83,35 +91,62 @@ public class ParkeerLogic extends AbstractModel {
 
 
     public void createSnapshot() {
-        ParkeerLogic self = this;
-        history.add(new Snapshot() {{
-            entranceCarQueue = self.entranceCarQueue;
-            entrancePassQueue = self.entrancePassQueue;
-            paymentCarQueue = self.paymentCarQueue;
-            exitCarQueue = self.exitCarQueue;
-            cars = self.cars;
-            numberOfOpenSpots = self.numberOfOpenSpots;
-            day = self.day;
-            hour = self.hour;
-            minute = self.minute;
-            week = self.week;
-            locationLogic = self.locationLogic;
-            reservationLogic = self.reservationLogic;
-            skippedCars = self.skippedCars;
-            totalEarned = self.totalEarned;
-        }});
+        Snapshot sn = new Snapshot();
 
+        sn.entranceCarQueue = entranceCarQueue;
+        sn.entrancePassQueue = entrancePassQueue;
+        sn.paymentCarQueue = paymentCarQueue;
+        sn.exitCarQueue = exitCarQueue;
+        sn.cars = (Car[][][]) deepClone(cars);
+        sn.numberOfOpenSpots = numberOfOpenSpots;
+        sn.day = day;
+        sn.hour = hour;
+        sn.minute = minute;
+        sn.week = week;
+        sn.locationLogic = locationLogic;
+        sn.reservationLogic = reservationLogic;
+        sn.skippedCars = skippedCars;
+        sn.totalEarned = totalEarned;
+
+        history.push(sn);
+    }
+
+    /**
+     * This method makes a "deep clone" of any Java object it is given.
+     */
+    public static Object deepClone(Object object) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void getSnapshot() {
-        Snapshot lastStep = history.poll();
-        lastStep.asMap().forEach((k, v) -> {
-            try {
-                Field field = getClass().getDeclaredField(k);
-                field.set(this, v);
-            } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            }
-        });
+        Snapshot lastStep = history.pop();
+
+        entranceCarQueue = lastStep.entranceCarQueue;
+        entrancePassQueue = lastStep.entrancePassQueue;
+        paymentCarQueue = lastStep.paymentCarQueue;
+        exitCarQueue = lastStep.exitCarQueue;
+        cars = lastStep.cars;
+        numberOfOpenSpots = lastStep.numberOfOpenSpots;
+        day = lastStep.day;
+        hour = lastStep.hour;
+        minute = lastStep.minute;
+        week = lastStep.week;
+        locationLogic = lastStep.locationLogic;
+        reservationLogic = lastStep.reservationLogic;
+        skippedCars = lastStep.skippedCars;
+        totalEarned = lastStep.totalEarned;
+
+
         updateViews();
     }
 

@@ -1,10 +1,11 @@
 package projectgroep.parkeergarage.logic.cars;
 
 import java.awt.*;
+import java.io.Serializable;
 
 import projectgroep.parkeergarage.logic.Location;
 
-public abstract class Car {
+public abstract class Car implements Serializable {
 
     private Location location;
     private int minutesLeft;
@@ -12,7 +13,7 @@ public abstract class Car {
     private boolean hasToPay;
     private double priceToPay;
     private int[] entranceTime;
-    
+
     /**
      * Constructor for objects of class Car
      *
@@ -68,11 +69,11 @@ public abstract class Car {
         this.priceToPay = priceToPay;
     }
 
-	public int[] getEntranceTime() {
-		return entranceTime;
-	}
+    public int[] getEntranceTime() {
+        return entranceTime;
+    }
 
-	public void setEntranceTime(int[] entranceTime) {
-		this.entranceTime = entranceTime;
-	}
+    public void setEntranceTime(int[] entranceTime) {
+        this.entranceTime = entranceTime;
+    }
 }
