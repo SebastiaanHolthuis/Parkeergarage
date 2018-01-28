@@ -8,11 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Stream;
 
-
-/**
- * FIXME: dirty catch blocks
- */
-public class Settings extends MapLike implements Serializable {
+public class Settings extends MapLike {
     /**
      * All settings fields
      */
@@ -39,12 +35,6 @@ public class Settings extends MapLike implements Serializable {
     int exitSpeed = 7; // number of cars that can leave per minute
     String demo = "hello"; // number of cars that can leave per minute
 
-    /**
-     * Constructors
-     */
-    public Settings() {
-    }
-
     public Settings(HashMap<String, Object> map) {
         map.forEach((k, v) -> {
             try {
@@ -53,12 +43,5 @@ public class Settings extends MapLike implements Serializable {
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             }
         });
-    }
-
-    /**
-     * Getters
-     */
-    public Set<String> keys() {
-        return asMap().keySet();
     }
 }
