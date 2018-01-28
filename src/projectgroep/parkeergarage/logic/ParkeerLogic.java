@@ -132,6 +132,8 @@ public class ParkeerLogic extends AbstractModel {
             if (!history.isEmpty())
                 history.pop();
 
+        if (history.isEmpty()) return;
+
         Snapshot lastStep = history.pop();
 
         lastStep.asMap().forEach((k, v) -> {
