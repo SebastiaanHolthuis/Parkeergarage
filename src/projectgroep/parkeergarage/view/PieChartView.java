@@ -2,46 +2,90 @@ package projectgroep.parkeergarage.view;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class PieChartView extends AbstractView {
 
-    private Dimension size;
-    private Image kekImage;
-
+    private XYChart xyChart;
+    
+    private List<Double> yData;
+    public static final String SERIES_NAME = "Omzet in euro's";
+    
     public PieChartView(ParkeerLogic model) {
         super(model);
-
-        size = new Dimension(0, 0);
+        go();
     }
+    
+    private void go() {
+    	JPanel chartPanel = new XChartPanel(getChart());
+    	add(chartPanel);
+    	chartPanel.validate();
+    	
+        // Simulate a data feed
+        TimerTask chartUpdaterTask = new TimerTask() {
 
-    public void updateView() {
-    	add(createChartPanel());
-    	repaint();
-    }
-    private JPanel createChartPanel() {
-   	    PieDataset dataset = createDataset(); 	 
-   	    JFreeChart chart = ChartFactory.createPieChart("Pie chart", dataset, true, false, false);
-   	    chart.setBorderVisible(false);
-   	    return new ChartPanel(chart);
-   }
+          @Override
+          public void run() {
+            updateData();
 
-    private DefaultPieDataset createDataset() {
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+              @Override
+              public void run() {
+            	  chartPanel.repaint();
+              }
+            });
+          }
+        };
 
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Ad Hoc", model.getAdHocCars().count());
-        dataset.setValue("Parking Pass", model.getParkingPassCars().count());
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+      }
 
-        return dataset;
-    }
+      public XYChart getChart() {
+        yData = getRandomData(5);
+
+        // Create Chart
+        xyChart = new XYChartBuilder().width(600).height(475).theme(ChartTheme.Matlab).title("Omzet per dag").build();
+        xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
+        xyChart.addSeries(SERIES_NAME, null, yData);
+
+        return xyChart;
+      }
+
+      public void updateData() {
+        // Get some new data
+        List<Double> newData = getRandomData(1);
+
+        yData.addAll(newData);
+
+        // Limit the total number of points
+        while (yData.size() > 7) {
+          yData.remove(0);
+        }
+
+        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+      }
+
+      private List<Double> getRandomData(int numPoints) {
+
+        List<Double> data = new CopyOnWriteArrayList<Double>();
+        for (int i = 0; i < numPoints; i++) {
+          data.add(Math.random() * 100);
+        }
+        return data;
+      }
 
 }
