@@ -71,6 +71,7 @@ public class ParkeerLogic extends AbstractModel {
         running = true;
 
         while (true) {
+            System.out.print(""); // HACK: niet verwijderen!
             if (running)
                 tickSimulator();
         }
