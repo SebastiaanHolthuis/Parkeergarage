@@ -76,4 +76,8 @@ public abstract class Car implements Serializable {
     public void setEntranceTime(int[] entranceTime) {
         this.entranceTime = entranceTime;
     }
+
+//    private static stayMinutes (int hours, int minutes) {
+//        (hours * 60) +
+//    }
 }

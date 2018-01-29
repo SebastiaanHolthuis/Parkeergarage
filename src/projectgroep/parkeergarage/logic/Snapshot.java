@@ -25,7 +25,7 @@ public class Snapshot extends MapLike {
     int week;
 
     LocationLogic locationLogic;
-    ReservationLogic reservationLogic;
+    ReservationSnapshot reservationSnapshot;
 
     List<Car> skippedCars;
 

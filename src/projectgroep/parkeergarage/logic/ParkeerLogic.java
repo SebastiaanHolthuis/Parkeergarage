@@ -6,9 +6,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.sun.org.apache.xpath.internal.functions.Function3Args;
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
@@ -100,7 +102,7 @@ public class ParkeerLogic extends AbstractModel {
         sn.minute = minute;
         sn.week = week;
         sn.locationLogic = locationLogic;
-        sn.reservationLogic = reservationLogic;
+        sn.reservationSnapshot = new ReservationSnapshot(reservationLogic);
         sn.skippedCars = skippedCars;
         sn.totalEarned = totalEarned;
 
@@ -404,18 +406,20 @@ public class ParkeerLogic extends AbstractModel {
         exitCarQueue.addCar(car);
     }
 
+    private void forEachLocation(Function<Location, Void> l) {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++)
+            for (int row = 0; row < getNumberOfRows(); row++)
+                for (int place = 0; place < getNumberOfPlaces(); place++)
+                    l.apply(new Location(floor, row, place));
+
+    }
+
     public void tick() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
-                    Location location = new Location(floor, row, place);
-                    Car car = getCarAt(location);
-                    if (car != null) {
-                        car.tick();
-                    }
-                }
-            }
-        }
+        forEachLocation(location -> {
+            Car car = getCarAt(location);
+            if (car != null) car.tick();
+            return null;
+        });
     }
 
     public int getNumberOfFloors() {

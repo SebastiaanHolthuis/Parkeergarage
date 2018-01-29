@@ -16,6 +16,12 @@ public class ReservationLogic {
         this.model = model;
     }
 
+    public ReservationLogic(ParkeerLogic model, ReservationSnapshot snapshot) {
+        this.model = model;
+        this.reservations = snapshot.reservations;
+        cars = snapshot.cars;
+    }
+
     public void addReservation(Car car, Location location) {
         if (!reservations.containsKey(car)) {
             int[] time = new int[3];
@@ -26,12 +32,12 @@ public class ReservationLogic {
                 time[0] = model.getHour() + 1;
                 time[1] = 14;
             }
-            
+
             if (location != null) {
                 reservations.put(car, location);
                 location.reserve(car);
                 car.setEntranceTime(time);
-            }             
+            }
         }
     }
 
@@ -68,5 +74,12 @@ public class ReservationLogic {
 
     public void setReservations(HashMap<Car, Location> reservations) {
         this.reservations = reservations;
+    }
+
+    public ReservationSnapshot makeSnapshot() {
+        return new ReservationSnapshot() {{
+            reservations = getReservations();
+            cars = getReservationCars();
+        }};
     }
 }
