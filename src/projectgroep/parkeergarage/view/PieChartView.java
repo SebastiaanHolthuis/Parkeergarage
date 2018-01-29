@@ -1,76 +1,91 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import projectgroep.parkeergarage.logic.Location;
+import javax.swing.JPanel;
+
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
+
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.logic.cars.AdHocCar;
-import projectgroep.parkeergarage.logic.cars.Car;
-import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
-import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class PieChartView extends AbstractView {
 
-    private Dimension size;
-    private Image kekImage;
-
+    private XYChart xyChart;
+    
+    private List<Double> yData;
+    public static final String SERIES_NAME = "Omzet in euro's";
+    
     public PieChartView(ParkeerLogic model) {
         super(model);
-
-        size = new Dimension(0, 0);
+        go();
     }
+    
+    private void go() {
+    	JPanel chartPanel = new XChartPanel(getChart());
+    	add(chartPanel);
+    	chartPanel.validate();
+    	
+        // Simulate a data feed
+        TimerTask chartUpdaterTask = new TimerTask() {
 
-    @Override
-    public void paintComponent(Graphics g) {
-        if (kekImage == null) {
-            return;
+          @Override
+          public void run() {
+            updateData();
+
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+              @Override
+              public void run() {
+            	  chartPanel.repaint();
+              }
+            });
+          }
+        };
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+      }
+
+      public XYChart getChart() {
+        yData = getRandomData(5);
+
+        // Create Chart
+        xyChart = new XYChartBuilder().width(600).height(475).theme(ChartTheme.Matlab).title("Omzet per dag").build();
+        xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
+        xyChart.addSeries(SERIES_NAME, null, yData);
+
+        return xyChart;
+      }
+
+      public void updateData() {
+        // Get some new data
+        List<Double> newData = getRandomData(1);
+
+        yData.addAll(newData);
+
+        // Limit the total number of points
+        while (yData.size() > 7) {
+          yData.remove(0);
         }
 
-        Dimension currentSize = getSize();
+        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+      }
 
-        if (size.equals(currentSize)) {
-            g.drawImage(kekImage, 0, 0, null);
-        } else {
-            g.drawImage(kekImage, 0, 0, currentSize.width, currentSize.height, null);
+      private List<Double> getRandomData(int numPoints) {
+
+        List<Double> data = new CopyOnWriteArrayList<Double>();
+        for (int i = 0; i < numPoints; i++) {
+          data.add(Math.random() * 100);
         }
-    }
-
-    public void updateView() {
-        if (!size.equals(getSize())) {
-            size = getSize();
-            kekImage = createImage(size.width, size.height);
-        }
-
-        Graphics graphics = kekImage.getGraphics();
-        drawChart(graphics);
-
-        repaint();
-
-	}
-	
-	public void drawChart(Graphics g) {	
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 1000, 1000);
-		
-		// Cirkel
-		g.setColor(Color.LIGHT_GRAY);
-		//fillArc(int x(12), int y(10), int width(180), int height(180), int startAngle(0), int arcAngle)
-		g.fillArc(12, 10, 180, 180, 0, (int) model.getAllCars().count() + model.getNumberOfOpenSpots());
-		
-		// Parking pass
-		g.setColor(ParkingPassCar.COLOR);
-		g.fillArc(12, 10, 180, 180, 0, (int) model.getParkingPassCars().count() - (int) model.getAdHocCars().count());
-		
-		// Ad Hoc
-		g.setColor(AdHocCar.COLOR);
-		g.fillArc(12, 10, 180, 180, 0, (int) model.getAdHocCars().count());
-		
-		// Reservatie auto
-		g.setColor(ReservationCar.COLOR);
-		g.fillArc(12, 10, 180, 180, 0, (int) model.getReservationCars().count());
-	}
+        return data;
+      }
 
 }
