@@ -125,18 +125,12 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public void stepBack(int steps) {
-        /**
-         * Get rid of earlier snapshots
-         */
-        for (int i = 0; i < steps - 1; i++)
-            if (!history.isEmpty())
-                history.pop();
+        IntStream.range(0, steps).forEach(i -> {
+            if (history.size() > 1) history.pop();
+        });
 
-        if (history.isEmpty()) return;
 
-        Snapshot lastStep = history.pop();
-
-        lastStep.asMap().forEach((k, v) -> {
+        history.peek().asMap().forEach((k, v) -> {
             try {
                 Field field = getClass().getDeclaredField(k);
                 field.set(this, v);
