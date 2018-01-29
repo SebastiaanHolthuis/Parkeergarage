@@ -33,8 +33,6 @@ public class Settings extends MapLike {
     int enterSpeed = 8; // number of cars that can enter per minute
     int paymentSpeed = 5; // number of cars that can pay per minute
     int exitSpeed = 7; // number of cars that can leave per minute
-    String demo = "hello"; // number of cars that can leave per minute
-
 
     public Settings() {
 

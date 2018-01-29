@@ -53,7 +53,7 @@ public class Simulator {
             gap = 20,
             panelWidth = 300,
             carParkWidth = 865,
-            pieChartWidth = 207;
+            pieChartWidth = 407;
 
     public Simulator(Settings settings) {
         createInstances(settings);
