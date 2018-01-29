@@ -1,18 +1,30 @@
 package projectgroep.parkeergarage.main;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.SystemColor;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import projectgroep.parkeergarage.SettingsRepository;
+import projectgroep.parkeergarage.controller.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
+import projectgroep.parkeergarage.view.LegendView;
 import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
-import projectgroep.parkeergarage.controller.ButtonController;
 
 public class Simulator {
 
@@ -21,7 +33,8 @@ public class Simulator {
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
     private PieChartView pieChartView;
-
+    private LegendView legendView;
+    
     private JFrame screen;
     private JFrame settingsScreen;
 
@@ -66,6 +79,7 @@ public class Simulator {
         initializePieChart();
         initializeStatistics();
         initializeSettings();
+        initializeLegend();
         initializePanel();
         initializeTabs();
         initializeMenu();
@@ -84,6 +98,7 @@ public class Simulator {
 
         carParkView.updateView();
         pieChartView.updateView();
+        legendView.updateView();
     }
 
 
@@ -92,6 +107,7 @@ public class Simulator {
         parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
         parkeerLogic.addView(pieChartView);
+        parkeerLogic.addView(legendView);
     }
 
     void initializeStatistics() {
@@ -160,11 +176,21 @@ public class Simulator {
         }};
     }
 
+    void initializeLegend() {
+        legendView = new LegendView(parkeerLogic) {{
+            setBackground(Color.WHITE);
+            setBorder(new LineBorder(new Color(0, 0, 0)));
+            setBounds(panelWidth + carParkWidth + gap * 2, 550, pieChartWidth, 101);
+        }};
+    }
+    
     void addElementsToContentPane() {
         contentPane.add(pieChartView);
         contentPane.add(carParkView);
         contentPane.add(buttonController);
+        contentPane.add(legendView);
         contentPane.add(panel);
+        
         // Menu bar voor nu gedeactiveerd
         // contentPane.add(menuBar);
     }
