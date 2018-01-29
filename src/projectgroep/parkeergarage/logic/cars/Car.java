@@ -15,8 +15,8 @@ public abstract class Car implements Serializable {
     private boolean hasToPay;
     private double priceToPay;
     private int[] entranceTime;
-    public ArrayList<Double> timeEntering;
-    public ArrayList<Double> timeLeaving;    
+    public int[] timeEntering = {0,0,0};
+    public int[] timeLeaving = {0,0,0};    
 //    private ArrayList<Double> timeEntering = new ArrayList<>();
 
     /**
@@ -26,8 +26,6 @@ public abstract class Car implements Serializable {
      */
     public Car(double priceToPay) {
         this.priceToPay = priceToPay;
-        ArrayList<Double> timeEntering = new ArrayList<>();
-        ArrayList<Double> timeLeaving = new ArrayList<>();
     }
 
     public Location getLocation() {
