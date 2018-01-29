@@ -10,6 +10,7 @@ public class ReservationLogic {
 
     private ParkeerLogic model;
     private HashMap<Car, Location> reservations = new HashMap<Car, Location>();
+    public static ArrayList<Car> cars = new ArrayList<Car>();
 
     public ReservationLogic(ParkeerLogic model) {
         this.model = model;
@@ -26,17 +27,18 @@ public class ReservationLogic {
                 time[1] = 14;
             }
 
+            
             if (location != null) {
                 reservations.put(car, location);
                 location.reserve(car);
                 car.setEntranceTime(time);
-            }
+            }             
         }
     }
 
     public void removeReservation(Car car, Location location) {
         if (reservations.containsKey(car)) {
-            reservations.remove(car);
+            reservations.remove(car, location);
             location.unreserve();
         }
     }

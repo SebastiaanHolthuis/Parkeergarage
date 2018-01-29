@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import projectgroep.parkeergarage.logic.cars.Car;
+
 public class LocationLogic {
 
     private HashMap<Location, String> locations = new HashMap<Location, String>();
+    
     private ParkeerLogic model;
 
     public LocationLogic(ParkeerLogic model) {
