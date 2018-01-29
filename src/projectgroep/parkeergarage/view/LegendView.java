@@ -46,13 +46,13 @@ public class LegendView extends AbstractView {
         }
 
         Graphics graphics = legendImage.getGraphics();
-        drawChart(graphics);
+        drawLegend(graphics);
 
         repaint();
 
 	}
 	
-	public void drawChart(Graphics g) {	
+	public void drawLegend(Graphics g) {	
 		g.setFont(new Font("Arial", Font.PLAIN, 14));
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 1000, 1000);
