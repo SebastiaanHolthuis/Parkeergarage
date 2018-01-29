@@ -101,6 +101,9 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public void stepBack(int steps) {
+        if (history.size() == 0)
+            return;
+
         IntStream.range(0, steps).forEach(i -> {
             if (history.size() > 1) history.pop();
         });

@@ -20,41 +20,36 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class PieChartView extends AbstractView {
 
     private XYChart xyChart;
-    
+
     private List<Double> yData;
     public static final String SERIES_NAME = "Omzet in euro's";
-    
+
     public PieChartView(ParkeerLogic model) {
         super(model);
         go();
     }
-    
+
     private void go() {
-    	JPanel chartPanel = new XChartPanel(getChart());
-    	add(chartPanel);
-    	chartPanel.validate();
-    	
+        JPanel chartPanel = new XChartPanel(getChart());
+//        add(chartPanel);
+        chartPanel.validate();
+
         // Simulate a data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
-          @Override
-          public void run() {
-            updateData();
+            @Override
+            public void run() {
+                updateData();
 
-            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-              @Override
-              public void run() {
-            	  chartPanel.repaint();
-              }
-            });
-          }
+                javax.swing.SwingUtilities.invokeLater(() -> chartPanel.repaint());
+            }
         };
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
+    }
 
-      public XYChart getChart() {
+    public XYChart getChart() {
         yData = getRandomData(5);
 
         // Create Chart
@@ -63,9 +58,9 @@ public class PieChartView extends AbstractView {
         xyChart.addSeries(SERIES_NAME, null, yData);
 
         return xyChart;
-      }
+    }
 
-      public void updateData() {
+    public void updateData() {
         // Get some new data
         List<Double> newData = getRandomData(1);
 
@@ -73,19 +68,19 @@ public class PieChartView extends AbstractView {
 
         // Limit the total number of points
         while (yData.size() > 7) {
-          yData.remove(0);
+            yData.remove(0);
         }
 
         xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
-      }
+    }
 
-      private List<Double> getRandomData(int numPoints) {
+    private List<Double> getRandomData(int numPoints) {
 
         List<Double> data = new CopyOnWriteArrayList<Double>();
         for (int i = 0; i < numPoints; i++) {
-          data.add(Math.random() * 100);
+            data.add(Math.random() * 100);
         }
         return data;
-      }
+    }
 
 }
