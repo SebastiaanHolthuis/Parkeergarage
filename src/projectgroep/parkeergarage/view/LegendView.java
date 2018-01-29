@@ -70,12 +70,19 @@ public class LegendView extends AbstractView {
 		g.setColor(Color.BLACK);
 		g.drawString("Parking Pass", 70, 55);
 		
-		// Reservation 
+		// Reservation Car
 		g.setColor(ReservationCar.COLOR);
 		g.fillRect(10, 70, 50, 20);
 		
 		g.setColor(Color.BLACK);
 		g.drawString("Reservation Car", 70, 85);
+		
+		// Reservation 
+		g.setColor(Color.decode("#8bba8b"));
+		g.fillRect(10, 100, 50, 20);
+		
+		g.setColor(Color.BLACK);
+		g.drawString("Reservation Car", 70, 115);
 	}
 
 }

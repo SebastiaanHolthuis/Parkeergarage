@@ -26,7 +26,6 @@ public class ReservationLogic {
                 time[0] = model.getHour() + 1;
                 time[1] = 14;
             }
-
             
             if (location != null) {
                 reservations.put(car, location);
