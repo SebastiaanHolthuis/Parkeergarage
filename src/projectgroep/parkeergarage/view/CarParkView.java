@@ -49,9 +49,13 @@ public class CarParkView extends AbstractView {
                 for (int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = model.getCarAt(location);
-                    Color color = car == null ? Color.white : car.getColor();
+                    Color color = car == null ? Color.decode("#8bba8b") : car.getColor();
                     
-                    if (model.getReservationLogic().getReservations().values().contains(location) == false) {
+                    if (model.getReservationLogic().getReservations().values().contains(location)) {                   	
+                    	if (car != null) {
+                    		color = car.getColor();
+                    	}
+                    } else {
 	                    if (car == null && floor == 0 && row < 2) {
 	                        color = Color.decode("#ADDAF7"); // Blue
 	                    } else if (car == null) {
@@ -59,17 +63,9 @@ public class CarParkView extends AbstractView {
 	                    } else {
 	                        color = car.getColor();
 	                    }
-                    } else {
-                    	if (car == null) {
-                    		color = Color.WHITE;
-                    	} else {
-                    		color = car.getColor();
-                    	}
                     }
                     
-                    drawPlace(graphics, location, color);
-
-                  
+                    drawPlace(graphics, location, color);                 
                 }
             }
         }
