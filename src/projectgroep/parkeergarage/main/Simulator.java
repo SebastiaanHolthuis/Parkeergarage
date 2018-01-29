@@ -180,7 +180,7 @@ public class Simulator {
         legendView = new LegendView(parkeerLogic) {{
             setBackground(Color.WHITE);
             setBorder(new LineBorder(new Color(0, 0, 0)));
-            setBounds(panelWidth + carParkWidth + gap * 2, 550, pieChartWidth, 101);
+            setBounds(panelWidth + carParkWidth + gap * 2, 550, pieChartWidth, 131);
         }};
     }
     
