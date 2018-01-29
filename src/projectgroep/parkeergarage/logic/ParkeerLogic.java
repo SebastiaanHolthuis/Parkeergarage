@@ -1,21 +1,19 @@
 package projectgroep.parkeergarage.logic;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.sun.org.apache.xpath.internal.functions.Function3Args;
+import projectgroep.parkeergarage.Utils;
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
+
+import static projectgroep.parkeergarage.Utils.*;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -102,28 +100,11 @@ public class ParkeerLogic extends AbstractModel {
         sn.minute = minute;
         sn.week = week;
         sn.locationLogic = locationLogic;
-        sn.reservationSnapshot = new ReservationSnapshot(reservationLogic);
+        sn.reservationSnapshot = reservationLogic.makeSnapshot();
         sn.skippedCars = skippedCars;
         sn.totalEarned = totalEarned;
 
         history.push(sn);
-    }
-
-    /**
-     * This method makes a "deep clone" of any Java object it is given.
-     */
-    public static Object deepClone(Object object) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(object);
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return ois.readObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void stepBack(int steps) {
@@ -131,14 +112,17 @@ public class ParkeerLogic extends AbstractModel {
             if (history.size() > 1) history.pop();
         });
 
-
-        history.peek().asMap().forEach((k, v) -> {
+        Snapshot lastStep = history.peek();
+        lastStep.asMap().forEach((k, v) -> {
             try {
                 Field field = getClass().getDeclaredField(k);
                 field.set(this, v);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             }
         });
+
+        reservationLogic = new ReservationLogic(this, lastStep.reservationSnapshot);
+
 
         updateViews();
     }
@@ -406,7 +390,7 @@ public class ParkeerLogic extends AbstractModel {
         exitCarQueue.addCar(car);
     }
 
-    private void forEachLocation(Function<Location, Void> l) {
+    private void forEachLocation(Function<Location, Object> l) {
         for (int floor = 0; floor < getNumberOfFloors(); floor++)
             for (int row = 0; row < getNumberOfRows(); row++)
                 for (int place = 0; place < getNumberOfPlaces(); place++)
@@ -486,6 +470,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public Car getFirstLeavingCar() {
+
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {

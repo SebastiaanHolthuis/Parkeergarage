@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import projectgroep.parkeergarage.Utils;
 import projectgroep.parkeergarage.logic.cars.Car;
+
+import static projectgroep.parkeergarage.Utils.deepClone;
 
 public class ReservationLogic {
 
@@ -78,8 +81,8 @@ public class ReservationLogic {
 
     public ReservationSnapshot makeSnapshot() {
         return new ReservationSnapshot() {{
-            reservations = getReservations();
-            cars = getReservationCars();
+            reservations = (HashMap<Car, Location>) deepClone(getReservations());
+            cars = (ArrayList<Car>) deepClone(getReservationCars());
         }};
     }
 }
