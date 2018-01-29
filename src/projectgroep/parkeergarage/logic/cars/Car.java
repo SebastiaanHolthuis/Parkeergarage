@@ -2,6 +2,8 @@ package projectgroep.parkeergarage.logic.cars;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import projectgroep.parkeergarage.logic.Location;
 
@@ -13,6 +15,9 @@ public abstract class Car implements Serializable {
     private boolean hasToPay;
     private double priceToPay;
     private int[] entranceTime;
+    public ArrayList<Double> timeEntering;
+    public ArrayList<Double> timeLeaving;    
+//    private ArrayList<Double> timeEntering = new ArrayList<>();
 
     /**
      * Constructor for objects of class Car
@@ -21,6 +26,8 @@ public abstract class Car implements Serializable {
      */
     public Car(double priceToPay) {
         this.priceToPay = priceToPay;
+        ArrayList<Double> timeEntering = new ArrayList<>();
+        ArrayList<Double> timeLeaving = new ArrayList<>();
     }
 
     public Location getLocation() {
@@ -38,6 +45,7 @@ public abstract class Car implements Serializable {
     public void setMinutesLeft(int minutesLeft) {
         this.minutesLeft = minutesLeft;
     }
+    
 
     public boolean getIsPaying() {
         return isPaying;

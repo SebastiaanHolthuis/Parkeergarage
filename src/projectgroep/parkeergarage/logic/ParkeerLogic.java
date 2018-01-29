@@ -213,7 +213,7 @@ public class ParkeerLogic extends AbstractModel {
         return hour + ":" + minute;
     }
     
-    public int getTimeToPay() {
+    public double getTimeToPay() {
     		return day + hour + minute;
     }
 
@@ -278,6 +278,8 @@ public class ParkeerLogic extends AbstractModel {
                 i < settings.enterSpeed) {
 
             Car car = queue.removeCar();
+            double timeToPay = getTimeToPay();
+            car.timeEntering.add(timeToPay);
 
             Location freeLocation = null;
 
@@ -323,6 +325,8 @@ public class ParkeerLogic extends AbstractModel {
         int i = 0;
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
+            double timeToPay = getTimeToPay();
+            car.timeLeaving.add(timeToPay);
             // TODO Handle payment.
             totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
