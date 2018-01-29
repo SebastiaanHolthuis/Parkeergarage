@@ -34,9 +34,9 @@ public class TextStatisticsView extends AbstractView {
         table.getModel().setValueAt(model.getReservationCars().count(), 3, 1);
         table.getModel().setValueAt(model.getEntranceCarQueue().carsInQueue(), 4, 1);
         table.getModel().setValueAt(model.getEntrancePassQueue().carsInQueue(), 5, 1);
-        table.getModel().setValueAt("€" + model.getTotalEarned(), 6, 1);
+        table.getModel().setValueAt("ï¿½" + model.getTotalEarned(), 6, 1);
         table.getModel().setValueAt(model.getSkipCount(), 7, 1);
-        table.getModel().setValueAt("€" + model.getSkipCount() * 4, 8, 1);// price to pay ophalen.
+        table.getModel().setValueAt("ï¿½" + model.getSkipCount() * 4, 8, 1);// price to pay ophalen.
         table.getModel().setValueAt(model.getDay(), 9, 1);
         table.getModel().setValueAt(model.getTime(), 10, 1);
         
@@ -58,7 +58,7 @@ public class TextStatisticsView extends AbstractView {
         		{"Totaal verdiend", new Integer(0)},
         		{"Skippende auto's", new Integer(0)},
         		{"Misgelopen omzet", new Integer(0)},
-        		{"Dagen", new Integer(0)},
+        		{"Dag", new Integer(0)},
         		{"Tijd", new Integer(0)},
         	},
         	new String[] {

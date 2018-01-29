@@ -190,19 +190,19 @@ public class ParkeerLogic extends AbstractModel {
 
         switch (day) {
             case 0:
-                return "Monday";
+                return "Maandag";
             case 1:
-                return "Tuesday";
+                return "Dinsdag";
             case 2:
-                return "Wednesday";
+                return "Woensdag";
             case 3:
-                return "Thursday";
+                return "Donderdag";
             case 4:
-                return "Friday";
+                return "Vrijdag";
             case 5:
-                return "Saturday";
+                return "Zaterdag";
             case 6:
-                return "Sunday";
+                return "Zondag";
             default:
                 return "";
         }
@@ -211,6 +211,10 @@ public class ParkeerLogic extends AbstractModel {
 
     public String translateTime(int hour, int minute) {
         return hour + ":" + minute;
+    }
+    
+    public int getTimeToPay() {
+    		return day + hour + minute;
     }
 
     public int getHour() {
@@ -533,12 +537,13 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new ParkingPassCar(0);
                     break;
                 case RESERVED:
-                    newCar = new ReservationCar(6);
+                    newCar = new ReservationCar(0.2);
                     break;
                 case AD_HOC:
                 default:
-                    newCar = new AdHocCar(settings.defaultPrice);
-                    break;
+                    //newCar = new AdHocCar(settings.defaultPrice);
+                	   	newCar = new AdHocCar(0.2);
+                	   	break;
             }
 
             if (!(newCar instanceof ReservationCar)) {
