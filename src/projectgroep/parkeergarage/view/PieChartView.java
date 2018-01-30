@@ -47,7 +47,7 @@ public class PieChartView extends AbstractView {
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 2000);
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 100);
     }
 
     XYChart makeChart() {
