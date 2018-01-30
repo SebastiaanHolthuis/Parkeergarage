@@ -31,7 +31,7 @@ public class PieChartView extends AbstractView {
 
     private void go() {
         JPanel chartPanel = new XChartPanel(getChart());
-//        add(chartPanel);
+        add(chartPanel);
         chartPanel.validate();
 
         // Simulate a data feed
