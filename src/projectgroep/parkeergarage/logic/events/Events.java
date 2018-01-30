@@ -8,7 +8,7 @@ public class Events {
 
 	private ParkeerLogic model;
 	private ArrayList<Event> events = new ArrayList<Event>();
-	
+
 	/**
 	 * Constructor.
 	 * 
@@ -17,7 +17,7 @@ public class Events {
 	public Events(ParkeerLogic model) {
 		this.model = model;
 	}
-	
+
 	/**
 	 * Add an instance of an Event object to the events ArrayList.
 	 * 
@@ -26,7 +26,7 @@ public class Events {
 	public void addEvent(Event event) {
 		if (!events.contains(event)) events.add(event);
 	}
-	
+
 	/**
 	 * Add a new Event to the events ArrayList.
 	 * 
@@ -40,7 +40,7 @@ public class Events {
 	public void addEvent(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
 		events.add(new Event(name, expectedVisitors, expectedVisitors, expectedVisitors, duration, expectedVisitors));				
 	}
-	
+
 	/**
 	 * Remove an Event from the events ArrayList.
 	 * 
@@ -49,7 +49,7 @@ public class Events {
 	public void removeEvent(Event event) {
 		if (events.contains(event)) events.remove(event);
 	}
-	
+
 	/**
 	 * Remove an Event from the events ArrayList by its name.
 	 * 
@@ -59,6 +59,30 @@ public class Events {
 		events.forEach(event -> {
 			if (event.getName().equals(name)) events.remove(event);
 		});
+	}
+
+
+	/**
+	 * Remove all of the Events from the events ArrayList.
+	 */
+	public void removeAll() {
+		events.clear();
+	}
+	
+	/**
+	 * @return Returns all of the Events listed in the events ArrayList.
+	 */
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+
+	/**
+	 * Set the events ArrayList.
+	 * 
+	 * @param events The ArrayList of Event objects that the events ArrayList should be set to.
+	 */
+	public void setEvents(ArrayList<Event> events) {
+		this.events = events;
 	}
 
 }
