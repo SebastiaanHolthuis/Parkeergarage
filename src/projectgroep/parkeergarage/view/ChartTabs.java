@@ -5,34 +5,27 @@ import javax.swing.JTabbedPane;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-public class ChartTabs extends AbstractView {
-    PieChartView pieChartView;
-    LineCarChartView lineCarChartView;
-    LineChartView lineChartView;
+import java.util.List;
 
+public class ChartTabs extends AbstractView {
     JTabbedPane tabbedPane;
 
     public ChartTabs(ParkeerLogic model) {
         super(model);
 
-        pieChartView = new PieChartView(model);
-        lineCarChartView = new LineCarChartView(model);
-        lineChartView = new LineChartView(model);
+        AbstractView[] views = {
+                new PieChartView(model),
+                new LineCarChartView(model),
+                new LineChartView(model)
+        };
 
         tabbedPane = new JTabbedPane() {{
-            add(pieChartView, PieChartView.SERIES_NAME);
-            add(lineCarChartView, LineCarChartView.SERIES_NAME);
-            add(lineChartView, LineChartView.SERIES_NAME);
+            for (AbstractView view : views) {
+                add(view, view.SERIES_NAME);
+                model.addView(pieChartView);
+            }
         }};
 
         add(tabbedPane);
-
-        addViewsToModel();
-    }
-
-    void addViewsToModel() {
-        model.addView(pieChartView);
-        model.addView(lineCarChartView);
-        model.addView(lineChartView);
     }
 }
