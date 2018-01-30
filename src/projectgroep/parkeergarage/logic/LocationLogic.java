@@ -1,12 +1,9 @@
 
 package projectgroep.parkeergarage.logic;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import projectgroep.parkeergarage.logic.cars.Car;
 
 public class LocationLogic {
 

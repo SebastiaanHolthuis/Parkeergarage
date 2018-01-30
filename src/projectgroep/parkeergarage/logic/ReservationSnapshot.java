@@ -1,9 +1,9 @@
 package projectgroep.parkeergarage.logic;
 
-import projectgroep.parkeergarage.logic.cars.Car;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import projectgroep.parkeergarage.logic.cars.Car;
 
 
 public class ReservationSnapshot extends MapLike {

@@ -2,18 +2,12 @@ package projectgroep.parkeergarage.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.logic.Settings;
-
-import java.awt.Label;
-import javax.swing.Box;
-import javax.swing.JLabel;
 
 public class TextStatisticsView extends AbstractView {
 
@@ -27,7 +21,8 @@ public class TextStatisticsView extends AbstractView {
         addComponents();
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         table.getModel().setValueAt(model.getNumberOfOpenSpots(), 0, 1);
         table.getModel().setValueAt(model.getAllCars().count(), 1, 1);
         table.getModel().setValueAt(model.getParkingPassCars().count(), 2, 1);
@@ -46,7 +41,7 @@ public class TextStatisticsView extends AbstractView {
     private void addComponents() {
         table = new JTable();
         table.setEnabled(false);
-        table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        table.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
         table.setModel(new DefaultTableModel(
         	new Object[][] {
         		{"Beschikbare plaatsen", new Integer(0)},
@@ -68,7 +63,8 @@ public class TextStatisticsView extends AbstractView {
         	boolean[] columnEditables = new boolean[] {
         		true, false
         	};
-        	public boolean isCellEditable(int row, int column) {
+        	@Override
+			public boolean isCellEditable(int row, int column) {
         		return columnEditables[column];
         	}
         });

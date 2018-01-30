@@ -1,8 +1,8 @@
 package projectgroep.parkeergarage.view;
 
-import projectgroep.parkeergarage.logic.ParkeerLogic;
+import javax.swing.JTabbedPane;
 
-import javax.swing.*;
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class ChartTabs extends AbstractView {
     PieChartView pieChartView;
@@ -20,7 +20,7 @@ public class ChartTabs extends AbstractView {
 
         tabbedPane = new JTabbedPane() {{
             add(pieChartView, "Omzet");
-            add(lineCarChartView, lineCarChartView.SERIES_NAME);
+            add(lineCarChartView, LineCarChartView.SERIES_NAME);
             add(lineChartView, "");
         }};
 

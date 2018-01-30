@@ -1,11 +1,8 @@
 package projectgroep.parkeergarage.view;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -65,7 +62,8 @@ public class LineChartView extends AbstractView {
         return xyChart;
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         addDataPoint();
     }
 

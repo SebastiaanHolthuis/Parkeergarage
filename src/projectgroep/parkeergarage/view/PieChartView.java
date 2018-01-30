@@ -62,7 +62,8 @@ public class PieChartView extends AbstractView {
         return xyChart;
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         addDataPoint();
     }
 

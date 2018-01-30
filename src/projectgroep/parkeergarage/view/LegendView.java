@@ -8,7 +8,6 @@ import java.awt.Image;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.AdHocCar;
-import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
@@ -39,7 +38,8 @@ public class LegendView extends AbstractView {
         }
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             legendImage = createImage(size.width, size.height);

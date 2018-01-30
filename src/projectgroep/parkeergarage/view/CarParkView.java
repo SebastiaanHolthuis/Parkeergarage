@@ -8,7 +8,6 @@ import java.awt.Image;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
-import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class CarParkView extends AbstractView {
 
@@ -36,7 +35,8 @@ public class CarParkView extends AbstractView {
         }
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
@@ -44,33 +44,27 @@ public class CarParkView extends AbstractView {
 
         Graphics graphics = carParkImage.getGraphics();
 
-        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) {
-                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                    Location location = new Location(floor, row, place);
-                    Car car = model.getCarAt(location);
-                    Color color = car == null ? Color.decode("#8bba8b") : car.getColor();
-                    
-                    if (model.getReservationLogic().getReservations().values().contains(location)) {                   	
-                    	if (car != null) {
-                    		color = car.getColor();
-                    	}
-                    } else {
-	                    if (car == null && floor == 0 && row < 2) {
-	                        color = Color.decode("#ADDAF7"); // Blue
-	                    } else if (car == null) {
-	                        color = Color.decode("#F0839E"); // Magenta
-	                    } else {
-	                        color = car.getColor();
-	                    }
-                    }
-                    
-                    drawPlace(graphics, location, color);                 
+        model.locations().forEach(location -> {
+            Car car = model.getCarAt(location);
+            Color color = car == null ? Color.decode("#8bba8b") : car.getColor();
+
+            if (model.getReservationLogic().getReservations().values().contains(location)) {
+                if (car != null) {
+                    color = car.getColor();
+                }
+            } else {
+                if (car == null && location.getFloor() == 0 && location.getRow() < 2) {
+                    color = Color.decode("#ADDAF7"); // Blue
+                } else if (car == null) {
+                    color = Color.decode("#F0839E"); // Magenta
+                } else {
+                    color = car.getColor();
                 }
             }
-        }
 
-
+            drawPlace(graphics, location, color);
+        });
+        
         repaint();
     }
 

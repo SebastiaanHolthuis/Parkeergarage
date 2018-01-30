@@ -1,6 +1,6 @@
 package projectgroep.parkeergarage.logic.cars;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 
 import projectgroep.parkeergarage.logic.Location;
