@@ -69,7 +69,8 @@ public class ParkeerLogic extends AbstractModel {
         this.reservationLogic = new ReservationLogic(this);
     }
 
-    public void run() {
+    @Override
+	public void run() {
         running = true;
 
         while (true) {

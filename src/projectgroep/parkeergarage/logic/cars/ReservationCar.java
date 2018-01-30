@@ -16,7 +16,8 @@ public class ReservationCar extends Car {
         this.setPriceToPay(6);
     }
 
-    public Color getColor() {
+    @Override
+	public Color getColor() {
         return COLOR;
     }
 }

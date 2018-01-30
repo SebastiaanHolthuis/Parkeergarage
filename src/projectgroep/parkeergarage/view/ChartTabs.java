@@ -20,7 +20,7 @@ public class ChartTabs extends AbstractView {
 
         tabbedPane = new JTabbedPane() {{
             add(pieChartView, "Omzet");
-            add(lineCarChartView, lineCarChartView.SERIES_NAME);
+            add(lineCarChartView, LineCarChartView.SERIES_NAME);
             add(lineChartView, "");
         }};
 

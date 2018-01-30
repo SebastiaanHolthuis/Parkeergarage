@@ -62,7 +62,8 @@ public class LineChartView extends AbstractView {
         return xyChart;
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         addDataPoint();
     }
 

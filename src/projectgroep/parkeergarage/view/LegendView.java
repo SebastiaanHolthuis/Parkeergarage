@@ -38,7 +38,8 @@ public class LegendView extends AbstractView {
         }
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             legendImage = createImage(size.width, size.height);

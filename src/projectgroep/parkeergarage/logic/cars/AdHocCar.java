@@ -15,7 +15,8 @@ public class AdHocCar extends Car {
         this.setHasToPay(true);
     }
 
-    public Color getColor() {
+    @Override
+	public Color getColor() {
         return COLOR;
     }
 }

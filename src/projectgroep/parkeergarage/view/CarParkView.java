@@ -35,7 +35,8 @@ public class CarParkView extends AbstractView {
         }
     }
 
-    public void updateView() {
+    @Override
+	public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             carParkImage = createImage(size.width, size.height);

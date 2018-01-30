@@ -15,7 +15,8 @@ public class ParkingPassCar extends Car {
         this.setHasToPay(false);
     }
 
-    public Color getColor() {
+    @Override
+	public Color getColor() {
         return COLOR;
     }
 }
