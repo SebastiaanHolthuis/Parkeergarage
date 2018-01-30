@@ -53,7 +53,7 @@ public class CarParkView extends AbstractView {
                     color = car.getColor();
                 }
             } else {
-                if (car == null && floor == 0 && row < 2) {
+                if (car == null && location.getFloor() == 0 && location.getRow() < 2) {
                     color = Color.decode("#ADDAF7"); // Blue
                 } else if (car == null) {
                     color = Color.decode("#F0839E"); // Magenta
@@ -64,13 +64,11 @@ public class CarParkView extends AbstractView {
 
             drawPlace(graphics, location, color);
         });
+        
+        repaint();
+
 
     }
-
-
-    repaint();
-
-}
 
     private void drawPlace(Graphics graphics, Location location, Color color) {
         graphics.setColor(color);
