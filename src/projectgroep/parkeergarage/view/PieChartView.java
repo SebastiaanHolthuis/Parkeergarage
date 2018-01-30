@@ -1,7 +1,5 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.Dimension;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -23,7 +21,6 @@ public class PieChartView extends AbstractView {
 
     private XYChart xyChart;
 
-    private List<Double> yData;
     public static final String SERIES_NAME = "Omzet in euro's";
 
     public PieChartView(ParkeerLogic model) {
@@ -31,8 +28,8 @@ public class PieChartView extends AbstractView {
         go();
     }
 
-    private void go() {
-        JPanel chartPanel = new XChartPanel(getChart());
+    void go() {
+        JPanel chartPanel = new XChartPanel(makeChart());
         add(chartPanel);
         chartPanel.validate();
 
@@ -42,7 +39,6 @@ public class PieChartView extends AbstractView {
             @Override
             public void run() {
                 updateData();
-
                 javax.swing.SwingUtilities.invokeLater(() -> chartPanel.repaint());
             }
         };
@@ -51,13 +47,18 @@ public class PieChartView extends AbstractView {
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
     }
 
-    public XYChart getChart() {
-        yData = getData();
+    XYChart makeChart() {
 
         // Create Chart
-        xyChart = new XYChartBuilder().width(600).height(475).theme(ChartTheme.Matlab).title("Omzet per dag").build();
+        xyChart = new XYChartBuilder()
+                .width(600)
+                .height(475)
+                .theme(ChartTheme.Matlab)
+                .title("Omzet per dag")
+                .build();
+
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, yData);
+        xyChart.addSeries(SERIES_NAME, null, getData());
 
         return xyChart;
     }
@@ -75,14 +76,4 @@ public class PieChartView extends AbstractView {
     public void updateData() {
         xyChart.updateXYSeries(SERIES_NAME, null, getData(), null);
     }
-
-    private List<Double> getRandomData(int numPoints) {
-
-        List<Double> data = new CopyOnWriteArrayList<Double>();
-        for (int i = 0; i < numPoints; i++) {
-            data.add(Math.random() * 100);
-        }
-        return data;
-    }
-
 }
