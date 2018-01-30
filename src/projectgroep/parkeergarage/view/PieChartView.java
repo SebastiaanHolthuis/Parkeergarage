@@ -20,6 +20,9 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class PieChartView extends AbstractView {
 
     private XYChart xyChart;
+    private ArrayList yData = new ArrayList() {{
+        add(0);
+    }};
 
     public static final String SERIES_NAME = "Omzet in euro's";
 
@@ -44,11 +47,10 @@ public class PieChartView extends AbstractView {
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 2000);
     }
 
     XYChart makeChart() {
-
         // Create Chart
         xyChart = new XYChartBuilder()
                 .width(600)
@@ -58,22 +60,21 @@ public class PieChartView extends AbstractView {
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, getData());
+        xyChart.addSeries(SERIES_NAME, null, yData);
 
         return xyChart;
     }
 
-    List<Double> getData() {
-        return new ArrayList() {{
-            add(0);
-            addAll(model.history
-                    .stream()
-                    .map(snapshot -> snapshot.totalEarned)
-                    .collect(Collectors.toList()));
-        }};
+    public void updateView() {
+        addDataPoint();
+    }
+
+    void addDataPoint() {
+        yData.add(model.getTotalEarned());
     }
 
     public void updateData() {
-        xyChart.updateXYSeries(SERIES_NAME, null, getData(), null);
+        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
     }
+
 }
