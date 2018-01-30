@@ -1,8 +1,11 @@
 package projectgroep.parkeergarage.view;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -14,16 +17,16 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-public class PieChartView extends AbstractView {
+public class LineCarChartView extends AbstractView {
 
     private XYChart xyChart;
     private ArrayList yData = new ArrayList() {{
         add(0);
     }};
 
-    public static final String SERIES_NAME = "Omzet in euro's";
+    public static final String SERIES_NAME = "Aantal Auto's";
 
-    public PieChartView(ParkeerLogic model) {
+    public LineCarChartView(ParkeerLogic model) {
         super(model);
         go();
     }
@@ -44,7 +47,7 @@ public class PieChartView extends AbstractView {
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 100);
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 2000);
     }
 
     XYChart makeChart() {
@@ -53,7 +56,7 @@ public class PieChartView extends AbstractView {
                 .width(600)
                 .height(475)
                 .theme(ChartTheme.Matlab)
-                .title("Omzet per dag")
+                .title(SERIES_NAME)
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
@@ -67,7 +70,7 @@ public class PieChartView extends AbstractView {
     }
 
     void addDataPoint() {
-        yData.add(model.getTotalEarned());
+        yData.add(model.getAdHocCars().count());
     }
 
     public void updateData() {

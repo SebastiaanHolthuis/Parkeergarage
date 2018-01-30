@@ -10,7 +10,7 @@ public class ReservationCar extends Car {
         super(priceToPay);
 
         Random random = new Random();
-        int stayMinutes = (int) (15 + random.nextFloat() * 3 * 60);
+        int stayMinutes = (int) (15 + random.nextFloat() * 3 * 10);
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
         this.setPriceToPay(6);

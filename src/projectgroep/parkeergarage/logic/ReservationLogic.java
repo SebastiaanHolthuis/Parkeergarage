@@ -12,7 +12,7 @@ import static projectgroep.parkeergarage.Utils.deepClone;
 public class ReservationLogic {
 
     private ParkeerLogic model;
-    private HashMap<Car, Location> reservations = new HashMap<Car, Location>();
+    private HashMap<Car, Location> reservations = new HashMap<>();
     public static ArrayList<Car> cars = new ArrayList<Car>();
 
     public ReservationLogic(ParkeerLogic model) {
@@ -21,7 +21,7 @@ public class ReservationLogic {
 
     public ReservationLogic(ParkeerLogic model, ReservationSnapshot snapshot) {
         this.model = model;
-        this.reservations = snapshot.reservations;
+        reservations = snapshot.reservations;
         cars = snapshot.cars;
     }
 

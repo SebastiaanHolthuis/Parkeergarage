@@ -22,9 +22,12 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.PieChartView;
+import projectgroep.parkeergarage.view.LineChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+
+import projectgroep.parkeergarage.view.*;
+
 
 public class Simulator {
 
@@ -32,9 +35,10 @@ public class Simulator {
     private CarParkView carParkView;
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
-    private PieChartView pieChartView;
+
+    private ChartTabs chartTabs;
     private LegendView legendView;
-    
+
     private JFrame screen;
     private JFrame settingsScreen;
 
@@ -76,7 +80,7 @@ public class Simulator {
         buttonController = new ButtonController(this, parkeerLogic);
 
         initializeCarPark();
-        initializePieChart();
+        initializeCharts();
         initializeStatistics();
         initializeSettings();
         initializeLegend();
@@ -97,7 +101,7 @@ public class Simulator {
         screen.setVisible(true);
 
         carParkView.updateView();
-        pieChartView.updateView();
+        chartTabs.updateView();
         legendView.updateView();
     }
 
@@ -106,7 +110,7 @@ public class Simulator {
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
-        parkeerLogic.addView(pieChartView);
+        parkeerLogic.addView(chartTabs);
         parkeerLogic.addView(legendView);
     }
 
@@ -128,10 +132,10 @@ public class Simulator {
         }};
     }
 
-    void initializePieChart() {
-        pieChartView = new PieChartView(parkeerLogic) {{
+    void initializeCharts() {
+        chartTabs = new ChartTabs(parkeerLogic) {{
             setBackground(Color.WHITE);
-            setBorder(new LineBorder(new Color(0, 0, 0)));
+//            setBorder(new LineBorder(new Color(0, 0, 0)));
             setBounds(panelWidth + carParkWidth + gap * 2, yOffset, pieChartWidth, 501);
         }};
     }
@@ -183,14 +187,14 @@ public class Simulator {
             setBounds(panelWidth + carParkWidth + gap * 2, 550, pieChartWidth, 131);
         }};
     }
-    
+
     void addElementsToContentPane() {
-        contentPane.add(pieChartView);
+        contentPane.add(chartTabs);
         contentPane.add(carParkView);
         contentPane.add(buttonController);
         contentPane.add(legendView);
         contentPane.add(panel);
-        
+
         // Menu bar voor nu gedeactiveerd
         // contentPane.add(menuBar);
     }
