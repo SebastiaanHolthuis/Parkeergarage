@@ -73,7 +73,7 @@ public class Events {
 	/**
 	 * @return Returns an ArrayList with all of the events that start at a specific time.
 	 * 
-	 * @param startTime The time that the event starts at.
+	 * @param startTime The time to use for the filter.
 	 */
 	public List<Event> getEventsByStartTime(int[] startTime) {
 		return events.stream().filter(event -> (event.getStartTime() == startTime)).collect(Collectors.toList());
