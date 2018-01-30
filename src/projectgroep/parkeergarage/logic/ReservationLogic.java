@@ -21,7 +21,7 @@ public class ReservationLogic {
 
     public ReservationLogic(ParkeerLogic model, ReservationSnapshot snapshot) {
         this.model = model;
-        this.reservations = snapshot.reservations;
+        reservations = snapshot.reservations;
         cars = snapshot.cars;
     }
 
