@@ -12,10 +12,9 @@ import javax.swing.table.DefaultTableModel;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class TextStatisticsView extends AbstractView {
-
-
     private Dimension size;
     private JTable table;
+    private Stat
 
     @SuppressWarnings("serial")
     public TextStatisticsView(ParkeerLogic model) {
@@ -37,12 +36,11 @@ public class TextStatisticsView extends AbstractView {
                 x -> "€" + model.getSkipCount() * 4,
                 x -> model.getDay(),
                 x -> model.getTime(),
-                x -> model.getTime()
+                x -> model.history.stepsBack()
         };
 
-        for (Function l : Arrays.asList(statistics)) {
-            table.getModel().setValueAt(statistics., 0, 1);
-        }
+        for (int i = 0; i < statistics.length; i++)
+            table.getModel().setValueAt(statistics[i].apply(null), i, 1);
 
         repaint();
     }
@@ -64,7 +62,7 @@ public class TextStatisticsView extends AbstractView {
                         {"Misgelopen omzet", new Integer(0)},
                         {"Dagen", new Integer(0)},
                         {"Tijd", new Integer(0)},
-                        {"Terug tot", new Integer(0)},
+                        {"Stappen terug", new Integer(0)},
                 },
                 new String[]{
                         "Variabele", "Waarde"

@@ -39,4 +39,8 @@ public class History {
     void popBottom() {
         snapshots.remove(0);
     }
+
+    public int stepsBack() {
+        return snapshots.size();
+    }
 }
