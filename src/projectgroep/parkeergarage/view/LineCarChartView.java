@@ -67,9 +67,9 @@ public class LineCarChartView extends AbstractView {
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, addHOC);
-        xyChart.addSeries(SERIES_NAME2, null, reservationCar);
         xyChart.addSeries(SERIES_NAME1, null, parkingPass);
+        xyChart.addSeries(SERIES_NAME2, null, reservationCar);
+        xyChart.addSeries(SERIES_NAME, null, addHOC);
 
 
         return xyChart;

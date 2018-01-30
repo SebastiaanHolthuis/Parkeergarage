@@ -70,7 +70,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     @Override
-	public void run() {
+    public void run() {
         running = true;
 
         while (true) {
