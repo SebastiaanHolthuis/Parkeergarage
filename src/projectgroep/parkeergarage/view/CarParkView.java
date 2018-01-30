@@ -66,10 +66,6 @@ public class CarParkView extends AbstractView {
         });
         
         repaint();
-
-
-        repaint();
-
     }
 
     private void drawPlace(Graphics graphics, Location location, Color color) {
