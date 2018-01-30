@@ -2,10 +2,12 @@ package projectgroep.parkeergarage.view;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -31,7 +33,7 @@ public class PieChartView extends AbstractView {
 
     private void go() {
         JPanel chartPanel = new XChartPanel(getChart());
-//        add(chartPanel);
+        add(chartPanel);
         chartPanel.validate();
 
         // Simulate a data feed
@@ -50,7 +52,7 @@ public class PieChartView extends AbstractView {
     }
 
     public XYChart getChart() {
-        yData = getRandomData(5);
+        yData = getData();
 
         // Create Chart
         xyChart = new XYChartBuilder().width(600).height(475).theme(ChartTheme.Matlab).title("Omzet per dag").build();
@@ -60,18 +62,18 @@ public class PieChartView extends AbstractView {
         return xyChart;
     }
 
+    List<Double> getData() {
+        return new ArrayList() {{
+            add(0);
+            addAll(model.history
+                    .stream()
+                    .map(snapshot -> snapshot.totalEarned)
+                    .collect(Collectors.toList()));
+        }};
+    }
+
     public void updateData() {
-        // Get some new data
-        List<Double> newData = getRandomData(1);
-
-        yData.addAll(newData);
-
-        // Limit the total number of points
-        while (yData.size() > 7) {
-            yData.remove(0);
-        }
-
-        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+        xyChart.updateXYSeries(SERIES_NAME, null, getData(), null);
     }
 
     private List<Double> getRandomData(int numPoints) {
