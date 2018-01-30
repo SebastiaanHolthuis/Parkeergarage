@@ -22,13 +22,13 @@ public class LineCarChartView extends AbstractView {
         add(0);
     }};
     private ArrayList parkingPass = new ArrayList() {{
-    	add(0);
+        add(0);
     }};
 
     private ArrayList reservationCar = new ArrayList() {{
-    	add(0);
+        add(0);
     }};
-    
+
     public static final String SERIES_NAME = "AddHOC Cars";
     public static final String SERIES_NAME1 = "ParkingPass Cars";
     public static final String SERIES_NAME2 = "Reservation Cars";
@@ -68,17 +68,16 @@ public class LineCarChartView extends AbstractView {
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
         xyChart.addSeries(SERIES_NAME, null, addHOC);
-        xyChart.addSeries(SERIES_NAME1, null, parkingPass);
         xyChart.addSeries(SERIES_NAME2, null, reservationCar);
-        
+        xyChart.addSeries(SERIES_NAME1, null, parkingPass);
+
 
         return xyChart;
     }
-   
-    
+
 
     @Override
-	public void updateView() {
+    public void updateView() {
         addDataPoint();
     }
 
