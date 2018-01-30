@@ -14,9 +14,7 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class TextStatisticsView extends AbstractView {
     private Dimension size;
     private JTable table;
-    private Stat
 
-    @SuppressWarnings("serial")
     public TextStatisticsView(ParkeerLogic model) {
         super(model);
         addComponents();
