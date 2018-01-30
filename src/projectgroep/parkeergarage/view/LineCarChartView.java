@@ -20,11 +20,21 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class LineCarChartView extends AbstractView {
 
     private XYChart xyChart;
-    private ArrayList yData = new ArrayList() {{
+    private XYChart xyChart1;
+    private ArrayList addHOC = new ArrayList() {{
         add(0);
     }};
+    private ArrayList parkingPass = new ArrayList() {{
+    	add(0);
+    }};
 
-    public static final String SERIES_NAME = "Aantal Auto's";
+    private ArrayList reservationCar = new ArrayList() {{
+    	add(0);
+    }};
+    
+    public static final String SERIES_NAME = "AddHOC Cars";
+    public static final String SERIES_NAME1 = "ParkingPass Cars";
+    public static final String SERIES_NAME2 = "Reservation Cars";
 
     public LineCarChartView(ParkeerLogic model) {
         super(model);
@@ -47,7 +57,7 @@ public class LineCarChartView extends AbstractView {
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 2000);
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 100);
     }
 
     XYChart makeChart() {
@@ -60,21 +70,30 @@ public class LineCarChartView extends AbstractView {
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, yData);
+        xyChart.addSeries(SERIES_NAME, null, addHOC);
+        xyChart.addSeries(SERIES_NAME1, null, parkingPass);
+        xyChart.addSeries(SERIES_NAME2, null, reservationCar);
+        
 
         return xyChart;
     }
+   
+    
 
     public void updateView() {
         addDataPoint();
     }
 
     void addDataPoint() {
-        yData.add(model.getAdHocCars().count());
+        addHOC.add(model.getAdHocCars().count());
+        parkingPass.add(model.getParkingPassCars().count());
+        reservationCar.add(model.getReservationCars().count());
     }
 
     public void updateData() {
-        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+        xyChart.updateXYSeries(SERIES_NAME, null, addHOC, null);
+        xyChart.updateXYSeries(SERIES_NAME1, null, parkingPass, null);
+        xyChart.updateXYSeries(SERIES_NAME2, null, reservationCar, null);
     }
 
 }
