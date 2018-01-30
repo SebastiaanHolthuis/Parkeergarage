@@ -1,3 +1,4 @@
+
 package projectgroep.parkeergarage.logic;
 
 import java.io.Serializable;
