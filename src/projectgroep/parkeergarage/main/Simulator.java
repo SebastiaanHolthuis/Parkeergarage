@@ -22,7 +22,7 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.PieChartView;
+import projectgroep.parkeergarage.view.LineChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
 
@@ -32,7 +32,7 @@ public class Simulator {
     private CarParkView carParkView;
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
-    private PieChartView pieChartView;
+    private LineChartView pieChartView;
     private LegendView legendView;
     
     private JFrame screen;
@@ -129,7 +129,7 @@ public class Simulator {
     }
 
     void initializePieChart() {
-        pieChartView = new PieChartView(parkeerLogic) {{
+        pieChartView = new LineChartView(parkeerLogic) {{
             setBackground(Color.WHITE);
             setBorder(new LineBorder(new Color(0, 0, 0)));
             setBounds(panelWidth + carParkWidth + gap * 2, yOffset, pieChartWidth, 501);
