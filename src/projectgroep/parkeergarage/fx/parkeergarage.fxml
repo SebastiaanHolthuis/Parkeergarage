@@ -5,17 +5,13 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane minHeight="600.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="600.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <left>
 
     </left>
     <center>
-        <Label text="Some data here"/>
+        <Label text="Some data here" />
     </center>
     <right>
 
@@ -24,30 +20,17 @@
 
     </bottom>
     <left>
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane prefHeight="200.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Statistics">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab text="Settings">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="445.0" prefWidth="181.0">
-                            <children>
-                                <GridPane>
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                </GridPane>
-                            </children>
-                        </AnchorPane>
+                        <fx:include source="settings.fxml" />
+
                     </content>
                 </Tab>
             </tabs>
@@ -58,13 +41,12 @@
             <tabs>
                 <Tab text="Untitled Tab 1">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="445.0" prefWidth="232.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="445.0" prefWidth="232.0" />
                     </content>
                 </Tab>
                 <Tab text="Untitled Tab 2">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <fx:include source="settings.fxml"/>
                         </AnchorPane>
                     </content>
                 </Tab>
@@ -72,6 +54,6 @@
         </TabPane>
     </right>
     <bottom>
-        <BorderPane prefHeight="122.0" prefWidth="1000.0" BorderPane.alignment="CENTER"/>
+        <BorderPane prefHeight="122.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
     </bottom>
 </BorderPane>
