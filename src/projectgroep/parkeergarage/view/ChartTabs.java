@@ -25,6 +25,6 @@ public class ChartTabs extends AbstractView {
             });
         }};
 
-//        add(tabbedPane);
+        add(tabbedPane);
     }
 }
