@@ -46,13 +46,15 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private CarQueue paymentCarQueue;
+
+
     private CarQueue exitCarQueue;
 
     private LocationLogic locationLogic;
 
     public int tickPause = 100;
 
-    public Stack<Snapshot> history = new Stack<>();
+    public History history;
     private ReservationLogic reservationLogic;
 
     public ParkeerLogic(Settings settings) {
@@ -65,6 +67,7 @@ public class ParkeerLogic extends AbstractModel {
         this.numberOfOpenSpots = settings.numberOfFloors * settings.numberOfRows * settings.numberOfPlaces;
         this.cars = new Car[settings.numberOfFloors][settings.numberOfRows][settings.numberOfPlaces];
 
+        this.history = new History(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
     }
@@ -107,18 +110,12 @@ public class ParkeerLogic extends AbstractModel {
         sn.skippedCars = skippedCars;
         sn.totalEarned = totalEarned;
 
-        history.push(sn);
+        history.saveSnapshot(sn);
     }
 
     public void stepBack(int steps) {
-        if (history.size() == 0)
-            return;
+        Snapshot lastStep = history.getStepsBack(steps);
 
-        IntStream.range(0, steps).forEach(i -> {
-            if (history.size() > 1) history.pop();
-        });
-
-        Snapshot lastStep = history.peek();
         lastStep.asMap().forEach((k, v) -> {
             try {
                 Field field = getClass().getDeclaredField(k);
@@ -128,7 +125,6 @@ public class ParkeerLogic extends AbstractModel {
         });
 
         reservationLogic = new ReservationLogic(this, lastStep.reservationSnapshot);
-
 
         updateViews();
     }
