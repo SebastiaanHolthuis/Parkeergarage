@@ -1,29 +1,28 @@
 package projectgroep.parkeergarage.view;
 
-import javax.sound.sampled.Line;
 import javax.swing.JTabbedPane;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class ChartTabs extends AbstractView {
     JTabbedPane tabbedPane;
 
-    public ChartTabs(ParkeerLogic model) {
-        super(model);
+    public ChartTabs(ParkeerLogic parkeerLogic) {
+        super(parkeerLogic);
 
-        AbstractView[] views = {
-                new PieChartView(model),
-                new LineCarChartView(model),
-                new LineChartView(model)
-        };
+        HashMap<AbstractView, String> views = new HashMap() {{
+            put(new PieChartView(model), "Omzet");
+            put(new LineCarChartView(model), "Aantal Auto's");
+            put(new LineChartView(model), "?");
+        }};
 
         tabbedPane = new JTabbedPane() {{
-            for (AbstractView view : views) {
-                add(view, view.SERIES_NAME);
-                model.addView(pieChartView);
-            }
+            views.forEach((chart, name) -> {
+                add(chart, name);
+                parkeerLogic.addView(chart);
+            });
         }};
 
         add(tabbedPane);
