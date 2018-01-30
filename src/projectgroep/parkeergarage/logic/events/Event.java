@@ -8,9 +8,7 @@ public class Event {
 	
 	private String name;
 	
-	private int day;
-	private int hour;
-	private int minute;
+	private int[] startTime;
 		
 	private int durationHours;
 	private int durationMinutes;
@@ -32,9 +30,10 @@ public class Event {
 	public Event(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
 		this.name = name;
 		
-		this.day = day;
-		this.hour = hour;
-		this.minute = minute;
+		this.startTime = new int[3];
+		this.startTime[0] = day;
+		this.startTime[1] = hour;
+		this.startTime[2] = minute;
 		
 		this.durationHours = duration[0];
 		this.durationMinutes = duration[1];
@@ -50,28 +49,12 @@ public class Event {
 		this.name = name;
 	}
 
-	public int getDay() {
-		return day;
+	public int[] getStartTime() {
+		return startTime;
 	}
 
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public int getHour() {
-		return hour;
-	}
-
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-
-	public int getMinute() {
-		return minute;
-	}
-
-	public void setMinute(int minute) {
-		this.minute = minute;
+	public void setStartTime(int[] startTime) {
+		this.startTime = startTime;
 	}
 
 	public int getDurationHours() {
