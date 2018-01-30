@@ -1,16 +1,25 @@
 package projectgroep.parkeergarage.logic;
 
+import static projectgroep.parkeergarage.Utils.deepClone;
+import static projectgroep.parkeergarage.logic.cars.CarType.AD_HOC;
+import static projectgroep.parkeergarage.logic.cars.CarType.PARKINGPASS;
+import static projectgroep.parkeergarage.logic.cars.CarType.RESERVED;
+
 import java.lang.reflect.Field;
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+import java.util.Stack;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import projectgroep.parkeergarage.Utils;
-import projectgroep.parkeergarage.logic.cars.*;
-
-import static projectgroep.parkeergarage.Utils.*;
-import static projectgroep.parkeergarage.logic.cars.CarType.*;
+import projectgroep.parkeergarage.logic.cars.AdHocCar;
+import projectgroep.parkeergarage.logic.cars.Car;
+import projectgroep.parkeergarage.logic.cars.CarQueue;
+import projectgroep.parkeergarage.logic.cars.CarType;
+import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
+import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;

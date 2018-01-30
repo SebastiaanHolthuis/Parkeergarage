@@ -1,8 +1,8 @@
 package projectgroep.parkeergarage.logic;
 
-import projectgroep.parkeergarage.logic.cars.Car;
-
 import java.io.Serializable;
+
+import projectgroep.parkeergarage.logic.cars.Car;
 
 public class Location implements Serializable {
 

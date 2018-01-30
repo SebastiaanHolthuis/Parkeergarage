@@ -2,18 +2,12 @@ package projectgroep.parkeergarage.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.logic.Settings;
-
-import java.awt.Label;
-import javax.swing.Box;
-import javax.swing.JLabel;
 
 public class TextStatisticsView extends AbstractView {
 

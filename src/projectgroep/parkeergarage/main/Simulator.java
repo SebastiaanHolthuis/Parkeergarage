@@ -21,12 +21,10 @@ import projectgroep.parkeergarage.controller.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
+import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.LineChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
-
-import projectgroep.parkeergarage.view.*;
 
 
 public class Simulator {

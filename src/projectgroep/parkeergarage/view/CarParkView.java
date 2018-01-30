@@ -8,7 +8,6 @@ import java.awt.Image;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
-import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
 public class CarParkView extends AbstractView {
 

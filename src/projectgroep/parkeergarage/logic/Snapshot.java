@@ -1,13 +1,9 @@
 package projectgroep.parkeergarage.logic;
 
+import java.util.List;
+
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class Snapshot extends MapLike {
     CarQueue entranceCarQueue;

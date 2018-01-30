@@ -1,7 +1,7 @@
 package projectgroep.parkeergarage.logic.cars;
 
+import java.awt.Color;
 import java.util.Random;
-import java.awt.*;
 
 public class AdHocCar extends Car {
     public static final Color COLOR = Color.decode("#D1345B");

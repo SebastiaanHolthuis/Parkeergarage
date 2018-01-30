@@ -1,8 +1,8 @@
 package projectgroep.parkeergarage.view;
 
-import projectgroep.parkeergarage.logic.ParkeerLogic;
+import javax.swing.JTabbedPane;
 
-import javax.swing.*;
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class ChartTabs extends AbstractView {
     PieChartView pieChartView;

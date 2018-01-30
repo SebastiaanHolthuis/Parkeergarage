@@ -1,8 +1,9 @@
 package projectgroep.parkeergarage.controller;
 
-import java.awt.*;
+import java.awt.Container;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JSlider;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.main.Simulator;
