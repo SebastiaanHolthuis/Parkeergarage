@@ -384,7 +384,7 @@ public class ParkeerLogic extends AbstractModel {
         exitCarQueue.addCar(car);
     }
 
-    private Collection<Location> locations() {
+    public Collection<Location> locations() {
         Collection<Location> locations = new ArrayList<>();
 
         for (int floor = 0; floor < getNumberOfFloors(); floor++)
