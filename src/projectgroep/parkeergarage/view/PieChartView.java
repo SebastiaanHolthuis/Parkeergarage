@@ -1,11 +1,11 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.Dimension;
-import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -20,8 +20,10 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 public class PieChartView extends AbstractView {
 
     private XYChart xyChart;
+    private ArrayList yData = new ArrayList() {{
+        add(0);
+    }};
 
-    private List<Double> yData;
     public static final String SERIES_NAME = "Omzet in euro's";
 
     public PieChartView(ParkeerLogic model) {
@@ -29,8 +31,8 @@ public class PieChartView extends AbstractView {
         go();
     }
 
-    private void go() {
-        JPanel chartPanel = new XChartPanel(getChart());
+    void go() {
+        JPanel chartPanel = new XChartPanel(makeChart());
         add(chartPanel);
         chartPanel.validate();
 
@@ -40,47 +42,39 @@ public class PieChartView extends AbstractView {
             @Override
             public void run() {
                 updateData();
-
                 javax.swing.SwingUtilities.invokeLater(() -> chartPanel.repaint());
             }
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 2000);
     }
 
-    public XYChart getChart() {
-        yData = getRandomData(5);
-
+    XYChart makeChart() {
         // Create Chart
-        xyChart = new XYChartBuilder().width(600).height(475).theme(ChartTheme.Matlab).title("Omzet per dag").build();
+        xyChart = new XYChartBuilder()
+                .width(600)
+                .height(475)
+                .theme(ChartTheme.Matlab)
+                .title("Omzet per dag")
+                .build();
+
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
         xyChart.addSeries(SERIES_NAME, null, yData);
 
         return xyChart;
     }
 
-    public void updateData() {
-        // Get some new data
-        List<Double> newData = getRandomData(1);
-
-        yData.addAll(newData);
-
-        // Limit the total number of points
-        while (yData.size() > 7) {
-            yData.remove(0);
-        }
-
-        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+    public void updateView() {
+        addDataPoint();
     }
 
-    private List<Double> getRandomData(int numPoints) {
+    void addDataPoint() {
+        yData.add(model.getTotalEarned());
+    }
 
-        List<Double> data = new CopyOnWriteArrayList<Double>();
-        for (int i = 0; i < numPoints; i++) {
-            data.add(Math.random() * 100);
-        }
-        return data;
+    public void updateData() {
+        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
     }
 
 }

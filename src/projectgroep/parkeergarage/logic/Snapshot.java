@@ -29,7 +29,7 @@ public class Snapshot extends MapLike {
 
     List<Car> skippedCars;
 
-    double totalEarned;
+    public double totalEarned;
 
 
 }
