@@ -35,7 +35,7 @@ public class Simulator {
     private CarParkView carParkView;
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
-    private LineChartView pieChartView;
+
     private ChartTabs chartTabs;
     private LegendView legendView;
 

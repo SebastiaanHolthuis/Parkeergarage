@@ -56,7 +56,7 @@ public class LineChartView extends AbstractView {
                 .width(600)
                 .height(475)
                 .theme(ChartTheme.Matlab)
-                .title("Omzet per dag")
+                .title(SERIES_NAME)
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
