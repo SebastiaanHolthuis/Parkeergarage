@@ -513,6 +513,8 @@ public class ParkeerLogic extends AbstractModel {
                 entranceCarQueue.addCar(car);
             }
         }
+        
+        if (getHour() >= 18 || getHour() <= 7) numberOfCars = numberOfCars /  2;
 
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
