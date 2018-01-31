@@ -6,6 +6,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
@@ -59,8 +60,11 @@ public class Simulator extends Application {
     }
 
     void addControlListeners() {
-        scene.lookup("#play").setOnMouseClicked((e) -> model.play());
-        scene.lookup("#pause").setOnMouseClicked((e) -> model.pause());
+        scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
+            model.toggleRunning();
+            ((ToggleButton) e.getSource()).setSelected(model.isRunning());
+        });
+
         scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
 

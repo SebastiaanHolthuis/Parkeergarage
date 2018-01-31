@@ -87,6 +87,14 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
+    public void toggleRunning() {
+        running = !running;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
     public void pause() {
         running = false;
     }

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -55,11 +56,10 @@
             <left>
                 <Pane prefHeight="194.0" prefWidth="210.0" style="-fx-border-style: solid; -fx-border-color: #ddd; -fx-border-width: 0 1px 0px 0px;" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="play" layoutX="37.0" layoutY="27.0" mnemonicParsing="false" text="Play" />
-                        <Button fx:id="pause" layoutX="120.0" layoutY="27.0" mnemonicParsing="false" text="Pause" />
-                        <Button fx:id="stepBack" layoutX="37.0" layoutY="69.0" mnemonicParsing="false" text="-10" />
-                        <Button fx:id="stepForward" layoutX="131.0" layoutY="69.0" mnemonicParsing="false" text="+10" />
+                        <Button fx:id="stepBack" layoutX="37.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="-10" />
+                        <Button fx:id="stepForward" layoutX="116.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="+10" />
                         <Slider fx:id="tickPauseSlider" layoutX="37.0" layoutY="110.0" min="1.0" showTickLabels="true" showTickMarks="true" />
+                        <ToggleButton fx:id="toggleRunning" layoutX="38.0" layoutY="19.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" selected="true" text="Running" />
                     </children>
                 </Pane>
             </left>
