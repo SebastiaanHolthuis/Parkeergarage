@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
+import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.SwingView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
@@ -40,6 +41,7 @@ public class Simulator extends Application {
     void addSwingComponents() {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
         addSwingComponent(new SettingsView(model, this), "#settings");
+        addSwingComponent(new CarParkView(model), "#carpark");
     }
 
     void addSwingComponent(SwingView view, String lookupId) {

@@ -1,13 +1,12 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
+
+import javax.swing.border.MatteBorder;
 
 public class CarParkView extends SwingView {
 
@@ -18,6 +17,9 @@ public class CarParkView extends SwingView {
         super(model);
 
         size = new Dimension(0, 0);
+        setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
+        setBackground(SystemColor.control);
+//        setBounds(0, 10, 865, 501);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class CarParkView extends SwingView {
     }
 
     @Override
-	public void updateView() {
+    public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
@@ -64,7 +66,7 @@ public class CarParkView extends SwingView {
 
             drawPlace(graphics, location, color);
         });
-        
+
         repaint();
     }
 
