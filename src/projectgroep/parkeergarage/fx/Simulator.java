@@ -31,16 +31,20 @@ public class Simulator extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-//        model.run();
         addSwingComponents();
+
+        new Thread(() -> {
+            model.run();
+        }).start();
     }
 
     void addSwingComponents() {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
         addSwingComponent(new SettingsView(model, this), "#settings");
-        addSwingComponent(new CarParkView(model), "#carpark");
+//        addSwingComponent(new CarParkView(model), "#carpark");
 
-        addSwingComponent(new ButtonController(this, model), "#legend");
+        addSwingComponent(new ButtonController(this, model), "#buttons");
+//        addSwingComponent(new LegendView(model), "#legend");
     }
 
     void addSwingComponent(View view, String lookupId) {
