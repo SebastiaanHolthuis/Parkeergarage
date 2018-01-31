@@ -16,18 +16,19 @@
     Chart lines
     TODO: duplicatie verwijderen
  */
-.default-color0 {
+
+.default-color0, .chart-legend-item-symbol {
     -fx-stroke: #D1345B !important;
     -fx-background-color: #D1345B !important;;
 }
 
-.default-color1 {
+.default-color1, .chart-legend-item-symbol {
     -fx-stroke: #33A4EA !important;
     -fx-background-color: #33A4EA !important;
 
 }
 
-.default-color2 {
+.default-color2, .chart-legend-item-symbol {
     -fx-stroke: #008000 !important;
     -fx-background-color: #008000 !important;
 }
@@ -35,4 +36,3 @@
 .chart-line-symbol {
     -fx-background-color: transparent !important;
 }
-

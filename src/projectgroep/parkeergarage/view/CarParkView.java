@@ -1,6 +1,7 @@
 package projectgroep.parkeergarage.view;
 
 
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -25,27 +26,29 @@ public class CarParkView extends AbstractView {
 
     @Override
     public void updateView() {
-        model.locations().forEach(location -> {
-            Car car = model.getCarAt(location);
-            Color color = car == null ? Color.web("#8bba8b") : car.getColor();
+        Platform.runLater(() -> {
+            model.locations().forEach(location -> {
+                Car car = model.getCarAt(location);
+                Color color = car == null ? Color.web("#8bba8b") : car.getColor();
+                System.out.println("update");
 
-            if (model.getReservationLogic().getReservations().values().contains(location)) {
-                if (car != null) {
-                    color = car.getColor();
-                }
-            } else {
-                if (car == null && location.getFloor() == 0 && location.getRow() < 2) {
-                    color = Color.web("#ADDAF7"); // Blue
-                } else if (car == null) {
-                    color = Color.web("#F0839E"); // Magenta
+                if (model.getReservationLogic().getReservations().values().contains(location)) {
+                    if (car != null) {
+                        color = car.getColor();
+                    }
                 } else {
-                    color = car.getColor();
+                    if (car == null && location.getFloor() == 0 && location.getRow() < 2) {
+                        color = Color.web("#ADDAF7"); // Blue
+                    } else if (car == null) {
+                        color = Color.web("#F0839E"); // Magenta
+                    } else {
+                        color = car.getColor();
+                    }
                 }
-            }
 
-            drawPlace(location, color);
+                drawPlace(location, color);
+            });
         });
-
     }
 
     private void drawPlace(Location location, Color color) {
@@ -55,6 +58,5 @@ public class CarParkView extends AbstractView {
                 60 + location.getPlace() * 10,
                 20 - 1,
                 10 - 1); // TODO use dynamic size or constants
-
     }
 }

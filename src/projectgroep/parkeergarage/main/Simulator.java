@@ -51,7 +51,7 @@ public class Simulator extends Application {
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
         attachComponentToLayout(new CarParkView(model), "#carpark");
-        attachComponentToLayout(new LegendView(model), "#legend");
+//        attachComponentToLayout(new LegendView(model), "#legend");
     }
 
 
@@ -92,7 +92,6 @@ public class Simulator extends Application {
         model = new ParkeerLogic(settings);
 
         Thread t = new Thread(() -> {
-
             model.run();
         });
 
