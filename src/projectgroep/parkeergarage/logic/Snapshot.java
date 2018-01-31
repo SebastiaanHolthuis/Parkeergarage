@@ -11,7 +11,7 @@ public class Snapshot extends MapLike {
     CarQueue paymentCarQueue;
     CarQueue exitCarQueue;
 
-    Car[][][] cars;
+    public Car[][][] cars;
 
     int numberOfOpenSpots;
 

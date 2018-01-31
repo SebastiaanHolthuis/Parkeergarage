@@ -1,10 +1,10 @@
 package projectgroep.parkeergarage.fx;
 
+import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 
@@ -27,12 +27,6 @@ public class LineCarChartView extends FXView {
         super();
 
         this.model = model;
-
-        adhoc.getData().add(new XYChart.Data(0, 0));
-        parkingPass.getData().add(new XYChart.Data(0, 0));
-        reservation.getData().add(new XYChart.Data(0, 0));
-
-
         adhoc.setName("Adhoc Cars");
         parkingPass.setName("ParkingPass Cars");
         reservation.setName("Reservation Cars");
@@ -42,19 +36,12 @@ public class LineCarChartView extends FXView {
         getChildren().addAll(lineChart);
     }
 
-
     @Override
     public void updateView() {
-        addDataPoint();
-    }
-
-    void addDataPoint() {
-        adhoc.getData().add(new XYChart.Data(model.tickNum(), model.getAdHocCars().count()));
-        parkingPass.getData().add(new XYChart.Data(model.tickNum(), model.getParkingPassCars().count()));
-        reservation.getData().add(new XYChart.Data(model.tickNum(), model.getReservationCars().count()));
-    }
-
-    public void updateData() {
-
+        Platform.runLater((Runnable) () -> {
+            adhoc.getData().add(new XYChart.Data(model.tickNum(), model.getAdHocCars().count()));
+            parkingPass.getData().add(new XYChart.Data(model.tickNum(), model.getParkingPassCars().count()));
+            reservation.getData().add(new XYChart.Data(model.tickNum(), model.getReservationCars().count()));
+        });
     }
 }

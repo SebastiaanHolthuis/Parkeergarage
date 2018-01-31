@@ -5,7 +5,7 @@ import java.util.Stack;
 import java.util.stream.IntStream;
 
 public class History {
-    Stack<Snapshot> snapshots = new Stack<>();
+    public Stack<Snapshot> snapshots = new Stack<>();
     int maxSize;
 
     History(int maxSize) {
