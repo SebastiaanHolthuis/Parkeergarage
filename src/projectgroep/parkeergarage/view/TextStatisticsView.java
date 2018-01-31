@@ -22,6 +22,7 @@ public class TextStatisticsView extends AbstractView {
 
     @Override
     public void updateView() {
+
         Function[] statistics = {
                 x -> model.getNumberOfOpenSpots(),
                 x -> model.getAllCars().count(),
