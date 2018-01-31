@@ -1,3 +1,7 @@
+#root {
+    /*-fx-font-family: "Futura Bk BT";*/
+}
+
 #bottomPane, #leftPane, #rightPane {
     -fx-background-color: #eeeeee;
     -fx-border-color: #ddd;
