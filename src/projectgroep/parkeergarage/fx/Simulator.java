@@ -42,6 +42,10 @@ public class Simulator extends Application {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
         addSwingComponent(new SettingsView(model, this), "#settings");
         addSwingComponent(new CarParkView(model), "#carpark");
+
+        addSwingComponent(new CarParkView(model), "#carpark");
+        addSwingComponent(new CarParkView(model), "#carpark");
+
     }
 
     void addSwingComponent(SwingView view, String lookupId) {
