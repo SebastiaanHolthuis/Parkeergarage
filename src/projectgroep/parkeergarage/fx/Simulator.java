@@ -53,6 +53,7 @@ public class Simulator extends Application {
     }
 
     void addSwingComponents() {
+        addSwingComponent(new TextStatisticsView(model), "#textstatistics");
 //        addSwingComponent(new LegendView(model), "#legend");
     }
 

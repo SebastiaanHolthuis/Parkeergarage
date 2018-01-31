@@ -24,14 +24,16 @@ public class TotalEarnedChartView extends FXView {
     public TotalEarnedChartView(ParkeerLogic model) {
         super();
         this.model = model;
+
+        totalEarned.setName(lineChart.getTitle());
+
         lineChart.getData().add(totalEarned);
         getChildren().addAll(lineChart);
     }
 
     @Override
     public void updateView() {
-        Platform.runLater((Runnable) () -> {
-            totalEarned.getData().add(new XYChart.Data(model.tickNum(), model.getTotalEarned()));
-        });
+        Platform.runLater(() ->
+                totalEarned.getData().add(new XYChart.Data(model.tickNum(), model.getTotalEarned())));
     }
 }
