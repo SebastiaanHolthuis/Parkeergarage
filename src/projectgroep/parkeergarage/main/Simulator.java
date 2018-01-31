@@ -62,7 +62,6 @@ public class Simulator extends Application {
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
         attachComponentToLayout(new CarParkView(model), "#carpark");
-//        attachComponentToLayout(new LegendView(model), "#legend");
     }
 
 
@@ -76,8 +75,8 @@ public class Simulator extends Application {
     void initializeSlider() {
         Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
         tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
-                model.tickPause = 100 - newValue.intValue());
-        tickPauseSlider.setValue(100 - model.tickPause);
+                model.tickPause = 101 - newValue.intValue());
+        tickPauseSlider.setValue(101 - model.tickPause);
     }
 
     void addToggleListener() {
@@ -107,7 +106,5 @@ public class Simulator extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
