@@ -42,7 +42,7 @@ public class LegendView extends SwingView {
     public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
-            legendImage = createImage(size.width, size.height);
+            legendImage = createImage(200, 100);
         }
 
         Graphics graphics = legendImage.getGraphics();
