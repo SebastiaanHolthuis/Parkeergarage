@@ -16,15 +16,19 @@
     Chart lines
     TODO: duplicatie verwijderen
  */
-.series-adhoc {
-    -fx-fill: #D1345B;
+.default-color0 {
+    -fx-stroke: #D1345B !important;
+    -fx-background-color: #D1345B !important;;
 }
 
-.series-parkingpass {
-    -fx-fill: #33A4EA;
+.default-color1 {
+    -fx-stroke: #33A4EA !important;
+    -fx-background-color: #33A4EA !important;
+
 }
 
-.series-reservation {
-    -fx-fill: #008000;
+.default-color2 {
+    -fx-stroke: #008000 !important;
+    -fx-background-color: #008000 !important;
 }
 
