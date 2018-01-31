@@ -40,7 +40,7 @@ public class Simulator extends Application {
         addSwingComponent(new SettingsView(model, this), "#settings");
         addSwingComponent(new CarParkView(model), "#carpark");
 
-//        addSwingComponent(new ButtonController(this, model), "#legend");
+        addSwingComponent(new ButtonController(this, model), "#legend");
     }
 
     void addSwingComponent(View view, String lookupId) {
@@ -52,7 +52,7 @@ public class Simulator extends Application {
 
         model.addView(view);
 
-        AnchorPane pane = (AnchorPane) scene.lookup(lookupId);
+        Pane pane = (Pane) scene.lookup(lookupId);
         pane.getChildren().add(swingNode);
     }
 
