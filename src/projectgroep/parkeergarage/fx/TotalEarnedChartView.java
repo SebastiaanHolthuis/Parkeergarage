@@ -8,7 +8,7 @@ import javafx.scene.chart.XYChart.Series;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 
-public class TotalEarnedChartView extends FXView {
+public class TotalEarnedChartView extends AbstractView {
     NumberAxis xAxis = new NumberAxis();
     NumberAxis yAxis = new NumberAxis();
 

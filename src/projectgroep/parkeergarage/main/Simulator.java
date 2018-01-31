@@ -32,8 +32,7 @@ public class Simulator extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        addFXComponents();
-        addSwingComponents();
+        addComponents();
         addControlListeners();
 
         primaryStage.setOnCloseRequest(t -> {
@@ -46,19 +45,14 @@ public class Simulator extends Application {
         }).start();
     }
 
-    void addFXComponents() {
-
-        addFXComponent(new projectgroep.parkeergarage.fx.Settings(model), "#settings");
+    void addComponents() {
+        addFXComponent(new SettingsView(model), "#settings");
         addFXComponent(new LineCarChartView(model), "#linecarchart");
         addFXComponent(new TotalEarnedChartView(model), "#totalearnedchart");
         addFXComponent(new TextStatisticsView(model), "#textstatistics");
         addFXComponent(new CarParkView(model), "#carpark");
     }
 
-    void addSwingComponents() {
-//        addSwingComponent(new TextStatisticsView(model), "#textstatistics");
-//        addSwingComponent(new LegendView(model), "#legend");
-    }
 
     void addControlListeners() {
         addToggleLister();
@@ -86,7 +80,7 @@ public class Simulator extends Application {
         });
     }
 
-    void addFXComponent(FXView view, String lookupId) {
+    void addFXComponent(AbstractView view, String lookupId) {
         ((Pane) scene.lookup(lookupId)).getChildren().add(view);
         model.addView(view);
     }

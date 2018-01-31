@@ -1,10 +1,8 @@
 package projectgroep.parkeergarage.fx;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
@@ -12,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Settings extends FXView {
+public class SettingsView extends AbstractView {
     GridPane container = new GridPane() {{
         setVgap(8);
         setHgap(15);
@@ -26,7 +24,7 @@ public class Settings extends FXView {
 
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
-    public Settings(ParkeerLogic model) {
+    public SettingsView(ParkeerLogic model) {
         getChildren().add(container);
 
         HashMap<String, Object> settings = (model.settings).asMap();

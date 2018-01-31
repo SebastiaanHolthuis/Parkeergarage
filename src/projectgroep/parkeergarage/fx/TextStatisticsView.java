@@ -8,11 +8,9 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.function.Function;
 
-public class TextStatisticsView extends FXView {
+public class TextStatisticsView extends AbstractView {
     ParkeerLogic model;
     HashMap<String, Label> valueLabels = new HashMap<>();
     HashMap<String, Function> statistics;
