@@ -17,13 +17,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import projectgroep.parkeergarage.SettingsRepository;
-import projectgroep.parkeergarage.fx.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.SettingsView;
+import projectgroep.parkeergarage.fx.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
 
 
@@ -46,7 +45,6 @@ public class Simulator {
     private JPanel panel;
     private JMenuItem mntmSettings;
     private JMenu mnSimulator;
-    private ButtonController buttonController;
 
     private JTabbedPane tabbedPane;
 
@@ -189,7 +187,7 @@ public class Simulator {
     void addElementsToContentPane() {
         contentPane.add(chartTabs);
         contentPane.add(carParkView);
-        contentPane.add(buttonController);
+//        contentPane.add(buttonController);
         contentPane.add(legendView);
         contentPane.add(panel);
 
