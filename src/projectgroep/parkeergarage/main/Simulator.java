@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class Simulator extends Application {
     public static ParkeerLogic model = new ParkeerLogic(SettingsRepository.loadSettings());
-    TextStatisticsView textStatisticsView;
+
     Pane root;
     Scene scene;
 
@@ -30,7 +30,7 @@ public class Simulator extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        addComponents();
+        attachComponentsToLayout();
         addControlListeners();
 
         primaryStage.setOnCloseRequest(t -> {
@@ -43,17 +43,19 @@ public class Simulator extends Application {
         }).start();
     }
 
-    void addComponents() {
-        addFXComponent(new SettingsView(model), "#settings");
-        addFXComponent(new LineCarChartView(model), "#linecarchart");
-        addFXComponent(new TotalEarnedChartView(model), "#totalearnedchart");
-        addFXComponent(new TextStatisticsView(model), "#textstatistics");
-        addFXComponent(new CarParkView(model), "#carpark");
+
+    void attachComponentsToLayout() {
+        attachComponentToLayout(new SettingsView(model), "#settings");
+        attachComponentToLayout(new LineCarChartView(model), "#linecarchart");
+        attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
+        attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
+        attachComponentToLayout(new CarParkView(model), "#carpark");
+        attachComponentToLayout(new LegendView(model), "#legend");
     }
 
 
     void addControlListeners() {
-        addToggleLister();
+        addToggleListener();
         initializeSlider();
         scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
@@ -66,7 +68,7 @@ public class Simulator extends Application {
         tickPauseSlider.setValue(100 - model.tickPause);
     }
 
-    void addToggleLister() {
+    void addToggleListener() {
         scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
             model.toggleRunning();
             ToggleButton source = (ToggleButton) e.getSource();
@@ -78,7 +80,7 @@ public class Simulator extends Application {
         });
     }
 
-    void addFXComponent(AbstractView view, String lookupId) {
+    void attachComponentToLayout(AbstractView view, String lookupId) {
         ((Pane) scene.lookup(lookupId)).getChildren().add(view);
         model.addView(view);
     }
