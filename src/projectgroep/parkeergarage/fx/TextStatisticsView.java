@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -14,7 +15,7 @@ import java.util.function.Function;
 public class TextStatisticsView extends FXView {
     ParkeerLogic model;
     HashMap<String, Label> valueLabels = new HashMap<>();
-    SortedMap<String, Function> statistics;
+    HashMap<String, Function> statistics;
     GridPane container = new GridPane() {{
         setVgap(8);
         setHgap(50);
@@ -24,7 +25,7 @@ public class TextStatisticsView extends FXView {
     public TextStatisticsView(ParkeerLogic model) {
         super();
 
-        statistics = new TreeMap<String, Function>() {{
+        statistics = new LinkedHashMap<String, Function>() {{
             put("Beschikbare plaatsen", x -> model.getNumberOfOpenSpots());
             put("Aantal auto's", x -> model.getAllCars().count());
             put("Aantal pashouders", x -> model.getParkingPassCars().count());
