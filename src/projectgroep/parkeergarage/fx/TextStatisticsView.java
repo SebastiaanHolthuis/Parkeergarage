@@ -37,7 +37,6 @@ public class TextStatisticsView extends FXView {
             put("Stappen terug", x -> model.history.stepsBack());
         }};
 
-
         this.model = model;
 
         getChildren().add(container);
