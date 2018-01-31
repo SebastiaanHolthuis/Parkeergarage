@@ -12,6 +12,19 @@
     -fx-border-width: 0px 1px 0px 1px;
 }
 
-.statisticskey {
-
+/**
+    Chart lines
+    TODO: duplicatie verwijderen
+ */
+.series-adhoc {
+    -fx-fill: #D1345B;
 }
+
+.series-parkingpass {
+    -fx-fill: #33A4EA;
+}
+
+.series-reservation {
+    -fx-fill: #008000;
+}
+

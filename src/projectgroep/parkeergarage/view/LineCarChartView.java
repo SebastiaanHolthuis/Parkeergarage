@@ -27,13 +27,24 @@ public class LineCarChartView extends AbstractView {
         super();
 
         this.model = model;
-        adhoc.setName("Adhoc Cars");
-        parkingPass.setName("ParkingPass Cars");
-        reservation.setName("Reservation Cars");
+
+        setSeriesNames();
 
         lineChart.getData().addAll(adhoc, parkingPass, reservation);
 
         getChildren().addAll(lineChart);
+    }
+
+    void setSeriesNames() {
+        adhoc.setName("Adhoc Cars");
+        adhoc.getNode().getStyleClass().add("series-adhoc");
+
+        parkingPass.setName("ParkingPass Cars");
+        parkingPass.getNode().getStyleClass().add("series-parkingpass");
+
+        reservation.setName("Reservation Cars");
+        reservation.getNode().getStyleClass().add("series-reservation");
+
     }
 
     @Override
