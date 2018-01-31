@@ -32,3 +32,6 @@
     -fx-background-color: #008000 !important;
 }
 
+.chart-line-symbol {
+    -fx-background-color: transparent !important;
+}
