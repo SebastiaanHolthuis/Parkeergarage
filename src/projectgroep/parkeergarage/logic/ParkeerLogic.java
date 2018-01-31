@@ -34,7 +34,7 @@ public class ParkeerLogic extends AbstractModel {
     
     private int ParkingPassEarnings = 0;
 
-    private boolean running;
+    volatile private boolean running;
 
     private double totalEarned = 0;
 
@@ -79,7 +79,6 @@ public class ParkeerLogic extends AbstractModel {
         running = true;
 
         while (true) {
-            System.out.print(""); // HACK: niet verwijderen!
             if (running)
                 tickSimulator();
         }
