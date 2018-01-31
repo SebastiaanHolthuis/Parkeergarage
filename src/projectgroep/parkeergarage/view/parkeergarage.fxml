@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?scenebuilder-stylesheet style.css?>
 
-<BorderPane fx:id="root" minHeight="1000.0" minWidth="1800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" minHeight="800" minWidth="1800.0" prefHeight="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <AnchorPane fx:id="carpark" />
     </center>

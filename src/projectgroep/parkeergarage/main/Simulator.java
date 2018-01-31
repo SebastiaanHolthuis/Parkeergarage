@@ -9,6 +9,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
+import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.*;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
@@ -45,7 +46,7 @@ public class Simulator extends Application {
 
 
     void attachComponentsToLayout() {
-        attachComponentToLayout(new SettingsView(model), "#settings");
+        attachComponentToLayout(new SettingsView(model, this), "#settings");
         attachComponentToLayout(new LineCarChartView(model), "#linecarchart");
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
@@ -85,13 +86,13 @@ public class Simulator extends Application {
         model.addView(view);
     }
 
-    public void restart(projectgroep.parkeergarage.logic.Settings settings) {
+    public void restart(Settings settings) {
         SettingsRepository.saveSettings(settings);
         model.pause();
+        model = new ParkeerLogic(settings);
 
         Thread t = new Thread(() -> {
-//            createInstances(settings);
-//            initializeFrame();
+
             model.run();
         });
 

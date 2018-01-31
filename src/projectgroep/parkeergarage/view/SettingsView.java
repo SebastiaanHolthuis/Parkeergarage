@@ -5,12 +5,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.logic.Settings;
+import projectgroep.parkeergarage.main.Simulator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SettingsView extends AbstractView {
+    Simulator simulator;
+
     GridPane container = new GridPane() {{
         setVgap(8);
         setHgap(15);
@@ -24,7 +28,7 @@ public class SettingsView extends AbstractView {
 
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
-    public SettingsView(ParkeerLogic model) {
+    public SettingsView(ParkeerLogic model, Simulator simulator) {
         getChildren().add(container);
 
         HashMap<String, Object> settings = (model.settings).asMap();
@@ -53,7 +57,7 @@ public class SettingsView extends AbstractView {
     }
 
     private void restart() {
-        getSettingsMap();
+        simulator.restart(new Settings(getSettingsMap()));
     }
 
     @Override
