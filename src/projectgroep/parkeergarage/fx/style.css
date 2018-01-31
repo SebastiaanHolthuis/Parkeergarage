@@ -1,4 +1,13 @@
-#bottomPane {
+#bottomPane, #leftPane, #rightPane {
     -fx-background-color: #eeeeee;
     -fx-border-color: #ddd;
+    -fx-border-width: 1px 1px 0px 1px;
+}
+
+#bottomPane, #leftPane, #rightPane {
+    -fx-border-width: 0px 1px 0px 1px;
+}
+
+#settings TextField {
+    -fx-max-width: 50px;
 }
