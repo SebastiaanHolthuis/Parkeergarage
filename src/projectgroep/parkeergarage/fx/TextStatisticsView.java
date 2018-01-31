@@ -17,9 +17,9 @@ public class TextStatisticsView extends FXView {
     HashMap<String, Label> valueLabels = new HashMap<>();
     HashMap<String, Function> statistics;
     GridPane container = new GridPane() {{
-        setVgap(8);
-        setHgap(50);
-        setPadding(new Insets(10, 10, 10, 10));
+        setVgap(20);
+        setHgap(80);
+        setPadding(new Insets(25, 25, 25, 25));
     }};
 
     public TextStatisticsView(ParkeerLogic model) {
@@ -48,6 +48,8 @@ public class TextStatisticsView extends FXView {
         for (String statistic : statistics.keySet()) {
             Label keyLabel = new Label(statistic);
             Label valueLabel = new Label("");
+
+            keyLabel.getStyleClass().add("statisticskey");
 
             container.add(keyLabel, 0, i);
             container.add(valueLabel, 1, i);
