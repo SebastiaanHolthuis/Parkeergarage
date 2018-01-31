@@ -2,8 +2,6 @@ package projectgroep.parkeergarage.fx;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,10 +50,11 @@ public class Simulator extends Application {
         addFXComponent(new projectgroep.parkeergarage.fx.Settings(model), "#settings");
         addFXComponent(new LineCarChartView(model), "#linecarchart");
         addFXComponent(new TotalEarnedChartView(model), "#totalearnedchart");
+        addFXComponent(new TextStatisticsView(model), "#textstatistics");
     }
 
     void addSwingComponents() {
-        addSwingComponent(new TextStatisticsView(model), "#textstatistics");
+//        addSwingComponent(new TextStatisticsView(model), "#textstatistics");
 //        addSwingComponent(new LegendView(model), "#legend");
     }
 

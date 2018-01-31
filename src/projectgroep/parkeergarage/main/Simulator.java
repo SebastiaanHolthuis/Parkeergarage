@@ -22,7 +22,7 @@ import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.TextStatisticsView;
+import projectgroep.parkeergarage.fx.TextStatisticsView;
 
 
 public class Simulator {
@@ -75,7 +75,7 @@ public class Simulator {
 
         initializeCarPark();
         initializeCharts();
-        initializeStatistics();
+//        initializeStatistics();
         initializeSettings();
         initializeLegend();
         initializePanel();
@@ -107,15 +107,15 @@ public class Simulator {
         parkeerLogic.addView(legendView);
     }
 
-    void initializeStatistics() {
-        textStatisticsView = new TextStatisticsView(parkeerLogic) {{
-            setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-            updateView();
-            setBounds(gap, 11, panelWidth, 276);
-            setBorder(null);
-            setLayout(new GridLayout(1, yOffset, 0, 0));
-        }};
-    }
+//    void initializeStatistics() {
+//        textStatisticsView = new TextStatisticsView(parkeerLogic) {{
+//            setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//            updateView();
+//            setBounds(gap, 11, panelWidth, 276);
+//            setBorder(null);
+//            setLayout(new GridLayout(1, yOffset, 0, 0));
+//        }};
+//    }
 
     void initializeCarPark() {
         carParkView = new CarParkView(parkeerLogic) {{
@@ -135,7 +135,7 @@ public class Simulator {
 
     void initializeTabs() {
         tabbedPane = new JTabbedPane() {{
-            addTab("Statistics", textStatisticsView);
+//            addTab("Statistics", textStatisticsView);
             setEnabled(true);
             setBounds(0, 0, panelWidth, 501);
         }};
