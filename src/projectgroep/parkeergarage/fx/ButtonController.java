@@ -61,6 +61,5 @@ public class ButtonController extends AbstractController {
         add(Reset);
         add(TickPauseSlider);
 
-        TickPauseSlider.setValue(100 - parkeerLogic.tickPause);
     }
 }

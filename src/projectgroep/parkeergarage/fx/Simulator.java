@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -44,8 +45,9 @@ public class Simulator extends Application {
         addSwingComponent(new SettingsView(model, this), "#settings");
 //        addSwingComponent(new CarParkView(model), "#carpark");
 
-//        addSwingComponent(new ButtonController(this, model), "#buttons");
 //        addSwingComponent(new LegendView(model), "#legend");
+
+        addSwingComponent(new LegendView(model), "#legend");
     }
 
     void addControlListeners() {
@@ -53,7 +55,10 @@ public class Simulator extends Application {
         scene.lookup("#pause").setOnMouseClicked((e) -> model.pause());
         scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
-        scene.lookup("#tickPauseSlider").setOnMouseClicked((e) -> model.play());
+
+        Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
+        tickPauseSlider.setOnMouseClicked((e) -> model.tickPause = (int) (100 - tickPauseSlider.getValue()));
+        tickPauseSlider.setValue(100 - model.tickPause);
     }
 
     void addSwingComponent(View view, String lookupId) {
@@ -64,7 +69,6 @@ public class Simulator extends Application {
         });
 
         model.addView(view);
-
         Pane pane = (Pane) scene.lookup(lookupId);
         pane.getChildren().add(swingNode);
     }
