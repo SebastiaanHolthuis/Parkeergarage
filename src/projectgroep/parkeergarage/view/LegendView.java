@@ -11,7 +11,7 @@ import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
 
-public class LegendView extends AbstractView {
+public class LegendView extends SwingView {
 
     private Dimension size;
     private Image legendImage;

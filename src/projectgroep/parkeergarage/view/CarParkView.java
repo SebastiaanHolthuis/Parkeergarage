@@ -9,7 +9,7 @@ import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
 
-public class CarParkView extends AbstractView {
+public class CarParkView extends SwingView {
 
     private Dimension size;
     private Image carParkImage;

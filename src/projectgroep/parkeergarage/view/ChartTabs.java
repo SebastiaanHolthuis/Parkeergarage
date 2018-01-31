@@ -6,13 +6,13 @@ import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.HashMap;
 
-public class ChartTabs extends AbstractView {
+public class ChartTabs extends SwingView {
     JTabbedPane tabbedPane;
 
     public ChartTabs(ParkeerLogic parkeerLogic) {
         super(parkeerLogic);
 
-        HashMap<AbstractView, String> views = new HashMap() {{
+        HashMap<SwingView, String> views = new HashMap() {{
             put(new PieChartView(model), "Omzet");
             put(new LineCarChartView(model), "Aantal Auto's");
             put(new LineChartView(model), "?");

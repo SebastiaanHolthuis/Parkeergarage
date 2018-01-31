@@ -2,11 +2,11 @@ package projectgroep.parkeergarage.logic;
 
 import java.util.ArrayList;
 
-import projectgroep.parkeergarage.view.AbstractView;
+import projectgroep.parkeergarage.view.SwingView;
 
 public class AbstractModel implements Runnable {
 
-    protected ArrayList<AbstractView> views;
+    protected ArrayList<SwingView> views;
 
     public AbstractModel() {
         views = new ArrayList<>();
@@ -21,7 +21,7 @@ public class AbstractModel implements Runnable {
         views.forEach(v -> v.updateView());
     }
 
-    public void addView(AbstractView view) {
+    public void addView(SwingView view) {
         views.add(view);
     }
 

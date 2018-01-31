@@ -14,7 +14,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-public class LineCarChartView extends AbstractView {
+public class LineCarChartView extends SwingView {
     private XYChart xyChart;
 
     private ArrayList addHOC = new ArrayList() {{

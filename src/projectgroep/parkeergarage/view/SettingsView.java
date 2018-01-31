@@ -15,7 +15,7 @@ import projectgroep.parkeergarage.main.Simulator;
  */
 
 
-public class SettingsView extends AbstractView {
+public class SettingsView extends SwingView {
     private HashMap<String, TypedTextField> fields = new HashMap<>();
     private JButton restartButton = new JButton("Restart");
     Simulator sim;

@@ -19,8 +19,6 @@ public class Simulator extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Parkeergarage simulator - ITV1C groep C");
 
-//        FXMLLoader loader = new FXMLLoader();
-
         Pane root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/fx/parkeergarage.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

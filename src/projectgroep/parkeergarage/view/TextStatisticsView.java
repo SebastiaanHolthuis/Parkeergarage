@@ -2,7 +2,6 @@ package projectgroep.parkeergarage.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Arrays;
 import java.util.function.Function;
 
 import javax.swing.JTable;
@@ -11,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-public class TextStatisticsView extends AbstractView {
+public class TextStatisticsView extends SwingView {
     private Dimension size;
     private JTable table;
 
