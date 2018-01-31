@@ -15,21 +15,20 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class LineCarChartView extends AbstractView {
-
     private XYChart xyChart;
-    private XYChart xyChart1;
+
     private ArrayList addHOC = new ArrayList() {{
         add(0);
     }};
     private ArrayList parkingPass = new ArrayList() {{
-    	add(0);
+        add(0);
     }};
 
     private ArrayList reservationCar = new ArrayList() {{
-    	add(0);
+        add(0);
     }};
-    
-    public static final String SERIES_NAME = "AddHOC Cars";
+
+    public static final String SERIES_NAME = "Adhoc Cars";
     public static final String SERIES_NAME1 = "ParkingPass Cars";
     public static final String SERIES_NAME2 = "Reservation Cars";
 
@@ -49,6 +48,7 @@ public class LineCarChartView extends AbstractView {
             @Override
             public void run() {
                 updateData();
+                addDataPoint();
                 javax.swing.SwingUtilities.invokeLater(() -> chartPanel.repaint());
             }
         };
@@ -67,18 +67,17 @@ public class LineCarChartView extends AbstractView {
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, addHOC);
         xyChart.addSeries(SERIES_NAME1, null, parkingPass);
         xyChart.addSeries(SERIES_NAME2, null, reservationCar);
-        
+        xyChart.addSeries(SERIES_NAME, null, addHOC);
+
 
         return xyChart;
     }
-   
-    
+
 
     @Override
-	public void updateView() {
+    public void updateView() {
         addDataPoint();
     }
 
@@ -93,5 +92,4 @@ public class LineCarChartView extends AbstractView {
         xyChart.updateXYSeries(SERIES_NAME1, null, parkingPass, null);
         xyChart.updateXYSeries(SERIES_NAME2, null, reservationCar, null);
     }
-
 }
