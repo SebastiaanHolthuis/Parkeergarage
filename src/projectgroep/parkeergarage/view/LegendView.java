@@ -39,7 +39,7 @@ public class LegendView extends SwingView {
     }
 
     @Override
-	public void updateView() {
+    public void updateView() {
         if (!size.equals(getSize())) {
             size = getSize();
             legendImage = createImage(size.width, size.height);
@@ -50,25 +50,25 @@ public class LegendView extends SwingView {
 
         repaint();
 
-	}
-	
-	public void drawLegend(Graphics g) {	
-		g.setFont(new Font("Arial", Font.PLAIN, 14));
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 1000, 1000);
-		
-		drawLegendItem(g, "Ad Hoc", AdHocCar.COLOR, 0);
-		drawLegendItem(g, "Abonnementhouder", ParkingPassCar.COLOR, 1);
-		drawLegendItem(g, "Reservatie", ReservationCar.COLOR, 2);
-		drawLegendItem(g, "Gereserveerde plek", Color.decode("#8bba8b"), 3);
-	}
-	
-	private void drawLegendItem(Graphics g, String text, Color color, int position) {
-		g.setColor(color);
-		g.fillRect(10, 10 + (position * 30), 50, 20);
-		
-		g.setColor(Color.BLACK);
-		g.drawString(text, 70, 25 + (position * 30));
-	}
+    }
+
+    public void drawLegend(Graphics g) {
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 1000, 1000);
+
+        drawLegendItem(g, "Ad Hoc", AdHocCar.COLOR, 0);
+        drawLegendItem(g, "Abonnementhouder", ParkingPassCar.COLOR, 1);
+        drawLegendItem(g, "Reservatie", ReservationCar.COLOR, 2);
+        drawLegendItem(g, "Gereserveerde plek", Color.decode("#8bba8b"), 3);
+    }
+
+    private void drawLegendItem(Graphics g, String text, Color color, int position) {
+        g.setColor(color);
+        g.fillRect(10, 10 + (position * 30), 50, 20);
+
+        g.setColor(Color.BLACK);
+        g.drawString(text, 70, 25 + (position * 30));
+    }
 
 }

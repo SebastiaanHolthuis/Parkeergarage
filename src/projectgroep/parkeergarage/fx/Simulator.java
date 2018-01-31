@@ -10,10 +10,7 @@ import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
-import projectgroep.parkeergarage.view.CarParkView;
-import projectgroep.parkeergarage.view.SettingsView;
-import projectgroep.parkeergarage.view.SwingView;
-import projectgroep.parkeergarage.view.TextStatisticsView;
+import projectgroep.parkeergarage.view.*;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -43,12 +40,10 @@ public class Simulator extends Application {
         addSwingComponent(new SettingsView(model, this), "#settings");
         addSwingComponent(new CarParkView(model), "#carpark");
 
-        addSwingComponent(new CarParkView(model), "#carpark");
-        addSwingComponent(new CarParkView(model), "#carpark");
-
+//        addSwingComponent(new ButtonController(this, model), "#legend");
     }
 
-    void addSwingComponent(SwingView view, String lookupId) {
+    void addSwingComponent(View view, String lookupId) {
         SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(() -> {

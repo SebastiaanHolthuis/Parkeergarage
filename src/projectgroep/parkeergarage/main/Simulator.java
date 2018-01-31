@@ -17,7 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import projectgroep.parkeergarage.SettingsRepository;
-import projectgroep.parkeergarage.controller.ButtonController;
+import projectgroep.parkeergarage.fx.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
@@ -75,7 +75,7 @@ public class Simulator {
         }};
 
         parkeerLogic = new ParkeerLogic(settings);
-        buttonController = new ButtonController(this, parkeerLogic);
+//        buttonController = new ButtonController(this, parkeerLogic);
 
         initializeCarPark();
         initializeCharts();
