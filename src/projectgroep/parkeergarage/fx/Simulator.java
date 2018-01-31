@@ -49,12 +49,10 @@ public class Simulator extends Application {
 
         addFXComponent(new projectgroep.parkeergarage.fx.Settings(model), "#settings");
         addFXComponent(new LineCarChartView(model), "#linecarchart");
+        addFXComponent(new TotalEarnedChartView(model), "#totalearnedchart");
     }
 
     void addSwingComponents() {
-        addSwingComponent(new TextStatisticsView(model), "#textstatistics");
-//        addSwingComponent(new LineCarChartView(model), "#linecarchart");
-//        addSwingComponent(new PieChartView(model), "#piechart");
 //        addSwingComponent(new LegendView(model), "#legend");
     }
 

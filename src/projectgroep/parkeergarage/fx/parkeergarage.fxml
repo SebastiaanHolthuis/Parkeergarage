@@ -45,7 +45,7 @@
                 </Tab>
                 <Tab text="Omzet">
                     <content>
-                        <AnchorPane fx:id="piechart" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                        <AnchorPane fx:id="totalearnedchart" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
                                     prefWidth="200.0">
                         </AnchorPane>
                     </content>
