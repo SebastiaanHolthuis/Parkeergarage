@@ -40,7 +40,7 @@ public class Events {
 	 * @param expectedVisitors The amount of visitors that are expected to show up at the event.
 	 */
 	public void addEvent(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
-		events.add(new Event(name, expectedVisitors, expectedVisitors, expectedVisitors, duration, expectedVisitors));				
+		events.add(new Event(name, day, hour, minute, duration, expectedVisitors));				
 	}
 
 	/**

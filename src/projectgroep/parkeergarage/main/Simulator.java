@@ -88,9 +88,7 @@ public class Simulator {
         initializePanel();
         initializeTabs();
         initializeMenu();
-        
-        initializeEvents();
-        
+                
         initializeFrame();
 
         addViews();
@@ -205,15 +203,6 @@ public class Simulator {
 
     private void initializeSettings() {
         settingsView = new SettingsView(parkeerLogic, this);
-    }
-
-    private void initializeEvents() {
-    	int[] duration = new int[2];
-    	duration[0] = 1;
-    	duration[1] = 30;
-    	
-    	events = new Events(parkeerLogic);
-    	events.addEvent("Koopavond", 0, 1, 30, duration, 100);
     }
 
     /**

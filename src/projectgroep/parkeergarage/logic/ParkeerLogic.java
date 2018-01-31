@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -20,6 +19,8 @@ import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.CarType;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
+import projectgroep.parkeergarage.logic.events.Event;
+import projectgroep.parkeergarage.logic.events.Events;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -58,7 +59,8 @@ public class ParkeerLogic extends AbstractModel {
 
     public History history;
     private ReservationLogic reservationLogic;
-
+    private Events events;
+    
     public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -72,6 +74,7 @@ public class ParkeerLogic extends AbstractModel {
         this.history = new History(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
+        initializeEvents();
     }
 
     @Override
@@ -147,6 +150,8 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
+        handleEvents();
+        
         saveSnapshot();
     }
 
@@ -236,6 +241,25 @@ public class ParkeerLogic extends AbstractModel {
         carsLeaving();
     }
 
+    private void initializeEvents() {
+    	int[] duration = new int[2];
+    	duration[0] = 1;
+    	duration[1] = 30;
+    	
+    	events = new Events(this);
+    	events.addEvent("Koopavond", 0, 1, 30, duration, 400);
+    }
+    
+    private void handleEvents() {
+    	int[] startTime = new int[3];
+    	startTime[0] = day;
+    	startTime[1] = hour;
+    	startTime[2] = minute;
+    	System.out.println(startTime[0] + " - " + startTime[1] + ":" + startTime[2]);
+    	ArrayList<Event> events2 = (ArrayList<Event>) events.getEventsByStartTime(startTime);
+    	events2.forEach(e -> System.out.print(e.getName()));
+    }
+    
     private void updateViews() {
         tick();
         notifyViews();
@@ -413,7 +437,7 @@ public class ParkeerLogic extends AbstractModel {
     private double getCarMultiplier() {
         double period = (2 * Math.PI) / 24;
         double multiplier = (double) hour + (double) minute / 60;
-        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5)))); // varies from 0 - 1       
+        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));       
     }
 
     private boolean queueTooLongFor(CarType type) {
