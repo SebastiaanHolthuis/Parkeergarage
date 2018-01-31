@@ -171,19 +171,19 @@ public class ParkeerLogic extends AbstractModel {
 
         switch (day) {
             case 0:
-                return "Monday";
+                return "Maandag";
             case 1:
-                return "Tuesday";
+                return "Dinsdag";
             case 2:
-                return "Wednesday";
+                return "Woensdag";
             case 3:
-                return "Thursday";
+                return "Donderdag";
             case 4:
-                return "Friday";
+                return "Vrijdag";
             case 5:
-                return "Saturday";
+                return "Zaterdag";
             case 6:
-                return "Sunday";
+                return "Zondag";
             default:
                 return "";
         }
@@ -192,6 +192,10 @@ public class ParkeerLogic extends AbstractModel {
 
     public String translateTime(int hour, int minute) {
         return hour + ":" + minute;
+    }
+    
+    public int getTimeToPay() {
+    		return day + hour + minute;
     }
 
     public int getHour() {
@@ -253,6 +257,9 @@ public class ParkeerLogic extends AbstractModel {
                 i < settings.enterSpeed) {
 
             Car car = queue.removeCar();
+            car.timeEntering[0] = day;
+            car.timeEntering[1] = hour;
+            car.timeEntering[2] = minute;
 
             Location freeLocation = null;
 
@@ -314,8 +321,41 @@ public class ParkeerLogic extends AbstractModel {
         int i = 0;
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
+            
+            car.timeLeaving[0] = day;
+            car.timeLeaving[1] = hour;
+            car.timeLeaving[2] = minute;
+            
             // TODO Handle payment.
-            totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
+            
+            int days = 0;
+            int hours = 0;
+            int minutes = 0;
+            
+            days = car.timeLeaving[0] - car.timeEntering[0];
+            hours = car.timeLeaving[1] - car.timeEntering[1];
+            minutes = car.timeLeaving[2] - car.timeEntering[2];
+            
+            if((car.timeLeaving[0] - car.timeEntering[0]) > 0) {
+            		minutes += (days * 24 * 60);
+            }
+            if((car.timeLeaving[1]-car.timeEntering[1] ) > 0) {
+            		minutes += (hours*60);
+            }
+            
+            if(car instanceof ReservationCar) {
+            		totalEarned += 1 + (minutes * 0.02);
+            }
+            
+            if(car instanceof AdHocCar) {
+            		totalEarned += (minutes * 0.02);
+            }
+            
+            if(car instanceof ParkingPassCar) {
+            		totalEarned += 100;
+            }
+            
+//            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
@@ -526,12 +566,13 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new ParkingPassCar(0);
                     break;
                 case RESERVED:
-                    newCar = new ReservationCar(6);
+                    newCar = new ReservationCar(0.2);
                     break;
                 case AD_HOC:
                 default:
-                    newCar = new AdHocCar(settings.defaultPrice);
-                    break;
+                    //newCar = new AdHocCar(settings.defaultPrice);
+                	   	newCar = new AdHocCar(0.2);
+                	   	break;
             }
 
             if (!(newCar instanceof ReservationCar)) {
