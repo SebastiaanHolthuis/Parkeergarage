@@ -24,8 +24,7 @@ public class History {
     }
 
     void saveSnapshot(Snapshot sn) {
-        System.out.println(snapshots.size());
-
+//        System.out.println(snapshots.size());
         if (isFull())
             popBottom();
 

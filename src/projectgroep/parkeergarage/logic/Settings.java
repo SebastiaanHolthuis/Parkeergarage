@@ -25,7 +25,7 @@ public class Settings extends MapLike {
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
     double skipChance = 0.5; // 0 to 1
 
-    int maxHistory = 100;
+    int maxHistory = 2000;
 
     int enterSpeed = 8; // number of cars that can enter per minute
     int paymentSpeed = 5; // number of cars that can pay per minute
