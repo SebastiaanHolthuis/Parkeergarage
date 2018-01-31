@@ -45,7 +45,7 @@ public class Settings extends FXView {
     }
 
     private void restart() {
-        System.out.println(getSettingsMap());
+        getSettingsMap();
     }
 
     @Override

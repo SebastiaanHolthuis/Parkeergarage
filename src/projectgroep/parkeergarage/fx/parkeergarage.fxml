@@ -8,8 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?scenebuilder-stylesheet style.css?>
 
-<BorderPane minHeight="800.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="800.0" minWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <left>
 
     </left>
@@ -58,7 +59,7 @@
         </TabPane>
     </right>
     <bottom>
-        <BorderPane prefHeight="180.0" prefWidth="1200.0" style="-fx-background-color: #eeeeee; -fx-border-color: #ddd;" BorderPane.alignment="CENTER">
+        <BorderPane fx:id="bottomPane" prefHeight="180.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <right>
                 <Pane fx:id="legend" prefHeight="122.0" prefWidth="326.0" BorderPane.alignment="CENTER" />
             </right>
@@ -71,9 +72,9 @@
                         <Button fx:id="stepForward" layoutX="131.0" layoutY="69.0" mnemonicParsing="false" text="+10" />
                         <Slider fx:id="tickPauseSlider" layoutX="37.0" layoutY="110.0" min="1.0" showTickLabels="true" showTickMarks="true" />
                     </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
                 </Pane>
             </left>
         </BorderPane>
