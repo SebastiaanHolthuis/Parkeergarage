@@ -2,6 +2,7 @@ package projectgroep.parkeergarage.view;
 
 import javax.swing.JPanel;
 
+import projectgroep.parkeergarage.fx.View;
 import projectgroep.parkeergarage.logic.AbstractModel;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 

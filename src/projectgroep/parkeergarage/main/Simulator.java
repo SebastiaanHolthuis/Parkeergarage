@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.fx;
+package projectgroep.parkeergarage.main;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -10,8 +10,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
+import projectgroep.parkeergarage.fx.*;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.view.*;
 
 import javax.swing.*;
 import java.io.IOException;

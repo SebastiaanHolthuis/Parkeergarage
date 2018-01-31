@@ -1,6 +1,6 @@
 package projectgroep.parkeergarage.controller;
 
-import projectgroep.parkeergarage.view.View;
+import projectgroep.parkeergarage.fx.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

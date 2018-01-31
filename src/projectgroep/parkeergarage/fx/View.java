@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.view;
+package projectgroep.parkeergarage.fx;
 
 import projectgroep.parkeergarage.logic.AbstractModel;
 import projectgroep.parkeergarage.logic.ParkeerLogic;

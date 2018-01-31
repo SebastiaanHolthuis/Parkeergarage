@@ -2,8 +2,7 @@ package projectgroep.parkeergarage.logic;
 
 import java.util.ArrayList;
 
-import projectgroep.parkeergarage.view.SwingView;
-import projectgroep.parkeergarage.view.View;
+import projectgroep.parkeergarage.fx.View;
 
 public class AbstractModel implements Runnable {
 
