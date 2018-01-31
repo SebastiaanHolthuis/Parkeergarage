@@ -31,6 +31,8 @@ public class ParkeerLogic extends AbstractModel {
     private int hour = 0;
     private int minute = 0;
     private int week = 0;
+    
+    private int ParkingPassEarnings = 0;
 
     private boolean running;
 
@@ -262,6 +264,10 @@ public class ParkeerLogic extends AbstractModel {
             car.timeEntering[2] = minute;
 
             Location freeLocation = null;
+            
+            if(car instanceof ParkingPassCar) {
+            		ParkingPassEarnings += 100;
+            }
 
             if (car instanceof ReservationCar && getReservationLogic().getReservations().containsKey(car)) {
                 freeLocation = getReservationLogic().getReservations().get(car);
@@ -344,14 +350,13 @@ public class ParkeerLogic extends AbstractModel {
             }
             
             if(car instanceof ReservationCar) {
-            		totalEarned += 1 + (minutes * 0.02);
-            }
-            
-            if(car instanceof AdHocCar) {
             		totalEarned += (minutes * 0.02);
             }
             
-            if(car instanceof ParkingPassCar) {
+            else if(car instanceof AdHocCar) {
+            		totalEarned += (minutes * 0.02);
+            }
+            else {
             		totalEarned += 100;
             }
             
@@ -552,6 +557,12 @@ public class ParkeerLogic extends AbstractModel {
             if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute() && !entranceCarQueue.getQueue().contains(car)) {
                 entranceCarQueue.addCar(car);
             }
+            if(car instanceof ReservationCar) {
+        			totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
+            }
+//            if(car instanceof ParkingPassCar) {
+//            		setParkingPassEarnings(getParkingPassEarnings() + 100);
+//            }
         }
         
         if (getHour() >= 18 || getHour() <= 7) numberOfCars = numberOfCars /  2;
@@ -563,12 +574,11 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new ParkingPassCar(0);
                     break;
                 case RESERVED:
-                    newCar = new ReservationCar(0.2);
+                    newCar = new ReservationCar(settings.defaultPrice);
                     break;
                 case AD_HOC:
                 default:
-                    //newCar = new AdHocCar(settings.defaultPrice);
-                	   	newCar = new AdHocCar(0.2);
+                    	newCar = new AdHocCar(settings.defaultPrice);
                 	   	break;
             }
 
@@ -607,5 +617,13 @@ public class ParkeerLogic extends AbstractModel {
     public void setReservationLogic(ReservationLogic reservationLogic) {
         this.reservationLogic = reservationLogic;
     }
+
+	public int getParkingPassEarnings() {
+		return ParkingPassEarnings;
+	}
+
+	public void setParkingPassEarnings(int parkingPassEarnings) {
+		ParkingPassEarnings = parkingPassEarnings;
+	}
 
 }
