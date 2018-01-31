@@ -199,7 +199,7 @@ public class Simulator {
 
 
     private void initializeSettings() {
-        settingsView = new SettingsView(parkeerLogic, this);
+//        settingsView = new SettingsView(parkeerLogic, this);
     }
 
 

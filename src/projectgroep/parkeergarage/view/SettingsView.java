@@ -6,9 +6,9 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import projectgroep.parkeergarage.fx.Simulator;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
-import projectgroep.parkeergarage.main.Simulator;
 
 /**
  * Tijdelijk 'restart' button
@@ -30,7 +30,7 @@ public class SettingsView extends SwingView {
     }
 
     private void initializeFields() {
-        (sim.getParkeerLogic().settings).asMap().forEach((setting, value) -> {
+        (model.settings).asMap().forEach((setting, value) -> {
             TypedTextField field = new TypedTextField(value);
             JLabel label = new JLabel(setting);
             add(label);
