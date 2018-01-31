@@ -2,6 +2,7 @@ package projectgroep.parkeergarage.view;
 
 import javax.swing.JTabbedPane;
 
+import projectgroep.parkeergarage.fx.LineCarChartView;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.HashMap;

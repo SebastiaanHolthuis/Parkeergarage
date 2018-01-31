@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.*;
 
 import javax.swing.*;
@@ -47,12 +46,15 @@ public class Simulator extends Application {
     }
 
     void addFXComponents() {
+
         addFXComponent(new projectgroep.parkeergarage.fx.Settings(model), "#settings");
+        addFXComponent(new LineCarChartView(model), "#linecarchart");
     }
 
     void addSwingComponents() {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
-//        addSwingComponent(new CarParkView(model), "#carpark");
+//        addSwingComponent(new LineCarChartView(model), "#linecarchart");
+//        addSwingComponent(new PieChartView(model), "#piechart");
 //        addSwingComponent(new LegendView(model), "#legend");
     }
 

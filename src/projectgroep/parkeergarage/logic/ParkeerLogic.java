@@ -57,6 +57,10 @@ public class ParkeerLogic extends AbstractModel {
     public History history;
     private ReservationLogic reservationLogic;
 
+    public int tickNum() {
+        return (week * 7 * 24 * 60) + (day * 24 * 60) + (hour * 60) + (minute);
+    }
+
     public ParkeerLogic(Settings settings) {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
