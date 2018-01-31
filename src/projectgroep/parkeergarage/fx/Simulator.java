@@ -2,6 +2,8 @@ package projectgroep.parkeergarage.fx;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -64,7 +66,8 @@ public class Simulator extends Application {
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
 
         Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
-        tickPauseSlider.setOnMouseClicked((e) -> model.tickPause = (int) (100 - tickPauseSlider.getValue()));
+        tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+                model.tickPause = 100 - newValue.intValue());
         tickPauseSlider.setValue(100 - model.tickPause);
     }
 
