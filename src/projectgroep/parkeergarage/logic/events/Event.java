@@ -27,7 +27,7 @@ public class Event {
 	 * @param duration The total duration of the event.
 	 * @param expectedVisitors The amount of visitors that are expected to show up at the event.
 	 */
-	public Event(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
+	public Event(String name, int day, int hour, int minute, int duration[], int expectedVisitors) {
 		this.name = name;
 		
 		this.startTime = new int[3];

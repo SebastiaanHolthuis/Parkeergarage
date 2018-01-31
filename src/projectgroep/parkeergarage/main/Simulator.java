@@ -20,6 +20,7 @@ import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.controller.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
+import projectgroep.parkeergarage.logic.events.Events;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
@@ -56,7 +57,9 @@ public class Simulator {
             panelWidth = 300,
             carParkWidth = 865,
             pieChartWidth = 607;
-
+    
+    private Events events;
+    
     public Simulator(Settings settings) {
         createInstances(settings);
         initializeFrame();
@@ -85,7 +88,9 @@ public class Simulator {
         initializePanel();
         initializeTabs();
         initializeMenu();
-
+        
+        initializeEvents();
+        
         initializeFrame();
 
         addViews();
@@ -202,6 +207,14 @@ public class Simulator {
         settingsView = new SettingsView(parkeerLogic, this);
     }
 
+    private void initializeEvents() {
+    	int[] duration = new int[2];
+    	duration[0] = 1;
+    	duration[1] = 30;
+    	
+    	events = new Events(parkeerLogic);
+    	events.addEvent("Koopavond", 0, 1, 30, duration, 100);
+    }
 
     /**
      * Disposes of the screens and reinitializes the simulator in a new thread

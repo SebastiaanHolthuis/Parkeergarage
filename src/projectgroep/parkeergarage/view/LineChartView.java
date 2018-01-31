@@ -71,7 +71,7 @@ public class LineChartView extends AbstractView {
         yData.add(model.getTotalEarned());
     }
 
-    public void updateData() {
+    public void updateData() {    	
         xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
     }
 

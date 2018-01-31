@@ -513,7 +513,7 @@ public class ParkeerLogic extends AbstractModel {
 
     private void addArrivingCars(int numberOfCars, CarType type) {
         for (Car car : reservationLogic.getReservationCars()) {
-            if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {
+            if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute() && !entranceCarQueue.getQueue().contains(car)) {
                 entranceCarQueue.addCar(car);
             }
         }
@@ -560,7 +560,6 @@ public class ParkeerLogic extends AbstractModel {
             reservationLogic.addReservation(car, location);
         }
     }
-
 
     public ReservationLogic getReservationLogic() {
         return reservationLogic;
