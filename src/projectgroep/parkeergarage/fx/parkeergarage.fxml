@@ -59,7 +59,7 @@
                         <Button fx:id="stepBack" layoutX="37.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="-10" />
                         <Button fx:id="stepForward" layoutX="116.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="+10" />
                         <Slider fx:id="tickPauseSlider" layoutX="37.0" layoutY="110.0" min="1.0" showTickLabels="true" showTickMarks="true" />
-                        <ToggleButton fx:id="toggleRunning" layoutX="38.0" layoutY="19.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" selected="true" text="Running" />
+                        <ToggleButton fx:id="toggleRunning" layoutX="38.0" layoutY="19.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" selected="true" text="Running..." />
                     </children>
                 </Pane>
             </left>

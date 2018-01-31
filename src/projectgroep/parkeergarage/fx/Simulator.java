@@ -60,18 +60,29 @@ public class Simulator extends Application {
     }
 
     void addControlListeners() {
-        scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
-            model.toggleRunning();
-            ((ToggleButton) e.getSource()).setSelected(model.isRunning());
-        });
-
+        addToggleLister();
+        initializeSlider();
         scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
+    }
 
+    void initializeSlider() {
         Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
         tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
                 model.tickPause = 100 - newValue.intValue());
         tickPauseSlider.setValue(100 - model.tickPause);
+    }
+
+    void addToggleLister() {
+        scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
+            model.toggleRunning();
+            ToggleButton source = (ToggleButton) e.getSource();
+            source.setSelected(model.isRunning());
+            if (model.isRunning())
+                source.setText("Running...");
+            else
+                source.setText("Run");
+        });
     }
 
     void addFXComponent(FXView view, String lookupId) {
