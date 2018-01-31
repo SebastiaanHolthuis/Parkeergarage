@@ -25,10 +25,11 @@ public class Settings extends FXView {
         List<String> keyList = new ArrayList<>(settings.keySet());
         for (int i = 0; i < keyList.size(); i++) {
             Label label = new Label(keyList.get(i));
-            TextField field = new TypedTextField(settings.get(keyList.get(i)));
+            TypedTextField field = new TypedTextField(settings.get(keyList.get(i)));
 
             container.add(label, 0, i);
             container.add(field, 1, i);
+            fields.put(keyList.get(i), field);
         }
 
         container.add(restartButton, 1, keyList.size() + 1);
