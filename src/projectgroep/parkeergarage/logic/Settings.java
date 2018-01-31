@@ -1,12 +1,7 @@
 package projectgroep.parkeergarage.logic;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.stream.Stream;
 
 public class Settings extends MapLike {
     /**
@@ -30,12 +25,13 @@ public class Settings extends MapLike {
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
     double skipChance = 0.5; // 0 to 1
 
+    int maxHistory = 100;
+
     int enterSpeed = 8; // number of cars that can enter per minute
     int paymentSpeed = 5; // number of cars that can pay per minute
     int exitSpeed = 7; // number of cars that can leave per minute
 
     public Settings() {
-
     }
 
     public Settings(HashMap<String, Object> map) {

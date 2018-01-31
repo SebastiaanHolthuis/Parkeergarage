@@ -1,7 +1,8 @@
 package projectgroep.parkeergarage.view;
 
-import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JTextField;
 
 /**
  * A type-aware and typesafe JTextField. In case the type cannot be created from a string, the initial value is returned.

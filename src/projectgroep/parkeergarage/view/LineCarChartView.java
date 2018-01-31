@@ -14,16 +14,25 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-public class PieChartView extends AbstractView {
-
+public class LineCarChartView extends AbstractView {
     private XYChart xyChart;
-    private ArrayList yData = new ArrayList() {{
+
+    private ArrayList addHOC = new ArrayList() {{
+        add(0);
+    }};
+    private ArrayList parkingPass = new ArrayList() {{
         add(0);
     }};
 
-    public static final String SERIES_NAME = "Omzet in euro's";
+    private ArrayList reservationCar = new ArrayList() {{
+        add(0);
+    }};
 
-    public PieChartView(ParkeerLogic model) {
+    public static final String SERIES_NAME = "Adhoc Cars";
+    public static final String SERIES_NAME1 = "ParkingPass Cars";
+    public static final String SERIES_NAME2 = "Reservation Cars";
+
+    public LineCarChartView(ParkeerLogic model) {
         super(model);
         go();
     }
@@ -39,6 +48,7 @@ public class PieChartView extends AbstractView {
             @Override
             public void run() {
                 updateData();
+                addDataPoint();
                 javax.swing.SwingUtilities.invokeLater(() -> chartPanel.repaint());
             }
         };
@@ -53,26 +63,33 @@ public class PieChartView extends AbstractView {
                 .width(600)
                 .height(475)
                 .theme(ChartTheme.Matlab)
-                .title("Omzet per dag")
+                .title(SERIES_NAME)
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);
-        xyChart.addSeries(SERIES_NAME, null, yData);
+        xyChart.addSeries(SERIES_NAME1, null, parkingPass);
+        xyChart.addSeries(SERIES_NAME2, null, reservationCar);
+        xyChart.addSeries(SERIES_NAME, null, addHOC);
+
 
         return xyChart;
     }
 
+
     @Override
-	public void updateView() {
+    public void updateView() {
         addDataPoint();
     }
 
     void addDataPoint() {
-        yData.add(model.getTotalEarned());
+        addHOC.add(model.getAdHocCars().count());
+        parkingPass.add(model.getParkingPassCars().count());
+        reservationCar.add(model.getReservationCars().count());
     }
 
     public void updateData() {
-        xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+        xyChart.updateXYSeries(SERIES_NAME, null, addHOC, null);
+        xyChart.updateXYSeries(SERIES_NAME1, null, parkingPass, null);
+        xyChart.updateXYSeries(SERIES_NAME2, null, reservationCar, null);
     }
-
 }

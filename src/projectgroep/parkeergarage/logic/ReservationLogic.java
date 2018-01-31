@@ -1,19 +1,26 @@
 package projectgroep.parkeergarage.logic;
 
+import static projectgroep.parkeergarage.Utils.deepClone;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import projectgroep.parkeergarage.logic.cars.Car;
 
 public class ReservationLogic {
 
     private ParkeerLogic model;
-    private HashMap<Car, Location> reservations = new HashMap<Car, Location>();
+    private HashMap<Car, Location> reservations = new HashMap<>();
     public static ArrayList<Car> cars = new ArrayList<Car>();
 
     public ReservationLogic(ParkeerLogic model) {
         this.model = model;
+    }
+
+    public ReservationLogic(ParkeerLogic model, ReservationSnapshot snapshot) {
+        this.model = model;
+        reservations = snapshot.reservations;
+        cars = snapshot.cars;
     }
 
     public void addReservation(Car car, Location location) {
@@ -26,12 +33,12 @@ public class ReservationLogic {
                 time[0] = model.getHour() + 1;
                 time[1] = 14;
             }
-            
+
             if (location != null) {
                 reservations.put(car, location);
                 location.reserve(car);
                 car.setEntranceTime(time);
-            }             
+            }
         }
     }
 
@@ -68,5 +75,12 @@ public class ReservationLogic {
 
     public void setReservations(HashMap<Car, Location> reservations) {
         this.reservations = reservations;
+    }
+
+    public ReservationSnapshot makeSnapshot() {
+        return new ReservationSnapshot() {{
+            reservations = (HashMap<Car, Location>) deepClone(getReservations());
+            cars = (ArrayList<Car>) deepClone(getReservationCars());
+        }};
     }
 }

@@ -1,13 +1,9 @@
 package projectgroep.parkeergarage.logic;
 
+import java.util.List;
+
 import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarQueue;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class Snapshot extends MapLike {
     CarQueue entranceCarQueue;
@@ -25,11 +21,9 @@ public class Snapshot extends MapLike {
     int week;
 
     LocationLogic locationLogic;
-    ReservationLogic reservationLogic;
+    ReservationSnapshot reservationSnapshot;
 
     List<Car> skippedCars;
 
-    double totalEarned;
-
-
+    public double totalEarned;
 }

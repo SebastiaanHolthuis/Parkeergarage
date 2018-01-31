@@ -1,7 +1,7 @@
 package projectgroep.parkeergarage.logic.cars;
 
+import java.awt.Color;
 import java.util.Random;
-import java.awt.*;
 
 public class ParkingPassCar extends Car {
     public static final Color COLOR = Color.decode("#33A4EA");
@@ -15,7 +15,8 @@ public class ParkingPassCar extends Car {
         this.setHasToPay(false);
     }
 
-    public Color getColor() {
+    @Override
+	public Color getColor() {
         return COLOR;
     }
 }

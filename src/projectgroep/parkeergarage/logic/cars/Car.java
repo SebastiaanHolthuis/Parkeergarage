@@ -1,6 +1,6 @@
 package projectgroep.parkeergarage.logic.cars;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,4 +82,8 @@ public abstract class Car implements Serializable {
     public void setEntranceTime(int[] entranceTime) {
         this.entranceTime = entranceTime;
     }
+
+//    private static stayMinutes (int hours, int minutes) {
+//        (hours * 60) +
+//    }
 }

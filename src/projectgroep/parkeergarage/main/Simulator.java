@@ -20,11 +20,13 @@ import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.controller.ButtonController;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
+import projectgroep.parkeergarage.logic.events.Events;
 import projectgroep.parkeergarage.view.CarParkView;
+import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.view.PieChartView;
 import projectgroep.parkeergarage.view.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
+
 
 public class Simulator {
 
@@ -32,9 +34,10 @@ public class Simulator {
     private CarParkView carParkView;
     private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
-    private PieChartView pieChartView;
+
+    private ChartTabs chartTabs;
     private LegendView legendView;
-    
+
     private JFrame screen;
     private JFrame settingsScreen;
 
@@ -53,8 +56,10 @@ public class Simulator {
             gap = 20,
             panelWidth = 300,
             carParkWidth = 865,
-            pieChartWidth = 407;
-
+            pieChartWidth = 607;
+    
+    private Events events;
+    
     public Simulator(Settings settings) {
         createInstances(settings);
         initializeFrame();
@@ -76,14 +81,16 @@ public class Simulator {
         buttonController = new ButtonController(this, parkeerLogic);
 
         initializeCarPark();
-        initializePieChart();
+        initializeCharts();
         initializeStatistics();
         initializeSettings();
         initializeLegend();
         initializePanel();
         initializeTabs();
         initializeMenu();
-
+        
+        initializeEvents();
+        
         initializeFrame();
 
         addViews();
@@ -97,7 +104,7 @@ public class Simulator {
         screen.setVisible(true);
 
         carParkView.updateView();
-        pieChartView.updateView();
+        chartTabs.updateView();
         legendView.updateView();
     }
 
@@ -106,7 +113,7 @@ public class Simulator {
         parkeerLogic.addView(carParkView);
         parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
-        parkeerLogic.addView(pieChartView);
+        parkeerLogic.addView(chartTabs);
         parkeerLogic.addView(legendView);
     }
 
@@ -122,16 +129,16 @@ public class Simulator {
 
     void initializeCarPark() {
         carParkView = new CarParkView(parkeerLogic) {{
-            setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+            setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
             setBackground(SystemColor.control);
             setBounds(panelWidth + gap, yOffset, carParkWidth, 501);
         }};
     }
 
-    void initializePieChart() {
-        pieChartView = new PieChartView(parkeerLogic) {{
+    void initializeCharts() {
+        chartTabs = new ChartTabs(parkeerLogic) {{
             setBackground(Color.WHITE);
-            setBorder(new LineBorder(new Color(0, 0, 0)));
+//            setBorder(new LineBorder(new Color(0, 0, 0)));
             setBounds(panelWidth + carParkWidth + gap * 2, yOffset, pieChartWidth, 501);
         }};
     }
@@ -183,14 +190,14 @@ public class Simulator {
             setBounds(panelWidth + carParkWidth + gap * 2, 550, pieChartWidth, 131);
         }};
     }
-    
+
     void addElementsToContentPane() {
-        contentPane.add(pieChartView);
+        contentPane.add(chartTabs);
         contentPane.add(carParkView);
         contentPane.add(buttonController);
         contentPane.add(legendView);
         contentPane.add(panel);
-        
+
         // Menu bar voor nu gedeactiveerd
         // contentPane.add(menuBar);
     }
@@ -200,6 +207,14 @@ public class Simulator {
         settingsView = new SettingsView(parkeerLogic, this);
     }
 
+    private void initializeEvents() {
+    	int[] duration = new int[2];
+    	duration[0] = 1;
+    	duration[1] = 30;
+    	
+    	events = new Events(parkeerLogic);
+    	events.addEvent("Koopavond", 0, 1, 30, duration, 100);
+    }
 
     /**
      * Disposes of the screens and reinitializes the simulator in a new thread

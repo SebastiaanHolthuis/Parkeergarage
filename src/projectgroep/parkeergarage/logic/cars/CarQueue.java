@@ -18,4 +18,9 @@ public class CarQueue implements Serializable {
     public int carsInQueue() {
         return queue.size();
     }
+    
+    public Queue<Car> getQueue() {
+    	return queue;
+    }
+    
 }

@@ -1,12 +1,14 @@
 package projectgroep.parkeergarage.view;
 
+import java.awt.GridLayout;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.main.Simulator;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
 
 /**
  * Tijdelijk 'restart' button
