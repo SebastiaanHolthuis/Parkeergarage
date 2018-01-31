@@ -102,4 +102,17 @@ public class Simulator extends Application {
         Pane pane = (Pane) scene.lookup(lookupId);
         pane.getChildren().add(swingNode);
     }
+
+    public void restart(projectgroep.parkeergarage.logic.Settings settings) {
+        SettingsRepository.saveSettings(settings);
+        model.pause();
+
+        Thread t = new Thread(() -> {
+//            createInstances(settings);
+//            initializeFrame();
+            model.run();
+        });
+
+        t.start();
+    }
 }

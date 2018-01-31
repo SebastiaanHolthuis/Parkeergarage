@@ -1,8 +1,8 @@
 package projectgroep.parkeergarage.logic.cars;
 
-import java.awt.Color;
 import java.io.Serializable;
 
+import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
 
 public abstract class Car implements Serializable {

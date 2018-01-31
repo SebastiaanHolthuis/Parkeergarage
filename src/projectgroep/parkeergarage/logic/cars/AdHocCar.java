@@ -1,10 +1,11 @@
 package projectgroep.parkeergarage.logic.cars;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 public class AdHocCar extends Car {
-    public static final Color COLOR = Color.decode("#D1345B");
+    public static final Color COLOR = Color.web("#D1345B");
 
     public AdHocCar(double priceToPay) {
         super(priceToPay);
@@ -16,7 +17,7 @@ public class AdHocCar extends Car {
     }
 
     @Override
-	public Color getColor() {
+    public Color getColor() {
         return COLOR;
     }
 }

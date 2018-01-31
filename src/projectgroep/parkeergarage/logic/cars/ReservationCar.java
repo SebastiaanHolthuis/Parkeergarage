@@ -1,10 +1,11 @@
 package projectgroep.parkeergarage.logic.cars;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 public class ReservationCar extends Car {
-    public static final Color COLOR = Color.decode("#008000");
+    public static final Color COLOR = Color.web("#008000");
 
     public ReservationCar(double priceToPay) {
         super(priceToPay);
@@ -17,7 +18,7 @@ public class ReservationCar extends Car {
     }
 
     @Override
-	public Color getColor() {
+    public Color getColor() {
         return COLOR;
     }
 }
