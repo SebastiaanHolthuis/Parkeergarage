@@ -17,14 +17,23 @@ import java.io.IOException;
 
 
 public class Simulator extends Application {
-    public static ParkeerLogic model = new ParkeerLogic(SettingsRepository.loadSettings());
+    ParkeerLogic model;
+    Thread modelThread;
 
     Pane root;
     Scene scene;
+    Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        actualStart(primaryStage);
+    }
+
+    void actualStart(Stage primaryStage) throws IOException {
+        model = new ParkeerLogic(SettingsRepository.loadSettings());
         primaryStage.setTitle("Parkeergarage simulator - ITV1C groep C");
+
+        stage = primaryStage;
 
         root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/parkeergarage.fxml"));
         scene = new Scene(root);
@@ -39,9 +48,11 @@ public class Simulator extends Application {
             System.exit(0);
         });
 
-        new Thread(() -> {
+        modelThread = new Thread(() -> {
             model.run();
-        }).start();
+        });
+
+        modelThread.start();
     }
 
 
@@ -89,12 +100,14 @@ public class Simulator extends Application {
     public void restart(Settings settings) {
         SettingsRepository.saveSettings(settings);
         model.pause();
-        model = new ParkeerLogic(settings);
+        modelThread.stop();
 
-        Thread t = new Thread(() -> {
-            model.run();
-        });
+        try {
+            actualStart(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        t.start();
+
     }
 }

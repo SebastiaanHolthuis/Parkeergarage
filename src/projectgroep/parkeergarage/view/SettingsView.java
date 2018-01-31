@@ -29,6 +29,8 @@ public class SettingsView extends AbstractView {
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
     public SettingsView(ParkeerLogic model, Simulator simulator) {
+        this.simulator = simulator;
+
         getChildren().add(container);
 
         HashMap<String, Object> settings = (model.settings).asMap();

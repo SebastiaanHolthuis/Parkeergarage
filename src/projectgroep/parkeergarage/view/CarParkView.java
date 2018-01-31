@@ -30,7 +30,7 @@ public class CarParkView extends AbstractView {
             model.locations().forEach(location -> {
                 Car car = model.getCarAt(location);
                 Color color = car == null ? Color.web("#8bba8b") : car.getColor();
-                System.out.println("update");
+//                System.out.println("update");
 
                 if (model.getReservationLogic().getReservations().values().contains(location)) {
                     if (car != null) {
