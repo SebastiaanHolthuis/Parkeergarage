@@ -2,7 +2,6 @@ package projectgroep.parkeergarage.main;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
@@ -10,10 +9,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
-import projectgroep.parkeergarage.fx.*;
+import projectgroep.parkeergarage.view.*;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
-import javax.swing.*;
 import java.io.IOException;
 
 
@@ -27,7 +25,7 @@ public class Simulator extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Parkeergarage simulator - ITV1C groep C");
 
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/fx/parkeergarage.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/parkeergarage.fxml"));
         scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -83,18 +81,6 @@ public class Simulator extends Application {
     void addFXComponent(AbstractView view, String lookupId) {
         ((Pane) scene.lookup(lookupId)).getChildren().add(view);
         model.addView(view);
-    }
-
-    void addSwingComponent(View view, String lookupId) {
-        SwingNode swingNode = new SwingNode();
-
-        SwingUtilities.invokeLater(() -> {
-            swingNode.setContent((JComponent) view);
-        });
-
-        model.addView(view);
-        Pane pane = (Pane) scene.lookup(lookupId);
-        pane.getChildren().add(swingNode);
     }
 
     public void restart(projectgroep.parkeergarage.logic.Settings settings) {

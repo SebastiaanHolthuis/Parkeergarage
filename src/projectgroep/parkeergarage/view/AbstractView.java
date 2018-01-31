@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.fx;
+package projectgroep.parkeergarage.view;
 
 import javafx.scene.layout.Pane;
 
