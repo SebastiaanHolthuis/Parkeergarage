@@ -63,7 +63,7 @@ public class LineCarChartView extends AbstractView {
                 .width(600)
                 .height(475)
                 .theme(ChartTheme.Matlab)
-                .title(SERIES_NAME)
+                .title("Aantal Auto's")
                 .build();
 
         xyChart.getStyler().setLegendPosition(LegendPosition.OutsideS);

@@ -397,7 +397,6 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
 
-
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
@@ -409,7 +408,13 @@ public class ParkeerLogic extends AbstractModel {
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int) Math.round(numberOfCarsPerHour / 60);
+        return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
+    }
+    
+    private double getCarMultiplier() {
+        double period = (2 * Math.PI) / 24;
+        double multiplier = (double) hour + (double) minute / 60;
+        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5)))); // varies from 0 - 1       
     }
 
     private boolean queueTooLongFor(CarType type) {
@@ -565,8 +570,6 @@ public class ParkeerLogic extends AbstractModel {
 //            }
         }
         
-        if (getHour() >= 18 || getHour() <= 7) numberOfCars = numberOfCars /  2;
-
         IntStream.range(0, numberOfCars).forEach(i -> {
             Car newCar;
             switch (type) {
