@@ -19,8 +19,10 @@ public class LegendView extends AbstractView {
 
         Canvas canvas = new Canvas(200, 100);
         g = canvas.getGraphicsContext2D();
+        getChildren().add(canvas);
     }
 
+    @Override
     public void updateView() {
         drawLegend();
     }
@@ -37,7 +39,7 @@ public class LegendView extends AbstractView {
     }
 
     private void drawLegendItem(String text, Color color, int position) {
-        g.setStroke(color);
+        g.setFill(color);
         g.fillRect(10, 10 + (position * 30), 50, 20);
 
         g.setStroke(Color.BLACK);
