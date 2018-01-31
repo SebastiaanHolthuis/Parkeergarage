@@ -28,7 +28,6 @@ public class LegendView extends AbstractView {
     }
 
     public void drawLegend() {
-        g.setFont(new Font("Arial", 16));
         g.setStroke(Color.WHITE);
         g.setFill(Color.BLACK);
 
@@ -43,7 +42,6 @@ public class LegendView extends AbstractView {
         g.fillRect(10, 10 + (position * 30), 50, 20);
 
         g.setStroke(Color.BLACK);
-//        g.tex(text, 70, 25 + (position * 30));
+        g.strokeText(text, 70, 25 + (position * 30));
     }
-
 }
