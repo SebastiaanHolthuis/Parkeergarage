@@ -1,22 +1,22 @@
 package projectgroep.parkeergarage.fx;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SettingsController {
-    @FXML
+public class Settings extends FXView {
     GridPane container;
-
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
-    public void initialize() {
-        HashMap<String, Object> settings = (Simulator.model.settings).asMap();
+    public Settings(ParkeerLogic model) {
+        container = new GridPane();
+
+        HashMap<String, Object> settings = (model.settings).asMap();
         List<String> keyList = new ArrayList<>(settings.keySet());
         for (int i = 0; i < keyList.size(); i++) {
             Label label = new Label(keyList.get(i));
@@ -40,4 +40,8 @@ public class SettingsController {
         System.out.println(getSettingsMap());
     }
 
+    @Override
+    public void updateView() {
+
+    }
 }

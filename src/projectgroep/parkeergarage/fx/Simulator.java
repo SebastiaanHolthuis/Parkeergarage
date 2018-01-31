@@ -47,6 +47,10 @@ public class Simulator extends Application {
         }).start();
     }
 
+    void addFXComponennts() {
+        ((Pane) scene.lookup("#settings")).getChildren().add(new projectgroep.parkeergarage.fx.Settings(model));
+    }
+
     void addSwingComponents() {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
         addSwingComponent(new SettingsView(model, this), "#settings");
