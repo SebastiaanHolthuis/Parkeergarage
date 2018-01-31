@@ -51,10 +51,7 @@ public class Simulator extends Application {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
         addSwingComponent(new SettingsView(model, this), "#settings");
 //        addSwingComponent(new CarParkView(model), "#carpark");
-
 //        addSwingComponent(new LegendView(model), "#legend");
-
-        addSwingComponent(new LegendView(model), "#legend");
     }
 
     void addControlListeners() {
