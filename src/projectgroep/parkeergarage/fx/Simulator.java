@@ -69,6 +69,7 @@ public class Simulator extends Application {
 
     void addFXComponent(FXView view, String lookupId) {
         ((Pane) scene.lookup(lookupId)).getChildren().add(view);
+        model.addView(view);
     }
 
     void addSwingComponent(View view, String lookupId) {

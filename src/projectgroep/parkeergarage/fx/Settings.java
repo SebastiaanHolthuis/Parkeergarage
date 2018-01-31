@@ -1,5 +1,6 @@
 package projectgroep.parkeergarage.fx;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,10 @@ import java.util.List;
 
 public class Settings extends FXView {
     GridPane container = new GridPane();
+    Button restartButton = new Button("Restart") {{
+        setOnMouseClicked(e -> restart());
+    }};
+
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
     public Settings(ParkeerLogic model) {
@@ -25,6 +30,8 @@ public class Settings extends FXView {
             container.add(label, 0, i);
             container.add(field, 1, i);
         }
+
+        container.add(restartButton, 1, keyList.size() + 1);
     }
 
 

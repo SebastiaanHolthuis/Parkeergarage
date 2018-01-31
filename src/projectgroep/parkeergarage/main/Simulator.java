@@ -22,7 +22,6 @@ import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.CarParkView;
 import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
-import projectgroep.parkeergarage.fx.SettingsView;
 import projectgroep.parkeergarage.view.TextStatisticsView;
 
 
@@ -30,7 +29,6 @@ public class Simulator {
 
     private ParkeerLogic parkeerLogic;
     private CarParkView carParkView;
-    private SettingsView settingsView;
     private TextStatisticsView textStatisticsView;
 
     private ChartTabs chartTabs;
@@ -104,7 +102,6 @@ public class Simulator {
 
     void addViews() {
         parkeerLogic.addView(carParkView);
-        parkeerLogic.addView(settingsView);
         parkeerLogic.addView(textStatisticsView);
         parkeerLogic.addView(chartTabs);
         parkeerLogic.addView(legendView);
@@ -139,7 +136,6 @@ public class Simulator {
     void initializeTabs() {
         tabbedPane = new JTabbedPane() {{
             addTab("Statistics", textStatisticsView);
-            addTab("Settings", settingsView);
             setEnabled(true);
             setBounds(0, 0, panelWidth, 501);
         }};
