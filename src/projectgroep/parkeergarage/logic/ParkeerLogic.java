@@ -357,7 +357,19 @@ public class ParkeerLogic extends AbstractModel {
             		minutes += (hours*60);
             }
             
-            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
+            if(car instanceof ReservationCar) {
+            		totalEarned += 1 + (minutes * 0.02);
+            }
+            
+            if(car instanceof AdHocCar) {
+            		totalEarned += (minutes * 0.02);
+            }
+            
+            if(car instanceof ParkingPassCar) {
+            		totalEarned += 100;
+            }
+            
+//            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
