@@ -3,8 +3,6 @@ package projectgroep.parkeergarage.main;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.SystemColor;
 
 import javax.swing.JFrame;
@@ -19,7 +17,7 @@ import javax.swing.border.MatteBorder;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
-import projectgroep.parkeergarage.view.CarParkView;
+import projectgroep.parkeergarage.fx.CarParkView;
 import projectgroep.parkeergarage.view.ChartTabs;
 import projectgroep.parkeergarage.view.LegendView;
 import projectgroep.parkeergarage.fx.TextStatisticsView;
@@ -73,7 +71,7 @@ public class Simulator {
         parkeerLogic = new ParkeerLogic(settings);
 //        buttonController = new ButtonController(this, parkeerLogic);
 
-        initializeCarPark();
+//        initializeCarPark();
         initializeCharts();
 //        initializeStatistics();
         initializeSettings();
@@ -116,14 +114,14 @@ public class Simulator {
 //            setLayout(new GridLayout(1, yOffset, 0, 0));
 //        }};
 //    }
-
-    void initializeCarPark() {
-        carParkView = new CarParkView(parkeerLogic) {{
-            setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
-            setBackground(SystemColor.control);
-            setBounds(panelWidth + gap, yOffset, carParkWidth, 501);
-        }};
-    }
+//
+//    void initializeCarPark() {
+//        carParkView = new CarParkView(parkeerLogic) {{
+//            setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
+//            setBackground(SystemColor.control);
+//            setBounds(panelWidth + gap, yOffset, carParkWidth, 501);
+//        }};
+//    }
 
     void initializeCharts() {
         chartTabs = new ChartTabs(parkeerLogic) {{
@@ -182,7 +180,7 @@ public class Simulator {
 
     void addElementsToContentPane() {
         contentPane.add(chartTabs);
-        contentPane.add(carParkView);
+//        contentPane.add(carParkView);
 //        contentPane.add(buttonController);
         contentPane.add(legendView);
         contentPane.add(panel);

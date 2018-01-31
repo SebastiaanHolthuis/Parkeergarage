@@ -52,6 +52,7 @@ public class Simulator extends Application {
         addFXComponent(new LineCarChartView(model), "#linecarchart");
         addFXComponent(new TotalEarnedChartView(model), "#totalearnedchart");
         addFXComponent(new TextStatisticsView(model), "#textstatistics");
+        addFXComponent(new CarParkView(model), "#carpark");
     }
 
     void addSwingComponents() {
