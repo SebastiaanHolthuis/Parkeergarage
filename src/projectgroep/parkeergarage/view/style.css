@@ -16,23 +16,24 @@
     Chart lines
     TODO: duplicatie verwijderen
  */
-
-.default-color0, .chart-legend-item-symbol {
-    -fx-stroke: #D1345B !important;
-    -fx-background-color: #D1345B !important;;
-}
-
-.default-color1, .chart-legend-item-symbol {
-    -fx-stroke: #33A4EA !important;
-    -fx-background-color: #33A4EA !important;
-
-}
-
-.default-color2, .chart-legend-item-symbol {
-    -fx-stroke: #008000 !important;
-    -fx-background-color: #008000 !important;
-}
-
-.chart-line-symbol {
+.chart-content .chart-line-symbol {
     -fx-background-color: transparent !important;
 }
+
+.default-color0.chart-legend-item-symbol, .default-color0 {
+    -fx-stroke: #D1345B !important;
+    -fx-background-color: #D1345B;
+}
+
+.default-color1.chart-legend-item-symbol, .default-color1 {
+    -fx-stroke: #33A4EA !important;
+    -fx-background-color: #33A4EA;
+
+}
+
+.default-color2.chart-legend-item-symbol, .default-color2 {
+    -fx-stroke: #008000 !important;
+    -fx-background-color: #008000;
+}
+
+
