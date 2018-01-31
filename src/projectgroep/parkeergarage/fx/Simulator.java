@@ -3,13 +3,11 @@ package projectgroep.parkeergarage.fx;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
@@ -34,6 +32,7 @@ public class Simulator extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        addFXComponents();
         addSwingComponents();
         addControlListeners();
 
@@ -47,13 +46,12 @@ public class Simulator extends Application {
         }).start();
     }
 
-    void addFXComponennts() {
-        ((Pane) scene.lookup("#settings")).getChildren().add(new projectgroep.parkeergarage.fx.Settings(model));
+    void addFXComponents() {
+        addFXComponent(new projectgroep.parkeergarage.fx.Settings(model), "#settings");
     }
 
     void addSwingComponents() {
         addSwingComponent(new TextStatisticsView(model), "#textstatistics");
-        addSwingComponent(new SettingsView(model, this), "#settings");
 //        addSwingComponent(new CarParkView(model), "#carpark");
 //        addSwingComponent(new LegendView(model), "#legend");
     }
@@ -69,6 +67,10 @@ public class Simulator extends Application {
         tickPauseSlider.setValue(100 - model.tickPause);
     }
 
+    void addFXComponent(FXView view, String lookupId) {
+        ((Pane) scene.lookup(lookupId)).getChildren().add(view);
+    }
+
     void addSwingComponent(View view, String lookupId) {
         SwingNode swingNode = new SwingNode();
 
@@ -79,9 +81,5 @@ public class Simulator extends Application {
         model.addView(view);
         Pane pane = (Pane) scene.lookup(lookupId);
         pane.getChildren().add(swingNode);
-    }
-
-    public void restart(Settings s) {
-        System.out.println(s);
     }
 }

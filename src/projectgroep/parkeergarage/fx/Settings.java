@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Settings extends FXView {
-    GridPane container;
+    GridPane container = new GridPane();
     private HashMap<String, TypedTextField> fields = new HashMap<>();
 
     public Settings(ParkeerLogic model) {
-        container = new GridPane();
+        getChildren().add(container);
 
         HashMap<String, Object> settings = (model.settings).asMap();
         List<String> keyList = new ArrayList<>(settings.keySet());
