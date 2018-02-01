@@ -60,7 +60,8 @@ public class Simulator extends Application {
 
     void attachComponentsToLayout() {
         attachComponentToLayout(new SettingsView(model, this), "#settings");
-        attachComponentToLayout(new LineCarChartView(model), "#linecarchart");
+        attachComponentToLayout(new CarLineChartView(model), "#carlinechart");
+        attachComponentToLayout(new CarPieChartView(model), "#carpiechart");
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
 
