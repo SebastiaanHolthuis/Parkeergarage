@@ -262,13 +262,14 @@ public class ParkeerLogic extends AbstractModel {
 
         events = new Events(this);
         events.addEvent("Koopavond", 0, 18, 30, duration, 50);
-        events.addEvent("Kermis", 3, 19, 30, duration, 300);
+        events.addEvent("Kermis", 3, 19, 30, duration, 45);
     }
 
     private void handleEvents() {
         ArrayList<Event> startingEvents = events.getEventsByStartTime(getCurrentTime());
         
         for (Event event : startingEvents) {
+        	event.addVisitors();
         	event.setStarted(true);
         }
         
@@ -297,15 +298,6 @@ public class ParkeerLogic extends AbstractModel {
     private void updateViews() {
         tick();
         notifyViews();
-        
-        int[] currentTime = new int[3];
-        currentTime[0] = day;
-        currentTime[1] = hour;
-        currentTime[2] = minute;
-        
-        for (Event event : events.getRunningEvents(currentTime)) {
-        	System.out.println(event.getName());
-    	}
     }
 
     private void carsArriving() {
@@ -658,17 +650,6 @@ public class ParkeerLogic extends AbstractModel {
                 reservationLogic.addReservation(newCar, location);
             }
         });
-    }
-
-    private void handleReservations() {
-        Random random = new Random();
-        int chance = random.nextInt(100);
-
-        if (chance < 10) {
-            ReservationCar car = new ReservationCar(6);
-            Location location = getFirstFreeLocation(car);
-            reservationLogic.addReservation(car, location);
-        }
     }
 
     public ReservationLogic getReservationLogic() {

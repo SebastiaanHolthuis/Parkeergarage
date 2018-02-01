@@ -39,7 +39,7 @@ public class Events {
 	 * @param expectedVisitors The amount of visitors that are expected to show up at the event.
 	 */
 	public void addEvent(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
-		events.add(new Event(name, day, hour, minute, duration, expectedVisitors));				
+		events.add(new Event(model, name, day, hour, minute, duration, expectedVisitors));				
 	}
 
 	/**
@@ -94,6 +94,17 @@ public class Events {
 		return toReturn;	
 	}
 	
+//	public int getTotalVisitorCount() {
+//		ArrayList<Event> runningEvents = getRunningEvents(model.getCurrentTime());
+//		int totalVisitors = 0;
+//		
+//		for (Event event : runningEvents) {
+//			totalVisitors += event.getNumberOfCars();
+//		}
+//		
+//		return totalVisitors;
+//	}
+//	
 	/**
 	 * @return Returns all of the Events listed in the events ArrayList.
 	 */

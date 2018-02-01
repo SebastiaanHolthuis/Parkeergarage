@@ -2,10 +2,16 @@ package projectgroep.parkeergarage.logic.events;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.IntStream;
 
+import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.logic.cars.AdHocCar;
 import projectgroep.parkeergarage.logic.cars.Car;
+import projectgroep.parkeergarage.logic.cars.CarType;
 
 public class Event {
+	
+	private ParkeerLogic model;
 	
 	private String name;
 	
@@ -30,7 +36,8 @@ public class Event {
 	 * @param duration The total duration of the event.
 	 * @param expectedVisitors The amount of visitors that are expected to show up at the event.
 	 */
-	public Event(String name, int day, int hour, int minute, int duration[], int expectedVisitors) {
+	public Event(ParkeerLogic model, String name, int day, int hour, int minute, int duration[], int expectedVisitors) {
+		this.model = model;
 		this.name = name;
 		
 		this.startTime = new int[3];
@@ -101,5 +108,30 @@ public class Event {
 	public void setVisitors(ArrayList<Car> visitors) {
 		this.visitors = visitors;
 	}
+	
+	public void addVisitors() {
+		IntStream.range(0, expectedVisitors).forEach(i -> {
+			Random random = new Random();			
+			CarType type = CarType.AD_HOC;
+			
+			model.getEntranceCarQueue().addCar(new AdHocCar(model.getSettings().getDefaultPrice()));
+		});
+	}
+	
+
+//    public int getNumberOfCars() {
+//        Random random = new Random();
+//
+//        double standardDeviation = expectedVisitors * 0.3;
+//        double numberOfCarsPerHour = expectedVisitors + random.nextGaussian() * standardDeviation;
+//
+//        return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
+//    }
+//
+//    private double getCarMultiplier() {
+//        double period = (2 * Math.PI) / 24;
+//        double multiplier = (double) durationHours + (double) durationMinutes / 60;
+//        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));
+//    }
 	
 }
