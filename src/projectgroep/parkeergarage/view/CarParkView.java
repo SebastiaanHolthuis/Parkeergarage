@@ -27,6 +27,15 @@ public class CarParkView extends Canvas implements View {
         graphicsContext = getGraphicsContext2D();
     }
 
+    static double canvasWidth(ParkeerLogic model) {
+        return model.getNumberOfFloors() * 260;
+    }
+
+    static double canvasHeight(ParkeerLogic model) {
+        return 120 + model.getNumberOfPlaces() * 10;
+    }
+
+
     @Override
     public void updateView() {
         Platform.runLater(() -> {
@@ -52,14 +61,6 @@ public class CarParkView extends Canvas implements View {
                 drawPlace(location, color);
             });
         });
-    }
-
-    static double canvasWidth(ParkeerLogic model) {
-        return model.getNumberOfFloors() * 260 + (1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75 + (model.getNumberOfRows() % 2) * 20;
-    }
-
-    static double canvasHeight(ParkeerLogic model) {
-        return 60 + model.getNumberOfPlaces() * 10;
     }
 
     private void drawPlace(Location location, Color color) {
