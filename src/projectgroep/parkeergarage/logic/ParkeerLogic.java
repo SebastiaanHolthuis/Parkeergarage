@@ -19,6 +19,8 @@ import projectgroep.parkeergarage.logic.cars.CarQueue;
 import projectgroep.parkeergarage.logic.cars.CarType;
 import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
+import projectgroep.parkeergarage.logic.events.Event;
+import projectgroep.parkeergarage.logic.events.Events;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;
@@ -57,6 +59,8 @@ public class ParkeerLogic extends AbstractModel {
 
     public History history;
     private ReservationLogic reservationLogic;
+    private Events events;
+
 
     public int tickNum() {
         return (week * 7 * 24 * 60) + (day * 24 * 60) + (hour * 60) + (minute);
@@ -75,6 +79,7 @@ public class ParkeerLogic extends AbstractModel {
         this.history = new History(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
+        initializeEvents();
     }
 
     @Override
@@ -154,6 +159,7 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
+
         saveSnapshot();
     }
 
@@ -179,19 +185,19 @@ public class ParkeerLogic extends AbstractModel {
 
         switch (day) {
             case 0:
-                return "Monday";
+                return "Maandag";
             case 1:
-                return "Tuesday";
+                return "Dinsdag";
             case 2:
-                return "Wednesday";
+                return "Woensdag";
             case 3:
-                return "Thursday";
+                return "Donderdag";
             case 4:
-                return "Friday";
+                return "Vrijdag";
             case 5:
-                return "Saturday";
+                return "Zaterdag";
             case 6:
-                return "Sunday";
+                return "Zondag";
             default:
                 return "";
         }
@@ -200,6 +206,10 @@ public class ParkeerLogic extends AbstractModel {
 
     public String translateTime(int hour, int minute) {
         return hour + ":" + minute;
+    }
+
+    public int getTimeToPay() {
+    		return day + hour + minute;
     }
 
     public int getHour() {
@@ -239,6 +249,30 @@ public class ParkeerLogic extends AbstractModel {
         carsLeaving();
     }
 
+    private void initializeEvents() {
+    	int[] duration = new int[2];
+    	duration[0] = 1;
+    	duration[1] = 30;
+
+    	events = new Events(this);
+    	events.addEvent("Koopavond", 0, 18, 30, duration, 400);
+    	events.addEvent("Kermis", 3, 19, 30, duration, 300);
+    }
+
+    private void handleEvents() {
+    	int[] startTime = new int[3];
+    	startTime[0] = day;
+    	startTime[1] = hour;
+    	startTime[2] = minute;
+
+    	ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
+    	expectedEventVisitors = 0;
+
+    	for (Event event : startingEvents) {
+			expectedEventVisitors += event.getExpectedVisitors();
+		}
+    }
+
     private void updateViews() {
         tick();
         notifyViews();
@@ -261,8 +295,15 @@ public class ParkeerLogic extends AbstractModel {
                 i < settings.enterSpeed) {
 
             Car car = queue.removeCar();
+            car.timeEntering[0] = day;
+            car.timeEntering[1] = hour;
+            car.timeEntering[2] = minute;
 
             Location freeLocation = null;
+
+            if(car instanceof ParkingPassCar) {
+            		ParkingPassEarnings += 100;
+            }
 
             if (car instanceof ReservationCar && getReservationLogic().getReservations().containsKey(car)) {
                 freeLocation = getReservationLogic().getReservations().get(car);
@@ -322,8 +363,40 @@ public class ParkeerLogic extends AbstractModel {
         int i = 0;
         while (paymentCarQueue.carsInQueue() > 0 && i < settings.paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
+
+            car.timeLeaving[0] = day;
+            car.timeLeaving[1] = hour;
+            car.timeLeaving[2] = minute;
+
             // TODO Handle payment.
-            totalEarned += car.getPriceToPay(); // houdt nog geen rekening met het aantal uur dat de auto er staat
+
+            int days = 0;
+            int hours = 0;
+            int minutes = 0;
+
+            days = car.timeLeaving[0] - car.timeEntering[0];
+            hours = car.timeLeaving[1] - car.timeEntering[1];
+            minutes = car.timeLeaving[2] - car.timeEntering[2];
+
+            if((car.timeLeaving[0] - car.timeEntering[0]) > 0) {
+            		minutes += (days * 24 * 60);
+            }
+            if((car.timeLeaving[1]-car.timeEntering[1] ) > 0) {
+            		minutes += (hours*60);
+            }
+
+            if(car instanceof ReservationCar) {
+            		totalEarned += (minutes * 0.02);
+            }
+
+            else if(car instanceof AdHocCar) {
+            		totalEarned += (minutes * 0.02);
+            }
+            else {
+            		totalEarned += 100;
+            }
+
+//            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
         }
@@ -360,7 +433,6 @@ public class ParkeerLogic extends AbstractModel {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
     }
 
-
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
 
@@ -372,7 +444,13 @@ public class ParkeerLogic extends AbstractModel {
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int) Math.round(numberOfCarsPerHour / 60);
+        return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
+    }
+
+    private double getCarMultiplier() {
+        double period = (2 * Math.PI) / 24;
+        double multiplier = (double) hour + (double) minute / 60;
+        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));
     }
 
     private boolean queueTooLongFor(CarType type) {
@@ -517,8 +595,11 @@ public class ParkeerLogic extends AbstractModel {
 
     private void addArrivingCars(int numberOfCars, CarType type) {
         for (Car car : reservationLogic.getReservationCars()) {
-            if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute()) {
+            if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute() && !entranceCarQueue.getQueue().contains(car)) {
                 entranceCarQueue.addCar(car);
+            }
+            if(car instanceof ReservationCar) {
+        			totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
             }
         }
 
@@ -529,12 +610,12 @@ public class ParkeerLogic extends AbstractModel {
                     newCar = new ParkingPassCar(0);
                     break;
                 case RESERVED:
-                    newCar = new ReservationCar(6);
+                    newCar = new ReservationCar(settings.defaultPrice);
                     break;
                 case AD_HOC:
                 default:
-                    newCar = new AdHocCar(settings.defaultPrice);
-                    break;
+                    	newCar = new AdHocCar(settings.defaultPrice);
+                	   	break;
             }
 
             if (!(newCar instanceof ReservationCar)) {
@@ -565,7 +646,6 @@ public class ParkeerLogic extends AbstractModel {
         }
     }
 
-
     public ReservationLogic getReservationLogic() {
         return reservationLogic;
     }
@@ -573,5 +653,13 @@ public class ParkeerLogic extends AbstractModel {
     public void setReservationLogic(ReservationLogic reservationLogic) {
         this.reservationLogic = reservationLogic;
     }
+
+	public int getParkingPassEarnings() {
+		return ParkingPassEarnings;
+	}
+
+	public void setParkingPassEarnings(int parkingPassEarnings) {
+		ParkingPassEarnings = parkingPassEarnings;
+	}
 
 }

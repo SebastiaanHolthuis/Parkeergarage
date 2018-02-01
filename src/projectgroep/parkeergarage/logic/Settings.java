@@ -13,7 +13,7 @@ public class Settings extends MapLike {
     int numberOfPassHolderRows = 2;
     int numberOfResFloors = 1;
     int numberOfResRows = 2;
-    double defaultPrice = 4;
+    double defaultPrice = 0.02;
 
     int weekDayArrivals = 80; // average number of arriving AdHoc cars per hour
     int weekendArrivals = 110; // average number of arriving AdHoc cars per hour

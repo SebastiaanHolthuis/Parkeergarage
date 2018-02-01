@@ -1,8 +1,7 @@
 package projectgroep.parkeergarage.logic.events;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
@@ -40,7 +39,7 @@ public class Events {
 	 * @param expectedVisitors The amount of visitors that are expected to show up at the event.
 	 */
 	public void addEvent(String name, int day, int hour, int minute, int[] duration, int expectedVisitors) {
-		events.add(new Event(name, expectedVisitors, expectedVisitors, expectedVisitors, duration, expectedVisitors));				
+		events.add(new Event(name, day, hour, minute, duration, expectedVisitors));				
 	}
 
 	/**
@@ -75,8 +74,14 @@ public class Events {
 	 * 
 	 * @param startTime The time to use for the filter.
 	 */
-	public List<Event> getEventsByStartTime(int[] startTime) {
-		return events.stream().filter(event -> (event.getStartTime() == startTime)).collect(Collectors.toList());
+	public ArrayList<Event> getEventsByStartTime(int[] startTime) {
+		ArrayList<Event> toReturn = new ArrayList<Event>();
+		
+		for (Event event : events) {
+			if (Arrays.equals(startTime, event.getStartTime())) toReturn.add(event);
+		}
+		
+		return toReturn;
 	}
 	
 	/**
