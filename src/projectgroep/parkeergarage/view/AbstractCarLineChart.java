@@ -22,8 +22,10 @@ abstract class AbstractLineChartView extends AbstractView {
     ParkeerLogic model;
 
 
-    AbstractLineChartView(ParkeerLogic model) {
+    AbstractLineChartView(String title, ParkeerLogic model, HashMap<String, Function> updaters) {
         this.model = model;
+        this.title = title;
+        this.updaters = updaters;
 
         lineChart.setTitle(title);
 

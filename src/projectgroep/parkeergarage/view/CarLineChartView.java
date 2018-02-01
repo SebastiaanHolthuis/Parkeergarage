@@ -8,14 +8,10 @@ import java.util.function.Function;
 
 public class CarLineChartView extends AbstractLineChartView {
     public CarLineChartView(ParkeerLogic model) {
-        super(model);
-
-        title = "Aantal auto's";
-
-        updaters = new HashMap<String, Function>() {{
+        super("Aantal auto's", model, new HashMap<String, Function>() {{
             put("Adhoc auto's", x -> model.getAdHocCars().count());
             put("Pashouders", x -> model.getParkingPassCars().count());
             put("Reservaties", x -> model.getReservationCars().count());
-        }};
+        }});
     }
 }
