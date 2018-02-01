@@ -30,7 +30,7 @@ public class TextStatisticsView extends AbstractView {
             put("Aantal reservaties", x -> model.getReservationCars().count());
             put("Auto's in queue", x -> model.getEntranceCarQueue().carsInQueue());
             put("Pashouders in queue", x -> model.getEntrancePassQueue().carsInQueue());
-            put("Totaal verdiend", x -> "€" + model.getTotalEarned());
+            put("Totaal verdiend", x -> "€" + (model.getTotalEarned() + model.getParkingPassEarnings()));
             put("Skippende auto's", x -> model.getSkipCount());
             put("Misgelopen omzet", x -> "€" + model.getSkipCount() * 4);
             put("Dagen", x -> model.getDay());
