@@ -132,7 +132,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public void stepBack(int steps) {
-        Snapshot lastStep = timeline.getStepsBack(steps);
+        Snapshot lastStep = timeline.backwards(steps);
 
         lastStep.asMap().forEach((k, v) -> {
             try {

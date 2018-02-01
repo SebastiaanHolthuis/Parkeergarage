@@ -25,7 +25,7 @@ public class TextStatisticsView extends AbstractView {
         super();
 
         DecimalFormat df = new DecimalFormat("#.00");
-        
+
         statistics = new LinkedHashMap<String, Function>() {{
             put("Beschikbare plaatsen", x -> model.getNumberOfOpenSpots());
             put("Aantal auto's", x -> model.getAllCars().count());
