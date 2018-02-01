@@ -13,6 +13,7 @@ public class Controller {
     ParkeerLogic model;
     Simulator simulator;
     Scene scene;
+    Pane timelinePane;
 
     public Controller(ParkeerLogic model, Simulator simulator, Scene scene) {
         this.model = model;
@@ -21,6 +22,7 @@ public class Controller {
 
         attachComponentsToLayout();
         initializeCarPark();
+        initializeTimeline();
         initializeSlider();
         addStepListeners();
         addToggleListener();
@@ -53,12 +55,21 @@ public class Controller {
         scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
     }
 
+    void initializeTimeline() {
+        timelinePane = (Pane) scene.lookup("#timelinepane");
+        Slider timelineSlider = (Slider) scene.lookup("#timelineSlider");
+//        tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+//
+    }
+
     void addToggleListener() {
         scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
             model.toggleRunning();
             ToggleButton source = (ToggleButton) e.getSource();
             source.setSelected(model.isRunning());
             source.setText(model.isRunning() ? "Running..." : "Run");
+
+            timelinePane.setDisable(model.isRunning()); // FIXME: eigen view of controller?
         });
     }
 
