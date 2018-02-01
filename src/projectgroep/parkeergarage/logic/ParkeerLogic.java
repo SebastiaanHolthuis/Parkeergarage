@@ -22,6 +22,11 @@ import projectgroep.parkeergarage.logic.cars.ParkingPassCar;
 import projectgroep.parkeergarage.logic.cars.ReservationCar;
 import projectgroep.parkeergarage.logic.events.Event;
 import projectgroep.parkeergarage.logic.events.Events;
+import projectgroep.parkeergarage.logic.history.History;
+import projectgroep.parkeergarage.logic.history.Snapshot;
+import projectgroep.parkeergarage.logic.locations.Location;
+import projectgroep.parkeergarage.logic.locations.LocationLogic;
+import projectgroep.parkeergarage.logic.reservations.ReservationLogic;
 
 public class ParkeerLogic extends AbstractModel {
     public Settings settings;

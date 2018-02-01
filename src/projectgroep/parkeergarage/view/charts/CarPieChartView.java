@@ -1,10 +1,11 @@
-package projectgroep.parkeergarage.view;
+package projectgroep.parkeergarage.view.charts;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.view.AbstractView;
 
 
 public class CarPieChartView extends AbstractView {

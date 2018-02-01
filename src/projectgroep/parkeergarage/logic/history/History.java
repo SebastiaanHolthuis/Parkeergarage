@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.logic;
+package projectgroep.parkeergarage.logic.history;
 
 import java.util.List;
 import java.util.Stack;
@@ -8,11 +8,11 @@ public class History {
     public Stack<Snapshot> snapshots = new Stack<>();
     int maxSize;
 
-    History(int maxSize) {
+    public History(int maxSize) {
         this.maxSize = maxSize;
     }
 
-    Snapshot getStepsBack(int steps) {
+    public Snapshot getStepsBack(int steps) {
         if (snapshots.size() == 0)
             return null;
 
@@ -23,7 +23,7 @@ public class History {
         return snapshots.peek();
     }
 
-    void saveSnapshot(Snapshot sn) {
+    public void saveSnapshot(Snapshot sn) {
 //        System.out.println(snapshots.size());
         if (isFull())
             popBottom();
@@ -31,11 +31,11 @@ public class History {
         snapshots.push(sn);
     }
 
-    boolean isFull() {
+    public boolean isFull() {
         return snapshots.size() == maxSize;
     }
 
-    void popBottom() {
+    public void popBottom() {
         snapshots.remove(0);
     }
 

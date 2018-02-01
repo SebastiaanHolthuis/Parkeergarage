@@ -1,10 +1,11 @@
-package projectgroep.parkeergarage.view;
+package projectgroep.parkeergarage.view.charts;
 
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.view.AbstractView;
 
 import java.util.HashMap;
 import java.util.function.Function;

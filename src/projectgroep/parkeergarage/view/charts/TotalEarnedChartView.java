@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.view;
+package projectgroep.parkeergarage.view.charts;
 
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
@@ -6,6 +6,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
+import projectgroep.parkeergarage.view.AbstractView;
 
 
 public class TotalEarnedChartView extends AbstractView {

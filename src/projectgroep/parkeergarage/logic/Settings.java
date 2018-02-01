@@ -3,6 +3,8 @@ package projectgroep.parkeergarage.logic;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import projectgroep.parkeergarage.logic.history.MapLike;
+
 public class Settings extends MapLike {
     /**
      * All settings fields

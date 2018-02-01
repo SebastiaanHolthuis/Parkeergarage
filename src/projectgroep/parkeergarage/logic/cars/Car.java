@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
-import projectgroep.parkeergarage.logic.Location;
+import projectgroep.parkeergarage.logic.locations.Location;
 
 public abstract class Car implements Serializable {
 

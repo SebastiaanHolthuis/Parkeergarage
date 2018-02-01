@@ -13,6 +13,10 @@ import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.*;
+import projectgroep.parkeergarage.view.charts.CarLineChartView;
+import projectgroep.parkeergarage.view.charts.CarPieChartView;
+import projectgroep.parkeergarage.view.charts.QueueLineChartView;
+import projectgroep.parkeergarage.view.charts.TotalEarnedChartView;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.view;
+package projectgroep.parkeergarage.view.charts;
 
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 

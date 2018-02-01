@@ -1,11 +1,14 @@
-package projectgroep.parkeergarage.logic;
+package projectgroep.parkeergarage.logic.reservations;
 
 import static projectgroep.parkeergarage.Utils.deepClone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
+import projectgroep.parkeergarage.logic.history.ReservationSnapshot;
+import projectgroep.parkeergarage.logic.locations.Location;
 
 public class ReservationLogic {
 

@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.logic;
+package projectgroep.parkeergarage.logic.history;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

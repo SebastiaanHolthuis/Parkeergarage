@@ -1,4 +1,4 @@
-package projectgroep.parkeergarage.logic;
+package projectgroep.parkeergarage.logic.locations;
 
 import java.io.Serializable;
 

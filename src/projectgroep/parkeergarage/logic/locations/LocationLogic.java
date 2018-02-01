@@ -1,9 +1,11 @@
 
-package projectgroep.parkeergarage.logic;
+package projectgroep.parkeergarage.logic.locations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 public class LocationLogic {
 
