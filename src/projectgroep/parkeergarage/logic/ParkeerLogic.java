@@ -161,9 +161,9 @@ public class ParkeerLogic extends AbstractModel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         handleEntrance();
-        
+
         saveSnapshot();
     }
 
@@ -270,9 +270,9 @@ public class ParkeerLogic extends AbstractModel {
         startTime[2] = minute;
 
         ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
-       
+
         for (Event event : startingEvents) {
-            this.expectedEventVisitors += event.getExpectedVisitors();            
+            this.expectedEventVisitors += event.getExpectedVisitors();
         }
     }
 
@@ -443,7 +443,7 @@ public class ParkeerLogic extends AbstractModel {
 
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors ) + random.nextGaussian() * standardDeviation;
+        double numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
 
         return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
     }
