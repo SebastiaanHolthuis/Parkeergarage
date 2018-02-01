@@ -61,10 +61,8 @@ public class TextStatisticsView extends AbstractView {
 
     @Override
     public void updateView() {
-        Platform.runLater(() -> {
-            statistics.forEach((statistic, f) -> {
-                valueLabels.get(statistic).setText(f.apply(null).toString());
-            });
-        });
+        Platform.runLater(() ->
+                statistics.forEach((statistic, f) ->
+                        valueLabels.get(statistic).setText(f.apply(null).toString())));
     }
 }

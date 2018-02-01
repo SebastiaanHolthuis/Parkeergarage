@@ -61,6 +61,7 @@ public class Simulator extends Application {
     void attachComponentsToLayout() {
         attachComponentToLayout(new SettingsView(model, this), "#settings");
         attachComponentToLayout(new CarLineChartView(model), "#carlinechart");
+        attachComponentToLayout(new QueueLineChartView(model), "#queuelinechart");
         attachComponentToLayout(new CarPieChartView(model), "#carpiechart");
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
@@ -68,9 +69,6 @@ public class Simulator extends Application {
         CarParkView c = new CarParkView(model);
         ((ScrollPane) scene.lookup("#carpark")).setContent(c);
         model.addView(c);
-//        stage.widthProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
-//        stage.heightProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
-//        stage.setOnShown(((e) -> c.resizeScrollPane()));
     }
 
 

@@ -165,7 +165,7 @@ public class ParkeerLogic extends AbstractModel {
         
         handleEvents();
         handleEntrance();
-        
+
         saveSnapshot();
     }
 
@@ -270,7 +270,6 @@ public class ParkeerLogic extends AbstractModel {
         
         for (Event event : startingEvents) {
         	event.setStarted(true);
-            this.expectedEventVisitors += event.getExpectedVisitors();            
         }
         
         for (Event event : events.getRunningEvents(getCurrentTime())) {
@@ -471,7 +470,7 @@ public class ParkeerLogic extends AbstractModel {
 
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors ) + random.nextGaussian() * standardDeviation;
+        double numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
 
         return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
     }
@@ -600,10 +599,7 @@ public class ParkeerLogic extends AbstractModel {
         int floor = location.getFloor();
         int row = location.getRow();
         int place = location.getPlace();
-        if (floor < 0 || floor >= settings.numberOfFloors || row < 0 || row > settings.numberOfRows || place < 0 || place > settings.numberOfPlaces) {
-            return false;
-        }
-        return true;
+        return floor >= 0 && floor < settings.numberOfFloors && row >= 0 && row <= settings.numberOfRows && place >= 0 && place <= settings.numberOfPlaces;
     }
 
     public LocationLogic getLocationLogic() {
