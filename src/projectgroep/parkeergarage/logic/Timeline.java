@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.IntStream;
 
-public class History {
+public class Timeline {
     public Stack<Snapshot> snapshots = new Stack<>();
     int maxSize;
 
-    History(int maxSize) {
+    Timeline(int maxSize) {
         this.maxSize = maxSize;
     }
 

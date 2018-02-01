@@ -10,6 +10,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
+import projectgroep.parkeergarage.controller.Controller;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
 import projectgroep.parkeergarage.view.*;
@@ -24,26 +25,23 @@ public class Simulator extends Application {
     Pane root;
     Scene scene;
     Stage stage;
+    Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        actualStart(primaryStage);
-    }
-
-    void actualStart(Stage primaryStage) throws IOException {
         model = new ParkeerLogic(SettingsRepository.loadSettings());
+
         primaryStage.setTitle("Parkeergarage simulator - ITV1C groep C");
 
         stage = primaryStage;
 
         root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/layout.fxml"));
         scene = new Scene(root);
+
+        controller = new Controller(model, this, scene);
+
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        attachComponentsToLayout();
-        addControlListeners();
-
         primaryStage.setOnCloseRequest(t -> {
             Platform.exit();
             System.exit(0);
@@ -54,53 +52,6 @@ public class Simulator extends Application {
         });
 
         modelThread.start();
-
-    }
-
-
-    void attachComponentsToLayout() {
-        attachComponentToLayout(new SettingsView(model, this), "#settings");
-        attachComponentToLayout(new CarLineChartView(model), "#carlinechart");
-        attachComponentToLayout(new QueueLineChartView(model), "#queuelinechart");
-        attachComponentToLayout(new CarPieChartView(model), "#carpiechart");
-        attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
-        attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
-
-        CarParkView c = new CarParkView(model);
-        ((ScrollPane) scene.lookup("#carpark")).setContent(c);
-        model.addView(c);
-    }
-
-
-    void addControlListeners() {
-        addToggleListener();
-        initializeSlider();
-        scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
-        scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
-    }
-
-    void initializeSlider() {
-        Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
-        tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
-                model.tickPause = 101 - newValue.intValue());
-        tickPauseSlider.setValue(101 - model.tickPause);
-    }
-
-    void addToggleListener() {
-        scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
-            model.toggleRunning();
-            ToggleButton source = (ToggleButton) e.getSource();
-            source.setSelected(model.isRunning());
-            if (model.isRunning())
-                source.setText("Running...");
-            else
-                source.setText("Run");
-        });
-    }
-
-    void attachComponentToLayout(AbstractView view, String lookupId) {
-        ((Pane) scene.lookup(lookupId)).getChildren().add(view);
-        model.addView(view);
     }
 
     public void restart(Settings settings) {
@@ -109,7 +60,7 @@ public class Simulator extends Application {
         modelThread.stop();
 
         try {
-            actualStart(stage);
+            start(stage);
         } catch (IOException e) {
             e.printStackTrace();
         }

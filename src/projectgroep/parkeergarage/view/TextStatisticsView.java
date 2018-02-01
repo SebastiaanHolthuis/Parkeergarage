@@ -38,7 +38,7 @@ public class TextStatisticsView extends AbstractView {
             put("Misgelopen omzet", x -> "€" + model.getSkipCount() * 4);
             put("Dagen", x -> model.getDay());
             put("Tijd", x -> model.getTime());
-            put("Stappen terug", x -> model.history.stepsBack());
+            put("Stappen terug", x -> model.timeline.stepsBack());
         }};
 
         this.model = model;

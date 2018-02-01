@@ -10,25 +10,25 @@ import projectgroep.parkeergarage.logic.cars.Car;
 import projectgroep.parkeergarage.logic.cars.CarType;
 
 public class Event {
-	
+
 	private ParkeerLogic model;
-	
+
 	private String name;
-	
+
 	private int[] startTime;
-		
+
 	private int durationHours;
 	private int durationMinutes;
-	
+
 	private int expectedVisitors;
 
 	private boolean started;
-	
+
 	private ArrayList<Car> visitors = new ArrayList<Car>();
-	
+
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param name The name of the event.
 	 * @param day The day that the event will take place.
 	 * @param hour The hour that the event will start.
@@ -39,20 +39,20 @@ public class Event {
 	public Event(ParkeerLogic model, String name, int day, int hour, int minute, int duration[], int expectedVisitors) {
 		this.model = model;
 		this.name = name;
-		
+
 		this.startTime = new int[3];
 		this.startTime[0] = day;
 		this.startTime[1] = hour;
 		this.startTime[2] = minute;
-		
+
 		this.durationHours = duration[0];
 		this.durationMinutes = duration[1];
-		
+
 		this.expectedVisitors = expectedVisitors;
-		
+
 		this.started = false;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -108,16 +108,16 @@ public class Event {
 	public void setVisitors(ArrayList<Car> visitors) {
 		this.visitors = visitors;
 	}
-	
+
 	public void addVisitors() {
 		IntStream.range(0, expectedVisitors).forEach(i -> {
-			Random random = new Random();			
+			Random random = new Random();
 			CarType type = CarType.AD_HOC;
-			
+
 			model.getEntranceCarQueue().addCar(new AdHocCar(model.getSettings().getDefaultPrice()));
 		});
 	}
-	
+
 
 //    public int getNumberOfCars() {
 //        Random random = new Random();
@@ -133,5 +133,5 @@ public class Event {
 //        double multiplier = (double) durationHours + (double) durationMinutes / 60;
 //        return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));
 //    }
-	
+
 }

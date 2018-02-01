@@ -61,7 +61,7 @@ public class ParkeerLogic extends AbstractModel {
 
     public int tickPause = 100;
 
-    public History history;
+    public Timeline timeline;
     private ReservationLogic reservationLogic;
     private Events events;
 
@@ -81,7 +81,7 @@ public class ParkeerLogic extends AbstractModel {
         this.numberOfOpenSpots = settings.numberOfFloors * settings.numberOfRows * settings.numberOfPlaces;
         this.cars = new Car[settings.numberOfFloors][settings.numberOfRows][settings.numberOfPlaces];
 
-        this.history = new History(settings.maxHistory);
+        this.timeline = new Timeline(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
         initializeEvents();
@@ -128,11 +128,11 @@ public class ParkeerLogic extends AbstractModel {
         sn.skippedCars = skippedCars;
         sn.totalEarned = totalEarned;
 
-        history.saveSnapshot(sn);
+        timeline.saveSnapshot(sn);
     }
 
     public void stepBack(int steps) {
-        Snapshot lastStep = history.getStepsBack(steps);
+        Snapshot lastStep = timeline.getStepsBack(steps);
 
         lastStep.asMap().forEach((k, v) -> {
             try {
@@ -162,7 +162,7 @@ public class ParkeerLogic extends AbstractModel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         handleEvents();
         handleEntrance();
 
@@ -267,31 +267,31 @@ public class ParkeerLogic extends AbstractModel {
 
     private void handleEvents() {
         ArrayList<Event> startingEvents = events.getEventsByStartTime(getCurrentTime());
-        
+
         for (Event event : startingEvents) {
-        	event.addVisitors();
-        	event.setStarted(true);
+            event.addVisitors();
+            event.setStarted(true);
         }
-        
+
         for (Event event : events.getRunningEvents(getCurrentTime())) {
-        	int[] startTime = event.getStartTime();
-        	int[] endTime = startTime.clone();
+            int[] startTime = event.getStartTime();
+            int[] endTime = startTime.clone();
 
-        	endTime[1] = startTime[1] + event.getDurationHours();
-        	endTime[2] = ((startTime[2] + event.getDurationMinutes()) == 60) ? 59 : (startTime[2] + event.getDurationMinutes());
+            endTime[1] = startTime[1] + event.getDurationHours();
+            endTime[2] = ((startTime[2] + event.getDurationMinutes()) == 60) ? 59 : (startTime[2] + event.getDurationMinutes());
 
-        	if (Arrays.equals(getCurrentTime(), endTime)) {
-        		event.setStarted(false);
-        	}
+            if (Arrays.equals(getCurrentTime(), endTime)) {
+                event.setStarted(false);
+            }
         }
     }
-    
+
     public int[] getCurrentTime() {
-    	int[] currentTime = new int[3];
+        int[] currentTime = new int[3];
         currentTime[0] = day;
         currentTime[1] = hour;
         currentTime[2] = minute;
-        
+
         return currentTime;
     }
 
@@ -414,7 +414,7 @@ public class ParkeerLogic extends AbstractModel {
             } else {
                 totalEarned += 100;
             }
-            
+
             if (car.isCrookedParking()) totalEarned += 5;
 
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
@@ -670,12 +670,12 @@ public class ParkeerLogic extends AbstractModel {
         this.parkingPassEarnings = parkingPassEarnings;
     }
 
-	public Settings getSettings() {
-		return settings;
-	}
+    public Settings getSettings() {
+        return settings;
+    }
 
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
 
 }
