@@ -31,12 +31,15 @@ public class CarParkView extends Canvas implements View {
         int base = (model.getNumberOfFloors() * 260);
         int a = ((1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75);
         int b = ((model.getNumberOfRows() % 2) * 20);
+        int total = base + a + b;
 
-        return base + a + b;
+        return Math.max(1200, total);
     }
 
     static double canvasHeight(ParkeerLogic model) {
-        return 120 + model.getNumberOfPlaces() * 10;
+        int total = 120 + model.getNumberOfPlaces() * 10;
+
+        return Math.max(1000, total);
     }
 
 
