@@ -12,6 +12,10 @@
     -fx-border-width: 0px 1px 0px 1px;
 }
 
+ScrollPane {
+    -fx-focus-color: transparent;
+}
+
 /**
     Chart lines
     TODO: duplicatie verwijderen

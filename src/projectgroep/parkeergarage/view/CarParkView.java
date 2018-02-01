@@ -2,15 +2,9 @@ package projectgroep.parkeergarage.view;
 
 
 import javafx.application.Platform;
-import javafx.geometry.Bounds;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
@@ -19,16 +13,26 @@ import projectgroep.parkeergarage.logic.cars.Car;
 
 public class CarParkView extends Canvas implements View {
     ParkeerLogic model;
-    private GraphicsContext graphicsContext;
+    GraphicsContext graphicsContext;
+    Image background = new Image("file:transp_bg.png");
+    int tileSize = 50;
 
     public CarParkView(ParkeerLogic model) {
         super(canvasWidth(model), canvasHeight(model));
         this.model = model;
         graphicsContext = getGraphicsContext2D();
+
+        Platform.runLater(() -> {
+            drawBackground();
+        });
     }
 
     static double canvasWidth(ParkeerLogic model) {
-        return model.getNumberOfFloors() * 260;
+        int base = (model.getNumberOfFloors() * 260);
+        int a = ((1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75);
+        int b = ((model.getNumberOfRows() % 2) * 20);
+
+        return base + a + b;
     }
 
     static double canvasHeight(ParkeerLogic model) {
@@ -61,6 +65,14 @@ public class CarParkView extends Canvas implements View {
                 drawPlace(location, color);
             });
         });
+    }
+
+    private void drawBackground() {
+        for (int x = 0; x < canvasWidth(model); x += tileSize) {
+            for (int y = 0; y < canvasWidth(model); y += tileSize) {
+                graphicsContext.drawImage(background, x, y, tileSize, tileSize);
+            }
+        }
     }
 
     private void drawPlace(Location location, Color color) {
