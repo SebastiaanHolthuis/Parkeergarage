@@ -7,6 +7,7 @@ import static projectgroep.parkeergarage.logic.cars.CarType.RESERVED;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -162,6 +163,7 @@ public class ParkeerLogic extends AbstractModel {
             e.printStackTrace();
         }
         
+        handleEvents();
         handleEntrance();
         
         saveSnapshot();
@@ -263,22 +265,48 @@ public class ParkeerLogic extends AbstractModel {
         events.addEvent("Kermis", 3, 19, 30, duration, 300);
     }
 
-    private void handleStartingEvents() {
-        int[] startTime = new int[3];
-        startTime[0] = day;
-        startTime[1] = hour;
-        startTime[2] = minute;
-
-        ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
-       
+    private void handleEvents() {
+        ArrayList<Event> startingEvents = events.getEventsByStartTime(getCurrentTime());
+        
         for (Event event : startingEvents) {
+        	event.setStarted(true);
             this.expectedEventVisitors += event.getExpectedVisitors();            
         }
+        
+        for (Event event : events.getRunningEvents(getCurrentTime())) {
+        	int[] startTime = event.getStartTime();
+        	int[] endTime = startTime.clone();
+
+        	endTime[1] = startTime[1] + event.getDurationHours();
+        	endTime[2] = ((startTime[2] + event.getDurationMinutes()) == 60) ? 59 : (startTime[2] + event.getDurationMinutes());
+
+        	if (Arrays.equals(getCurrentTime(), endTime)) {
+        		event.setStarted(false);
+        	}
+        }
+    }
+    
+    public int[] getCurrentTime() {
+    	int[] currentTime = new int[3];
+        currentTime[0] = day;
+        currentTime[1] = hour;
+        currentTime[2] = minute;
+        
+        return currentTime;
     }
 
     private void updateViews() {
         tick();
         notifyViews();
+        
+        int[] currentTime = new int[3];
+        currentTime[0] = day;
+        currentTime[1] = hour;
+        currentTime[2] = minute;
+        
+        for (Event event : events.getRunningEvents(currentTime)) {
+        	System.out.println(event.getName());
+    	}
     }
 
     private void carsArriving() {
