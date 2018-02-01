@@ -35,7 +35,7 @@ public class Simulator extends Application {
 
         stage = primaryStage;
 
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/parkeergarage.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/layout.fxml"));
         scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -53,6 +53,7 @@ public class Simulator extends Application {
         });
 
         modelThread.start();
+
     }
 
 
@@ -61,7 +62,12 @@ public class Simulator extends Application {
         attachComponentToLayout(new LineCarChartView(model), "#linecarchart");
         attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
-        attachComponentToLayout(new CarParkView(model), "#carpark");
+
+        CarParkView c = new CarParkView(model);
+        attachComponentToLayout(c, "#carpark");
+//        stage.widthProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
+//        stage.heightProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
+//        stage.setOnShown(((e) -> c.resizeScrollPane()));
     }
 
 

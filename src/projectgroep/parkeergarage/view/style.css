@@ -12,6 +12,10 @@
     -fx-border-width: 0px 1px 0px 1px;
 }
 
+ScrollPane {
+    -fx-padding: 40px;
+}
+
 /**
     Chart lines
     TODO: duplicatie verwijderen

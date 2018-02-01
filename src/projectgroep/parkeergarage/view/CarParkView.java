@@ -2,37 +2,46 @@ package projectgroep.parkeergarage.view;
 
 
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
+import javafx.geometry.Dimension2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
 
 
-public class CarParkView extends AbstractView {
+public class CarParkView extends Canvas implements View {
     ParkeerLogic model;
     private GraphicsContext graphicsContext;
-    ScrollPane container;
+    ScrollPane scrollPane;
 
     public CarParkView(ParkeerLogic model) {
         super();
 
         this.model = model;
 
-        Canvas canvas = new Canvas(865, 1000);
+        Canvas canvas = new Canvas(canvasWidth(), canvasHeight());
         graphicsContext = canvas.getGraphicsContext2D();
+        scrollPane = new ScrollPane();
 
-        container = new ScrollPane();
 
-        container.setPrefHeight(800);
-        container.setPrefWidth(600);
-        container.setContent(canvas);
-        container.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        container.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        AnchorPane.setTopAnchor(scrollPane, 0.0);
+        AnchorPane.setLeftAnchor(scrollPane, 0.0);
+        AnchorPane.setRightAnchor(scrollPane, 0.0);
+        AnchorPane.setBottomAnchor(scrollPane, 0.0);
 
-        getChildren().add(container);
+        scrollPane.setContent(canvas);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setPannable(true);
+
     }
 
     @Override
@@ -60,6 +69,14 @@ public class CarParkView extends AbstractView {
                 drawPlace(location, color);
             });
         });
+    }
+
+    double canvasWidth() {
+        return model.getNumberOfFloors() * 260 + (1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75 + (model.getNumberOfRows() % 2) * 20;
+    }
+
+    double canvasHeight() {
+        return 60 + model.getNumberOfPlaces() * 10;
     }
 
     private void drawPlace(Location location, Color color) {
