@@ -140,11 +140,13 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     void restoreSnapshot(Snapshot snapshot) {
+        if (snapshot == null) return;
         snapshot.asMap().forEach((k, v) -> {
             try {
                 Field field = getClass().getDeclaredField(k);
                 field.set(this, v);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+                e.printStackTrace();
             }
         });
 
@@ -154,24 +156,28 @@ public class ParkeerLogic extends AbstractModel {
 
 
     public void tickMany(int ticks) {
-        IntStream.range(0, ticks).forEach(tick -> tickSimulator());
+        IntStream.range(0, ticks).forEach(tick -> stepForward(ticks));
     }
 
     public void tickSimulator() {
-        advanceTime();
-        handleExit();
-        updateViews();
+        if (timeline.canForward()) {
+            stepForward(1);
+        } else {
+            advanceTime();
+            handleExit();
+            updateViews();
 
-        try {
-            Thread.sleep(tickPause);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                Thread.sleep(tickPause);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            handleEvents();
+            handleEntrance();
+
+            saveSnapshot();
         }
-
-        handleEvents();
-        handleEntrance();
-
-        saveSnapshot();
     }
 
     private void advanceTime() {

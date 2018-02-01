@@ -18,7 +18,6 @@ public class Timeline {
         this.maxSize = maxSize;
     }
 
-
     /**
      * Actions
      */
@@ -30,9 +29,11 @@ public class Timeline {
             addAll(past.subList(remainingPast(steps), past.size()));
         }};
 
-        past = past.subList(0, remainingPast(steps) + 1);
+        Snapshot toReturn = past.get(remainingPast(steps) - 1);
 
-        return atCursor();
+        past = past.subList(0, remainingPast(steps));
+
+        return toReturn;
     }
 
     int remainingPast(int steps) {
@@ -40,17 +41,14 @@ public class Timeline {
     }
 
     Snapshot forwards(int steps) {
-        if (!canForward())
-            return null;
+        past = new ArrayList<Snapshot>() {{
+            addAll(past);
+            addAll(future.subList(0, steps));
+        }};
 
-        IntStream.range(0, steps).forEach(i -> stepForward());
+        future = future.subList(steps, future.size());
 
         return atCursor();
-    }
-
-    void stepForward() {
-        past.add(future.get(0));
-        future.remove(0);
     }
 
     void saveSnapshot(Snapshot sn) {
@@ -58,7 +56,6 @@ public class Timeline {
         past.add(sn);
         future.clear();
     }
-
 
     /**
      * Getters
