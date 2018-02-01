@@ -43,7 +43,7 @@ public class CarLineChartView extends AbstractView {
 
     @Override
     public void updateView() {
-        Platform.runLater((Runnable) () -> {
+        Platform.runLater(() -> {
             adhoc.getData().add(new XYChart.Data(model.tickNum(), model.getAdHocCars().count()));
             parkingPass.getData().add(new XYChart.Data(model.tickNum(), model.getParkingPassCars().count()));
             reservation.getData().add(new XYChart.Data(model.tickNum(), model.getReservationCars().count()));

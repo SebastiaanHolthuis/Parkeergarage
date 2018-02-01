@@ -32,7 +32,7 @@ public class CarPieChartView extends AbstractView {
 
     @Override
     public void updateView() {
-        Platform.runLater((Runnable) () -> {
+        Platform.runLater(() -> {
             adHoc.setPieValue(model.getAdHocCars().count());
             passHolder.setPieValue(model.getParkingPassCars().count());
             reservations.setPieValue(model.getReservationCars().count());
