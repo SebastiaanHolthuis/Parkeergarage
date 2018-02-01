@@ -15,13 +15,15 @@ public class Settings extends MapLike {
     int numberOfResRows = 2;
     double defaultPrice = 0.02;
 
+    int distributedPasses = 60;
+
     int weekDayArrivals = 80; // average number of arriving AdHoc cars per hour
     int weekendArrivals = 110; // average number of arriving AdHoc cars per hour
-    int weekDayPassArrivals = 50; // average number of arriving Passholder cars per hour
-    int weekendPassArrivals = 25; // average number of arriving Passholder cars per hour
+    int weekDayPassArrivals = distributedPasses / 3; // average number of arriving Passholder cars per hour
+    int weekendPassArrivals = distributedPasses / 3; // average number of arriving Passholder cars per hour
     int weekDayResArrivals = 30; // average number of arriving Reserved cars per hour
     int weekendResArrivals = 10; // average number of arriving Reserved cars per hour
-
+    
     int maxQueue = 10; // The maximum queue size, after which cars will no longer enter
     double skipChance = 0.5; // 0 to 1
 

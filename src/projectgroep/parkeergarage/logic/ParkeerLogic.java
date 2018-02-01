@@ -84,6 +84,8 @@ public class ParkeerLogic extends AbstractModel {
         this.timeline = new Timeline(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
+        
+        this.parkingPassEarnings = settings.distributedPasses * 100;
         initializeEvents();
     }
 
@@ -334,10 +336,6 @@ public class ParkeerLogic extends AbstractModel {
 
             Location freeLocation = null;
 
-            if (car instanceof ParkingPassCar) {
-                parkingPassEarnings += 100;
-            }
-
             if (car instanceof ReservationCar && getReservationLogic().getReservations().containsKey(car)) {
                 freeLocation = getReservationLogic().getReservations().get(car);
                 setCarAt(freeLocation, car);
@@ -463,6 +461,10 @@ public class ParkeerLogic extends AbstractModel {
 
     public Stream<Car> getAdHocCars() {
         return getAllCars().filter((c) -> (c instanceof AdHocCar));
+    }
+
+    public Stream<Car> getCrookedCars() {
+        return getAllCars().filter((c) -> c.isCrookedParking());
     }
 
     private int getNumberOfCars(int weekDay, int weekend) {
