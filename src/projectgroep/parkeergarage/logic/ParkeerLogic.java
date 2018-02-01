@@ -420,8 +420,6 @@ public class ParkeerLogic extends AbstractModel {
                 totalEarned += (minutes * 0.02);
             } else if (car instanceof AdHocCar) {
                 totalEarned += (minutes * 0.02);
-            } else {
-                totalEarned += 100;
             }
 
             if (car.isCrookedParking()) totalEarned += 5;
