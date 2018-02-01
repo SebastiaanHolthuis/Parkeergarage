@@ -414,6 +414,8 @@ public class ParkeerLogic extends AbstractModel {
             } else {
                 totalEarned += 100;
             }
+            
+            if (car.isCrookedParking()) totalEarned += 5;
 
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);

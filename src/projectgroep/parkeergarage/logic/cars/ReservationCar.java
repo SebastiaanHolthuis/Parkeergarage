@@ -19,6 +19,7 @@ public class ReservationCar extends Car {
 
     @Override
     public Color getColor() {
+    	if (isCrookedParking()) return Color.BLACK;
         return COLOR;
     }
 }

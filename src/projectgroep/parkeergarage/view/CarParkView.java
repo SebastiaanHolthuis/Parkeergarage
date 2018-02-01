@@ -63,7 +63,7 @@ public class CarParkView extends Canvas implements View {
                         color = car.getColor();
                     }
                 }
-
+                
                 drawPlace(location, color);
             });
         });
@@ -75,7 +75,7 @@ public class CarParkView extends Canvas implements View {
                 graphicsContext.drawImage(background, x, y, tileSize, tileSize);
     }
 
-    private void drawPlace(Location location, Color color) {
+    private void drawPlace(Location location, Color color) {    	
         graphicsContext.setFill(color);
         graphicsContext.fillRect(
                 location.getFloor() * 260 + (1 + (int) Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,

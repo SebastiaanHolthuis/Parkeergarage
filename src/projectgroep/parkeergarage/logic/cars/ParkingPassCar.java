@@ -18,6 +18,7 @@ public class ParkingPassCar extends Car {
 
     @Override
     public Color getColor() {
+    	if (isCrookedParking()) return Color.BLACK;
         return COLOR;
     }
 }

@@ -18,6 +18,8 @@ public class AdHocCar extends Car {
 
     @Override
     public Color getColor() {
+    	if (isCrookedParking()) return Color.BLACK;
+    	
         return COLOR;
     }
 }
