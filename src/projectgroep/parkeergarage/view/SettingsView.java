@@ -21,7 +21,7 @@ public class SettingsView extends AbstractView {
         setPadding(new Insets(10, 10, 10, 10));
     }};
 
-    Button restartButton = new Button("Restart") {{
+    Button restartButton = new Button("Herstart") {{
         setOnMouseClicked(e -> restart());
         setMaxWidth(140);
     }};

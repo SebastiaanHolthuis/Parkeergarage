@@ -36,9 +36,9 @@ public class LineCarChartView extends AbstractView {
     }
 
     void setSeriesNames() {
-        adhoc.setName("Adhoc Cars");
-        parkingPass.setName("ParkingPass Cars");
-        reservation.setName("Reservation Cars");
+        adhoc.setName("Adhoc auto's");
+        parkingPass.setName("Pashouders");
+        reservation.setName("Reservaties");
     }
 
     @Override

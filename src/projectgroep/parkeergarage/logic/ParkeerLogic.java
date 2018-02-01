@@ -37,7 +37,11 @@ public class ParkeerLogic extends AbstractModel {
     private volatile boolean running;
     private boolean alive = true;
 
+    /**
+     * Earnings
+     */
     private double totalEarned = 0;
+    private int parkingPassEarnings;
 
     private List<Car> skippedCars = new ArrayList<>();
 
@@ -47,6 +51,7 @@ public class ParkeerLogic extends AbstractModel {
     public CarQueue getEntrancePassQueue() {
         return entrancePassQueue;
     }
+
 
     private CarQueue paymentCarQueue;
 
@@ -61,6 +66,7 @@ public class ParkeerLogic extends AbstractModel {
     private ReservationLogic reservationLogic;
     private Events events;
 
+    private int expectedEventVisitors;
 
     public int tickNum() {
         return (week * 7 * 24 * 60) + (day * 24 * 60) + (hour * 60) + (minute);
@@ -209,7 +215,7 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public int getTimeToPay() {
-    		return day + hour + minute;
+        return day + hour + minute;
     }
 
     public int getHour() {
@@ -250,27 +256,27 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     private void initializeEvents() {
-    	int[] duration = new int[2];
-    	duration[0] = 1;
-    	duration[1] = 30;
+        int[] duration = new int[2];
+        duration[0] = 1;
+        duration[1] = 30;
 
-    	events = new Events(this);
-    	events.addEvent("Koopavond", 0, 18, 30, duration, 400);
-    	events.addEvent("Kermis", 3, 19, 30, duration, 300);
+        events = new Events(this);
+        events.addEvent("Koopavond", 0, 18, 30, duration, 400);
+        events.addEvent("Kermis", 3, 19, 30, duration, 300);
     }
 
     private void handleEvents() {
-    	int[] startTime = new int[3];
-    	startTime[0] = day;
-    	startTime[1] = hour;
-    	startTime[2] = minute;
+        int[] startTime = new int[3];
+        startTime[0] = day;
+        startTime[1] = hour;
+        startTime[2] = minute;
 
-    	ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
-    	expectedEventVisitors = 0;
+        ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
+        expectedEventVisitors = 0;
 
-    	for (Event event : startingEvents) {
-			expectedEventVisitors += event.getExpectedVisitors();
-		}
+        for (Event event : startingEvents) {
+            expectedEventVisitors += event.getExpectedVisitors();
+        }
     }
 
     private void updateViews() {
@@ -301,8 +307,8 @@ public class ParkeerLogic extends AbstractModel {
 
             Location freeLocation = null;
 
-            if(car instanceof ParkingPassCar) {
-            		ParkingPassEarnings += 100;
+            if (car instanceof ParkingPassCar) {
+                parkingPassEarnings += 100;
             }
 
             if (car instanceof ReservationCar && getReservationLogic().getReservations().containsKey(car)) {
@@ -378,22 +384,19 @@ public class ParkeerLogic extends AbstractModel {
             hours = car.timeLeaving[1] - car.timeEntering[1];
             minutes = car.timeLeaving[2] - car.timeEntering[2];
 
-            if((car.timeLeaving[0] - car.timeEntering[0]) > 0) {
-            		minutes += (days * 24 * 60);
+            if ((car.timeLeaving[0] - car.timeEntering[0]) > 0) {
+                minutes += (days * 24 * 60);
             }
-            if((car.timeLeaving[1]-car.timeEntering[1] ) > 0) {
-            		minutes += (hours*60);
-            }
-
-            if(car instanceof ReservationCar) {
-            		totalEarned += (minutes * 0.02);
+            if ((car.timeLeaving[1] - car.timeEntering[1]) > 0) {
+                minutes += (hours * 60);
             }
 
-            else if(car instanceof AdHocCar) {
-            		totalEarned += (minutes * 0.02);
-            }
-            else {
-            		totalEarned += 100;
+            if (car instanceof ReservationCar) {
+                totalEarned += (minutes * 0.02);
+            } else if (car instanceof AdHocCar) {
+                totalEarned += (minutes * 0.02);
+            } else {
+                totalEarned += 100;
             }
 
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
@@ -598,8 +601,8 @@ public class ParkeerLogic extends AbstractModel {
             if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute() && !entranceCarQueue.getQueue().contains(car)) {
                 entranceCarQueue.addCar(car);
             }
-            if(car instanceof ReservationCar) {
-        			totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
+            if (car instanceof ReservationCar) {
+                totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
             }
         }
 
@@ -614,8 +617,8 @@ public class ParkeerLogic extends AbstractModel {
                     break;
                 case AD_HOC:
                 default:
-                    	newCar = new AdHocCar(settings.defaultPrice);
-                	   	break;
+                    newCar = new AdHocCar(settings.defaultPrice);
+                    break;
             }
 
             if (!(newCar instanceof ReservationCar)) {
@@ -654,12 +657,12 @@ public class ParkeerLogic extends AbstractModel {
         this.reservationLogic = reservationLogic;
     }
 
-	public int getParkingPassEarnings() {
-		return ParkingPassEarnings;
-	}
+    public int getParkingPassEarnings() {
+        return parkingPassEarnings;
+    }
 
-	public void setParkingPassEarnings(int parkingPassEarnings) {
-		ParkingPassEarnings = parkingPassEarnings;
-	}
+    public void setParkingPassEarnings(int parkingPassEarnings) {
+        this.parkingPassEarnings = parkingPassEarnings;
+    }
 
 }
