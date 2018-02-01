@@ -8,7 +8,7 @@ import javafx.scene.chart.XYChart.Series;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 
-public class LineCarChartView extends AbstractView {
+public class CarLineChartView extends AbstractView {
     NumberAxis xAxis = new NumberAxis();
     NumberAxis yAxis = new NumberAxis();
 
@@ -23,7 +23,7 @@ public class LineCarChartView extends AbstractView {
     ParkeerLogic model;
 
 
-    public LineCarChartView(ParkeerLogic model) {
+    public CarLineChartView(ParkeerLogic model) {
         super();
 
         this.model = model;
