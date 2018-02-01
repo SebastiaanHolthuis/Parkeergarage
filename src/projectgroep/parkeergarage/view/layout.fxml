@@ -11,47 +11,40 @@
 <?import javafx.scene.layout.Pane?>
 <?scenebuilder-stylesheet style.css?>
 
-<BorderPane fx:id="root" minHeight="1000.0" minWidth="1800.0" stylesheets="@style.css"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" minHeight="1000.0" minWidth="1800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <AnchorPane>
-            <ScrollPane fx:id="carpark" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <ScrollPane fx:id="carpark" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         </AnchorPane>
     </center>
     <left>
-        <TabPane fx:id="leftPane" prefHeight="620.0" prefWidth="351.0" tabClosingPolicy="UNAVAILABLE"
-                 BorderPane.alignment="CENTER">
+        <TabPane fx:id="leftPane" prefHeight="620.0" prefWidth="351.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Statistics">
                     <content>
-                        <AnchorPane fx:id="textstatistics" minHeight="0.0" minWidth="0.0" prefHeight="587.0"
-                                    prefWidth="338.0">
+                        <AnchorPane fx:id="textstatistics" minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="338.0">
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Settings">
                     <content>
-                    <Pane fx:id="settings"/>
+                    <Pane fx:id="settings" />
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
     </left>
     <right>
-        <TabPane fx:id="rightPane" prefHeight="820.0" prefWidth="522.0" tabClosingPolicy="UNAVAILABLE"
-                 BorderPane.alignment="CENTER">
+        <TabPane fx:id="rightPane" prefHeight="820.0" prefWidth="522.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Aantal Auto's">
                     <content>
-                        <AnchorPane fx:id="linecarchart" minHeight="0.0" minWidth="504.0" prefHeight="786.0"
-                                    prefWidth="504.0"/>
+                        <AnchorPane fx:id="linecarchart" minHeight="0.0" minWidth="504.0" prefHeight="786.0" prefWidth="504.0" />
                     </content>
                 </Tab>
                 <Tab text="Omzet">
                     <content>
-                        <AnchorPane fx:id="totalearnedchart" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                    prefWidth="200.0">
+                        <AnchorPane fx:id="totalearnedchart" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         </AnchorPane>
                     </content>
                 </Tab>
@@ -61,21 +54,15 @@
     <bottom>
         <BorderPane fx:id="bottomPane" prefHeight="180.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <right>
-                <Pane fx:id="legend" prefHeight="122.0" prefWidth="326.0" BorderPane.alignment="CENTER"/>
+                <Pane fx:id="legend" prefHeight="122.0" prefWidth="326.0" BorderPane.alignment="CENTER" />
             </right>
             <left>
-                <Pane prefHeight="194.0" prefWidth="210.0"
-                      style="-fx-border-style: solid; -fx-border-color: #ddd; -fx-border-width: 0 1px 0px 0px;"
-                      BorderPane.alignment="CENTER">
+                <Pane prefHeight="194.0" prefWidth="210.0" style="-fx-border-style: solid; -fx-border-color: #ddd; -fx-border-width: 0 1px 0px 0px;" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="stepBack" layoutX="37.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0"
-                                prefWidth="61.0" text="-10"/>
-                        <Button fx:id="stepForward" layoutX="116.0" layoutY="69.0" mnemonicParsing="false"
-                                prefHeight="26.0" prefWidth="60.0" text="+10"/>
-                        <Slider fx:id="tickPauseSlider" layoutX="37.0" layoutY="110.0" min="1.0" showTickLabels="true"
-                                showTickMarks="true"/>
-                        <ToggleButton fx:id="toggleRunning" layoutX="38.0" layoutY="19.0" mnemonicParsing="false"
-                                      prefHeight="39.0" prefWidth="138.0" selected="true" text="Running..."/>
+                        <Button fx:id="stepBack" layoutX="37.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="-10" />
+                        <Button fx:id="stepForward" layoutX="116.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="+10" />
+                        <Slider fx:id="tickPauseSlider" layoutX="37.0" layoutY="110.0" min="1.0" showTickLabels="true" showTickMarks="true" />
+                        <ToggleButton fx:id="toggleRunning" layoutX="38.0" layoutY="19.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" selected="true" text="Running..." />
                     </children>
                 </Pane>
             </left>
