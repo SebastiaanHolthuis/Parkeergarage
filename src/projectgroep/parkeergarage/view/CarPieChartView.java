@@ -1,6 +1,8 @@
 package projectgroep.parkeergarage.view;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -29,8 +31,6 @@ public class CarPieChartView extends AbstractView {
         this.model = model;
 
         setSeriesNames();
-
-        pieChart.addDa
 
         getChildren().addAll(pieChart);
     }
