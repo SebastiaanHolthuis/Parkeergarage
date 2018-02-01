@@ -38,7 +38,8 @@ public class ParkeerLogic extends AbstractModel {
     volatile private boolean running;
 
     private double totalEarned = 0;
-
+    private double expectedEventVisitors = 0;
+    
     private List<Car> skippedCars = new ArrayList<>();
 
     private CarQueue entranceCarQueue;
@@ -150,7 +151,6 @@ public class ParkeerLogic extends AbstractModel {
         }
 
         handleEntrance();
-        handleEvents();
         
         saveSnapshot();
     }
@@ -247,7 +247,8 @@ public class ParkeerLogic extends AbstractModel {
     	duration[1] = 30;
     	
     	events = new Events(this);
-    	events.addEvent("Koopavond", 0, 1, 30, duration, 400);
+    	events.addEvent("Koopavond", 0, 18, 30, duration, 400);
+    	events.addEvent("Kermis", 3, 19, 30, duration, 300);
     }
     
     private void handleEvents() {
@@ -255,9 +256,13 @@ public class ParkeerLogic extends AbstractModel {
     	startTime[0] = day;
     	startTime[1] = hour;
     	startTime[2] = minute;
-    	System.out.println(startTime[0] + " - " + startTime[1] + ":" + startTime[2]);
-    	ArrayList<Event> events2 = (ArrayList<Event>) events.getEventsByStartTime(startTime);
-    	events2.forEach(e -> System.out.print(e.getName()));
+    	
+    	ArrayList<Event> startingEvents = events.getEventsByStartTime(startTime);
+    	expectedEventVisitors = 0;
+    	
+    	for (Event event : startingEvents) {
+			expectedEventVisitors += event.getExpectedVisitors();
+		}
     }
     
     private void updateViews() {
@@ -427,7 +432,7 @@ public class ParkeerLogic extends AbstractModel {
         int averageNumberOfCarsPerHour = day < 5
                 ? weekDay
                 : weekend;
-
+    	
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
@@ -588,9 +593,6 @@ public class ParkeerLogic extends AbstractModel {
             if(car instanceof ReservationCar) {
         			totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
             }
-//            if(car instanceof ParkingPassCar) {
-//            		setParkingPassEarnings(getParkingPassEarnings() + 100);
-//            }
         }
         
         IntStream.range(0, numberOfCars).forEach(i -> {
