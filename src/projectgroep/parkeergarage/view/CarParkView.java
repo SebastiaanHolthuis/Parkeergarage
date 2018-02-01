@@ -4,6 +4,7 @@ package projectgroep.parkeergarage.view;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
@@ -13,15 +14,25 @@ import projectgroep.parkeergarage.logic.cars.Car;
 public class CarParkView extends AbstractView {
     ParkeerLogic model;
     private GraphicsContext graphicsContext;
+    ScrollPane container;
 
     public CarParkView(ParkeerLogic model) {
         super();
 
         this.model = model;
 
-        Canvas canvas = new Canvas(865, 500);
+        Canvas canvas = new Canvas(865, 1000);
         graphicsContext = canvas.getGraphicsContext2D();
-        getChildren().add(canvas);
+
+        container = new ScrollPane();
+
+        container.setPrefHeight(800);
+        container.setPrefWidth(600);
+        container.setContent(canvas);
+        container.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        container.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        getChildren().add(container);
     }
 
     @Override
