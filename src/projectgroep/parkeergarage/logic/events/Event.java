@@ -15,6 +15,8 @@ public class Event {
 	
 	private int expectedVisitors;
 
+	private boolean started;
+	
 	private ArrayList<Car> visitors = new ArrayList<Car>();
 	
 	/**
@@ -39,6 +41,8 @@ public class Event {
 		this.durationMinutes = duration[1];
 		
 		this.expectedVisitors = expectedVisitors;
+		
+		this.started = false;
 	}
 
 	public String getName() {
@@ -79,6 +83,14 @@ public class Event {
 
 	public void setExpectedVisitors(int expectedVisitors) {
 		this.expectedVisitors = expectedVisitors;
+	}
+
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
 	}
 
 	public ArrayList<Car> getVisitors() {
