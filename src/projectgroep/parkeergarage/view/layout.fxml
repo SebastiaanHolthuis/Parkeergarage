@@ -49,6 +49,12 @@
                                     prefWidth="504.0"/>
                     </content>
                 </Tab>
+                <Tab text="Wachtrijen">
+                    <content>
+                        <AnchorPane fx:id="queuelinechart" minHeight="0.0" minWidth="504.0" prefHeight="786.0"
+                                    prefWidth="504.0"/>
+                    </content>
+                </Tab>
                 <Tab text="Verdeling">
                     <content>
                         <AnchorPane fx:id="carpiechart" minHeight="0.0" minWidth="504.0" prefHeight="786.0"
