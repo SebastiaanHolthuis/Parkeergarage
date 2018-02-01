@@ -43,4 +43,156 @@ public class Settings extends MapLike {
             }
         });
     }
+
+	public int getNumberOfFloors() {
+		return numberOfFloors;
+	}
+
+	public void setNumberOfFloors(int numberOfFloors) {
+		this.numberOfFloors = numberOfFloors;
+	}
+
+	public int getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(int numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
+
+	public int getNumberOfPlaces() {
+		return numberOfPlaces;
+	}
+
+	public void setNumberOfPlaces(int numberOfPlaces) {
+		this.numberOfPlaces = numberOfPlaces;
+	}
+
+	public int getNumberOfPassHolderRows() {
+		return numberOfPassHolderRows;
+	}
+
+	public void setNumberOfPassHolderRows(int numberOfPassHolderRows) {
+		this.numberOfPassHolderRows = numberOfPassHolderRows;
+	}
+
+	public int getNumberOfResFloors() {
+		return numberOfResFloors;
+	}
+
+	public void setNumberOfResFloors(int numberOfResFloors) {
+		this.numberOfResFloors = numberOfResFloors;
+	}
+
+	public int getNumberOfResRows() {
+		return numberOfResRows;
+	}
+
+	public void setNumberOfResRows(int numberOfResRows) {
+		this.numberOfResRows = numberOfResRows;
+	}
+
+	public double getDefaultPrice() {
+		return defaultPrice;
+	}
+
+	public void setDefaultPrice(double defaultPrice) {
+		this.defaultPrice = defaultPrice;
+	}
+
+	public int getWeekDayArrivals() {
+		return weekDayArrivals;
+	}
+
+	public void setWeekDayArrivals(int weekDayArrivals) {
+		this.weekDayArrivals = weekDayArrivals;
+	}
+
+	public int getWeekendArrivals() {
+		return weekendArrivals;
+	}
+
+	public void setWeekendArrivals(int weekendArrivals) {
+		this.weekendArrivals = weekendArrivals;
+	}
+
+	public int getWeekDayPassArrivals() {
+		return weekDayPassArrivals;
+	}
+
+	public void setWeekDayPassArrivals(int weekDayPassArrivals) {
+		this.weekDayPassArrivals = weekDayPassArrivals;
+	}
+
+	public int getWeekendPassArrivals() {
+		return weekendPassArrivals;
+	}
+
+	public void setWeekendPassArrivals(int weekendPassArrivals) {
+		this.weekendPassArrivals = weekendPassArrivals;
+	}
+
+	public int getWeekDayResArrivals() {
+		return weekDayResArrivals;
+	}
+
+	public void setWeekDayResArrivals(int weekDayResArrivals) {
+		this.weekDayResArrivals = weekDayResArrivals;
+	}
+
+	public int getWeekendResArrivals() {
+		return weekendResArrivals;
+	}
+
+	public void setWeekendResArrivals(int weekendResArrivals) {
+		this.weekendResArrivals = weekendResArrivals;
+	}
+
+	public int getMaxQueue() {
+		return maxQueue;
+	}
+
+	public void setMaxQueue(int maxQueue) {
+		this.maxQueue = maxQueue;
+	}
+
+	public double getSkipChance() {
+		return skipChance;
+	}
+
+	public void setSkipChance(double skipChance) {
+		this.skipChance = skipChance;
+	}
+
+	public int getMaxHistory() {
+		return maxHistory;
+	}
+
+	public void setMaxHistory(int maxHistory) {
+		this.maxHistory = maxHistory;
+	}
+
+	public int getEnterSpeed() {
+		return enterSpeed;
+	}
+
+	public void setEnterSpeed(int enterSpeed) {
+		this.enterSpeed = enterSpeed;
+	}
+
+	public int getPaymentSpeed() {
+		return paymentSpeed;
+	}
+
+	public void setPaymentSpeed(int paymentSpeed) {
+		this.paymentSpeed = paymentSpeed;
+	}
+
+	public int getExitSpeed() {
+		return exitSpeed;
+	}
+
+	public void setExitSpeed(int exitSpeed) {
+		this.exitSpeed = exitSpeed;
+	}
 }

@@ -1,14 +1,15 @@
 package projectgroep.parkeergarage.view;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.function.Function;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.function.Function;
 
 public class TextStatisticsView extends AbstractView {
     ParkeerLogic model;
@@ -23,6 +24,8 @@ public class TextStatisticsView extends AbstractView {
     public TextStatisticsView(ParkeerLogic model) {
         super();
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        
         statistics = new LinkedHashMap<String, Function>() {{
             put("Beschikbare plaatsen", x -> model.getNumberOfOpenSpots());
             put("Aantal auto's", x -> model.getAllCars().count());
@@ -30,7 +33,7 @@ public class TextStatisticsView extends AbstractView {
             put("Aantal reservaties", x -> model.getReservationCars().count());
             put("Auto's in queue", x -> model.getEntranceCarQueue().carsInQueue());
             put("Pashouders in queue", x -> model.getEntrancePassQueue().carsInQueue());
-            put("Totaal verdiend", x -> "€" + (model.getTotalEarned() + model.getParkingPassEarnings()));
+            put("Totaal verdiend", x -> "€" + (df.format(model.getTotalEarned() + model.getParkingPassEarnings())));
             put("Skippende auto's", x -> model.getSkipCount());
             put("Misgelopen omzet", x -> "€" + model.getSkipCount() * 4);
             put("Dagen", x -> model.getDay());

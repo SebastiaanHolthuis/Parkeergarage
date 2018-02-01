@@ -49,14 +49,13 @@ public class CarParkView extends Canvas implements View {
             model.locations().forEach(location -> {
                 Car car = model.getCarAt(location);
                 Color color = car == null ? Color.web("#8bba8b") : car.getColor();
-//                System.out.println("update");
 
                 if (model.getReservationLogic().getReservations().values().contains(location)) {
                     if (car != null) {
                         color = car.getColor();
                     }
                 } else {
-                    if (car == null && location.getFloor() == 0 && location.getRow() < 2) {
+                    if (car == null && location.getFloor() == 0 && location.getRow() < model.getSettings().getNumberOfPassHolderRows()) {
                         color = Color.web("#ADDAF7"); // Blue
                     } else if (car == null) {
                         color = Color.web("#F0839E"); // Magenta

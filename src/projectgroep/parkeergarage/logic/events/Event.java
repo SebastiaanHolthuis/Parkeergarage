@@ -1,6 +1,7 @@
 package projectgroep.parkeergarage.logic.events;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import projectgroep.parkeergarage.logic.cars.Car;
 
@@ -44,7 +45,7 @@ public class Event {
 		
 		this.started = false;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
