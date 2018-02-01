@@ -1,8 +1,7 @@
 package projectgroep.parkeergarage.logic.cars;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
@@ -17,6 +16,8 @@ public abstract class Car implements Serializable {
     private int[] entranceTime;
     public int[] timeEntering = {0,0,0};
     public int[] timeLeaving = {0,0,0};    
+    private boolean crookedParking = false;
+    
 //    private ArrayList<Double> timeEntering = new ArrayList<>();
 
     /**
@@ -26,6 +27,9 @@ public abstract class Car implements Serializable {
      */
     public Car(double priceToPay) {
         this.priceToPay = priceToPay;
+        
+        Random rand = new Random();
+        if (rand.nextInt(1000) <= 5) crookedParking = true;
     }
 
     public Location getLocation() {
@@ -82,6 +86,14 @@ public abstract class Car implements Serializable {
     public void setEntranceTime(int[] entranceTime) {
         this.entranceTime = entranceTime;
     }
+
+	public boolean isCrookedParking() {
+		return crookedParking;
+	}
+
+	public void setCrookedParking(boolean crookedParking) {
+		this.crookedParking = crookedParking;
+	}
 
 //    private static stayMinutes (int hours, int minutes) {
 //        (hours * 60) +
