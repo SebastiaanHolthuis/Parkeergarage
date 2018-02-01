@@ -58,10 +58,7 @@ public class Controller {
             model.toggleRunning();
             ToggleButton source = (ToggleButton) e.getSource();
             source.setSelected(model.isRunning());
-            if (model.isRunning())
-                source.setText("Running...");
-            else
-                source.setText("Run");
+            source.setText(model.isRunning() ? "Running..." : "Run");
         });
     }
 
