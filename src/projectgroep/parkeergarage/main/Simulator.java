@@ -3,9 +3,12 @@ package projectgroep.parkeergarage.main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
@@ -64,7 +67,8 @@ public class Simulator extends Application {
         attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
 
         CarParkView c = new CarParkView(model);
-        attachComponentToLayout(c, "#carpark");
+        ((ScrollPane) scene.lookup("#carpark")).setContent(c);
+        model.addView(c);
 //        stage.widthProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
 //        stage.heightProperty().addListener((obs, oldVal, newVal) -> c.resizeScrollPane());
 //        stage.setOnShown(((e) -> c.resizeScrollPane()));

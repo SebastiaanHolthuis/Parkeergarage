@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -13,7 +14,10 @@
 <BorderPane fx:id="root" minHeight="1000.0" minWidth="1800.0" stylesheets="@style.css"
             xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <AnchorPane fx:id="carpark"/>
+        <AnchorPane>
+            <ScrollPane fx:id="carpark" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        </AnchorPane>
     </center>
     <left>
         <TabPane fx:id="leftPane" prefHeight="620.0" prefWidth="351.0" tabClosingPolicy="UNAVAILABLE"
@@ -28,7 +32,7 @@
                 </Tab>
                 <Tab text="Settings">
                     <content>
-                        <Pane fx:id="settings"/>
+                    <Pane fx:id="settings"/>
                     </content>
                 </Tab>
             </tabs>

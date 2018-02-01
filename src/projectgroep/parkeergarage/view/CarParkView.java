@@ -20,28 +20,11 @@ import projectgroep.parkeergarage.logic.cars.Car;
 public class CarParkView extends Canvas implements View {
     ParkeerLogic model;
     private GraphicsContext graphicsContext;
-    ScrollPane scrollPane;
 
     public CarParkView(ParkeerLogic model) {
-        super();
-
+        super(canvasWidth(model), canvasHeight(model));
         this.model = model;
-
-        Canvas canvas = new Canvas(canvasWidth(), canvasHeight());
-        graphicsContext = canvas.getGraphicsContext2D();
-        scrollPane = new ScrollPane();
-
-
-        AnchorPane.setTopAnchor(scrollPane, 0.0);
-        AnchorPane.setLeftAnchor(scrollPane, 0.0);
-        AnchorPane.setRightAnchor(scrollPane, 0.0);
-        AnchorPane.setBottomAnchor(scrollPane, 0.0);
-
-        scrollPane.setContent(canvas);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setPannable(true);
-
+        graphicsContext = getGraphicsContext2D();
     }
 
     @Override
@@ -71,11 +54,11 @@ public class CarParkView extends Canvas implements View {
         });
     }
 
-    double canvasWidth() {
+    static double canvasWidth(ParkeerLogic model) {
         return model.getNumberOfFloors() * 260 + (1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75 + (model.getNumberOfRows() % 2) * 20;
     }
 
-    double canvasHeight() {
+    static double canvasHeight(ParkeerLogic model) {
         return 60 + model.getNumberOfPlaces() * 10;
     }
 
