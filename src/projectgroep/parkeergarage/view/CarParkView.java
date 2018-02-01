@@ -72,7 +72,7 @@ public class CarParkView extends Canvas implements View {
 
     private void drawBackground() {
         for (int x = 0; x < canvasWidth(model); x += tileSize)
-            for (int y = 0; y < canvasWidth(model); y += tileSize)
+            for (int y = 0; y < canvasHeight(model); y += tileSize)
                 graphicsContext.drawImage(background, x, y, tileSize, tileSize);
     }
 
