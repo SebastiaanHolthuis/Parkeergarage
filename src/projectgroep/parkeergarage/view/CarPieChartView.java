@@ -13,7 +13,9 @@ public class CarPieChartView extends AbstractView {
     PieChart.Data reservations = new PieChart.Data("Reservaties", 0);
     PieChart.Data openSpots = new PieChart.Data("Leeg", 0);
 
-    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(adHoc, passHolder, reservations);
+    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+            adHoc, passHolder, reservations, openSpots
+    );
 
     PieChart pieChart = new PieChart(pieChartData) {{
         setTitle("Verdeling auto's");
