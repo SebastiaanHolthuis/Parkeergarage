@@ -98,7 +98,7 @@ public class Simulator extends Application {
 
     public void restart(Settings settings) {
         SettingsRepository.saveSettings(settings);
-        model.pause();
+        model.kill();
         modelThread.stop();
 
         try {

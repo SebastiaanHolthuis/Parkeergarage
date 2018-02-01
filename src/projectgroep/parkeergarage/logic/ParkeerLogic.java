@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -32,7 +31,9 @@ public class ParkeerLogic extends AbstractModel {
     private int minute = 0;
     private int week = 0;
 
+    // Run switches
     private volatile boolean running;
+    private boolean alive = true;
 
     private double totalEarned = 0;
 
@@ -80,7 +81,7 @@ public class ParkeerLogic extends AbstractModel {
     public void run() {
         running = true;
 
-        while (true) {
+        while (alive) {
             if (running)
                 tickSimulator();
         }
@@ -94,12 +95,8 @@ public class ParkeerLogic extends AbstractModel {
         return running;
     }
 
-    public void pause() {
-        running = false;
-    }
-
-    public void play() {
-        running = true;
+    public void kill() {
+        alive = false;
     }
 
 
