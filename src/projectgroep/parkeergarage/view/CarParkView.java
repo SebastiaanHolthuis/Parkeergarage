@@ -21,7 +21,7 @@ public class CarParkView extends Canvas implements View {
         super(canvasWidth(model), canvasHeight(model));
         this.model = model;
         graphicsContext = getGraphicsContext2D();
-        
+
         Platform.runLater(() -> {
             drawBackground();
         });
