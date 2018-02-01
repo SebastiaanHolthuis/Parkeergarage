@@ -84,6 +84,16 @@ public class Events {
 		return toReturn;
 	}
 	
+	public ArrayList<Event> getRunningEvents(int[] currentTime) {
+		ArrayList<Event> toReturn = new ArrayList<Event>();
+		
+		for (Event event : events) {
+			if (event.isStarted()) toReturn.add(event);
+		}
+		
+		return toReturn;	
+	}
+	
 	/**
 	 * @return Returns all of the Events listed in the events ArrayList.
 	 */
