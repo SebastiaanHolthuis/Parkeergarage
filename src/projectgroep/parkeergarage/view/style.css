@@ -1,0 +1,50 @@
+#root {
+    /*-view-font-family: "Futura Bk BT";*/
+}
+
+#bottomPane, #leftPane, #rightPane {
+    -fx-background-color: #eeeeee;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px 1px 0px 1px;
+}
+
+#leftPane, #rightPane {
+    -fx-border-width: 0px 1px 0px 1px;
+}
+
+ScrollPane {
+    -fx-focus-color: transparent;
+}
+
+/**
+    Chart lines
+    TODO: duplicatie verwijderen
+ */
+.chart-content .chart-line-symbol {
+    -fx-background-color: transparent !important;
+}
+
+.default-color0.chart-legend-item-symbol, .default-color0 {
+    -fx-stroke: #D1345B !important;
+    -fx-background-color: #D1345B;
+}
+
+.default-color1.chart-legend-item-symbol, .default-color1 {
+    -fx-stroke: #33A4EA !important;
+    -fx-background-color: #33A4EA;
+}
+
+.default-color2.chart-legend-item-symbol, .default-color2 {
+    -fx-stroke: #008000 !important;
+    -fx-background-color: #008000;
+}
+
+/* Empty */
+.default-color3.chart-legend-item-symbol, .default-color3 {
+    -fx-stroke: white !important;
+    -fx-background-color: white;
+}
+
+
+
+

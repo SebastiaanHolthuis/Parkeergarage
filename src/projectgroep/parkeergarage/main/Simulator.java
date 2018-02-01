@@ -1,122 +1,117 @@
 package projectgroep.parkeergarage.main;
 
-import javax.swing.*;
-import java.awt.*;
-
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import projectgroep.parkeergarage.SettingsRepository;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.Settings;
-import projectgroep.parkeergarage.view.CarParkView;
-import projectgroep.parkeergarage.view.SettingsView;
-import projectgroep.parkeergarage.view.TextStatisticsView;
-import javax.swing.border.MatteBorder;
+import projectgroep.parkeergarage.view.*;
 
-public class Simulator {
+import java.io.IOException;
 
-    private ParkeerLogic parkeerLogic;
-    private CarParkView carParkView;
-    private SettingsView settingsView;
-    private TextStatisticsView textStatisticsView;
 
-    private JFrame screen;
-    private JFrame settingsScreen;
+public class Simulator extends Application {
+    ParkeerLogic model;
+    Thread modelThread;
 
-    private Container contentPane;
-    private Container settingsContentPane;
+    Pane root;
+    Scene scene;
+    Stage stage;
 
-    public Simulator(Settings settings) {
-        createInstances(settings);
-        initializeFrame();
-        initializeSettingsFrame();
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        actualStart(primaryStage);
     }
 
-    private void createInstances(Settings settings) {
-        screen = new JFrame();
-        screen.getContentPane().setBackground(SystemColor.control);
-        settingsScreen = new JFrame();
+    void actualStart(Stage primaryStage) throws IOException {
+        model = new ParkeerLogic(SettingsRepository.loadSettings());
+        primaryStage.setTitle("Parkeergarage simulator - ITV1C groep C");
 
-        parkeerLogic = new ParkeerLogic(settings);
+        stage = primaryStage;
 
-        carParkView = new CarParkView(parkeerLogic);
-        carParkView.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        carParkView.setBackground(SystemColor.control);
-        carParkView.setBounds(261, 11, 848, 549);
-        settingsView = new SettingsView(parkeerLogic, this);
-        
-        textStatisticsView = new TextStatisticsView(parkeerLogic);
-        textStatisticsView.setBorder(null);
-        textStatisticsView.setBounds(10, 11, 241, 549);
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("projectgroep/parkeergarage/view/layout.fxml"));
+        scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-        parkeerLogic.addView(carParkView);
-        parkeerLogic.addView(settingsView);
-        parkeerLogic.addView(textStatisticsView);
-    }
+        attachComponentsToLayout();
+        addControlListeners();
 
-    private void initializeFrame() {
-        screen.setTitle("Parkeergarage simulator - ITV1C groep C");
-        screen.setPreferredSize(new Dimension(1125, 600));
-        screen.setResizable(false);
-        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        contentPane = screen.getContentPane();
-        screen.getContentPane().setLayout(null);
-
-        contentPane.add(textStatisticsView);
-        contentPane.add(carParkView);
-
-        screen.pack();
-        screen.setLocationRelativeTo(null);
-        screen.setVisible(true);
-
-        carParkView.updateView();
-        textStatisticsView.updateView();
-    }
-
-    private void initializeSettingsFrame() {
-        settingsScreen.setTitle("Settings");
-        settingsScreen.setPreferredSize(new Dimension(900, 600));
-        settingsScreen.setResizable(false);
-        settingsScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        settingsContentPane = settingsScreen.getContentPane();
-        settingsContentPane.add(settingsView);
-
-        settingsScreen.pack();
-        settingsScreen.setLocationRelativeTo(null);
-        settingsScreen.setVisible(true);
-    }
-
-
-    /**
-     * Disposes of the screens and reinitializes the simulator in a new changed
-     * with the new settings
-     */
-    public void restart(Settings settings) {
-        SettingsRepository.saveSettings(settings);
-        settingsScreen.dispose();
-        screen.dispose();
-        parkeerLogic.stop();
-
-        Thread t = new Thread(() -> {
-            createInstances(settings);
-            initializeFrame();
-            initializeSettingsFrame();
-            parkeerLogic.run();
+        primaryStage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
         });
 
-        t.start();
+        modelThread = new Thread(() -> {
+            model.run();
+        });
+
+        modelThread.start();
 
     }
 
-    public ParkeerLogic getParkeerLogic() {
-        return parkeerLogic;
+
+    void attachComponentsToLayout() {
+        attachComponentToLayout(new SettingsView(model, this), "#settings");
+        attachComponentToLayout(new CarLineChartView(model), "#carlinechart");
+        attachComponentToLayout(new QueueLineChartView(model), "#queuelinechart");
+        attachComponentToLayout(new CarPieChartView(model), "#carpiechart");
+        attachComponentToLayout(new TotalEarnedChartView(model), "#totalearnedchart");
+        attachComponentToLayout(new TextStatisticsView(model), "#textstatistics");
+
+        CarParkView c = new CarParkView(model);
+        ((ScrollPane) scene.lookup("#carpark")).setContent(c);
+        model.addView(c);
     }
 
-    public CarParkView getCarParkView() {
-        return carParkView;
+
+    void addControlListeners() {
+        addToggleListener();
+        initializeSlider();
+        scene.lookup("#stepBack").setOnMouseClicked((e) -> model.stepBack(10));
+        scene.lookup("#stepForward").setOnMouseClicked((e) -> model.tickMany(10));
     }
 
-    public Container getContentPane() {
-        return screen.getContentPane();
+    void initializeSlider() {
+        Slider tickPauseSlider = (Slider) scene.lookup("#tickPauseSlider");
+        tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+                model.tickPause = 101 - newValue.intValue());
+        tickPauseSlider.setValue(101 - model.tickPause);
+    }
+
+    void addToggleListener() {
+        scene.lookup("#toggleRunning").setOnMouseClicked((e) -> {
+            model.toggleRunning();
+            ToggleButton source = (ToggleButton) e.getSource();
+            source.setSelected(model.isRunning());
+            if (model.isRunning())
+                source.setText("Running...");
+            else
+                source.setText("Run");
+        });
+    }
+
+    void attachComponentToLayout(AbstractView view, String lookupId) {
+        ((Pane) scene.lookup(lookupId)).getChildren().add(view);
+        model.addView(view);
+    }
+
+    public void restart(Settings settings) {
+        SettingsRepository.saveSettings(settings);
+        model.kill();
+        modelThread.stop();
+
+        try {
+            actualStart(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

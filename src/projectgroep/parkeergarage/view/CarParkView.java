@@ -1,81 +1,86 @@
 package projectgroep.parkeergarage.view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
 
+import javafx.application.Platform;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import projectgroep.parkeergarage.logic.Location;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 import projectgroep.parkeergarage.logic.cars.Car;
 
-public class CarParkView extends AbstractView {
 
-	private Dimension 		size;
-	private Image			carParkImage;
-	
-	public CarParkView(ParkeerLogic model) {
-		super(model);
-		
-		size = new Dimension(0, 0);
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		if (carParkImage == null) {
-            return;
-        }
+public class CarParkView extends Canvas implements View {
+    ParkeerLogic model;
+    GraphicsContext graphicsContext;
+    Image background = new Image("file:img/transp_bg.png");
+    int tileSize = 50;
 
-        Dimension currentSize = getSize();
-        
-        if (size.equals(currentSize)) {
-            g.drawImage(carParkImage, 0, 0, null);
-        } else {
-            g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
-        }
-	}
+    public CarParkView(ParkeerLogic model) {
+        super(canvasWidth(model), canvasHeight(model));
+        this.model = model;
+        graphicsContext = getGraphicsContext2D();
 
-	public void updateView() {
-		if (!size.equals(getSize())) {
-            size = getSize();
-            carParkImage = createImage(size.width, size.height);
-        }
-		
-        Graphics graphics = carParkImage.getGraphics();
-        
-        for (int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-            for (int row = 0; row < model.getNumberOfRows(); row++) { 
-                for (int place = 0; place < model.getNumberOfPlaces(); place++) {
-                	Location location = new Location(floor, row, place);                	
-                    Car car = model.getCarAt(location);
-                    Color color = car == null ? Color.white : car.getColor();
-                    drawPlace(graphics, location, color);
-                    
-                    if (!model.getLocationLogic().existsInMap(location)) {
-	                    if (floor == 0 && row < 2) {
-	                    	model.getLocationLogic().addLocation(location, "2");
-	                    	location.setForParkingPass(true);
-	                    } else {
-	                    	model.getLocationLogic().addLocation(location, "1");
-	                    	location.setForParkingPass(false);
-	                    }
+        Platform.runLater(() -> {
+            drawBackground();
+        });
+    }
+
+    static double canvasWidth(ParkeerLogic model) {
+        int base = (model.getNumberOfFloors() * 260);
+        int a = ((1 + (int) Math.floor(model.getNumberOfRows() * 0.5)) * 75);
+        int b = ((model.getNumberOfRows() % 2) * 20);
+        int total = base + a + b - 215;
+
+        return Math.max(1200, total);
+    }
+
+    static double canvasHeight(ParkeerLogic model) {
+        int total = 120 + model.getNumberOfPlaces() * 10;
+
+        return Math.max(900, total);
+    }
+
+
+    @Override
+    public void updateView() {
+        Platform.runLater(() -> {
+            model.locations().forEach(location -> {
+                Car car = model.getCarAt(location);
+                Color color = car == null ? Color.web("#8bba8b") : car.getColor();
+
+                if (model.getReservationLogic().getReservations().values().contains(location)) {
+                    if (car != null) {
+                        color = car.getColor();
+                    }
+                } else {
+                    if (car == null && location.getFloor() == 0 && location.getRow() < model.getSettings().getNumberOfPassHolderRows()) {
+                        color = Color.web("#ADDAF7"); // Blue
+                    } else if (car == null) {
+                        color = Color.web("#F0839E"); // Magenta
+                    } else {
+                        color = car.getColor();
                     }
                 }
-            }
-        }
-        
-        
-        
-        repaint();
-	}
-	
-	 private void drawPlace(Graphics graphics, Location location, Color color) {
-         graphics.setColor(color);
-         graphics.fillRect(
-                 location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
-                 60 + location.getPlace() * 10,
-                 20 - 1,
-                 10 - 1); // TODO use dynamic size or constants
 
-     }
+                drawPlace(location, color);
+            });
+        });
+    }
+
+    private void drawBackground() {
+        for (int x = 0; x < canvasWidth(model); x += tileSize)
+            for (int y = 0; y < canvasHeight(model); y += tileSize)
+                graphicsContext.drawImage(background, x, y, tileSize, tileSize);
+    }
+
+    private void drawPlace(Location location, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillRect(
+                location.getFloor() * 260 + (1 + (int) Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
+                60 + location.getPlace() * 10,
+                20 - 1,
+                10 - 1); // TODO use dynamic size or constants
+    }
 }

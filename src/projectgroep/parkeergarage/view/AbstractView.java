@@ -1,25 +1,10 @@
 package projectgroep.parkeergarage.view;
 
-import javax.swing.JPanel;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
-import projectgroep.parkeergarage.logic.AbstractModel;
-import projectgroep.parkeergarage.logic.ParkeerLogic;
+public abstract class AbstractView extends AnchorPane implements View {
+    public void updateView() {
 
-@SuppressWarnings("serial")
-public class AbstractView extends JPanel {
-
-	protected ParkeerLogic model;
-	
-	public AbstractView(ParkeerLogic model) {
-		this.model = model;
-	}
-	
-	public AbstractModel getModel() {
-		return model;
-	}
-	
-	public void updateView() {
-		repaint();
-	}
-	
+    }
 }
