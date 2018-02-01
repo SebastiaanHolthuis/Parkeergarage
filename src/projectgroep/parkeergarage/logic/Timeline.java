@@ -40,7 +40,7 @@ public class Timeline {
     }
 
     Snapshot forwards(int steps) {
-        if (future.size() == 0)
+        if (!canForward())
             return null;
 
         IntStream.range(0, steps).forEach(i -> stepForward());
@@ -85,6 +85,10 @@ public class Timeline {
 
     boolean isFull() {
         return size() == maxSize;
+    }
+
+    boolean canForward() {
+        return !future.isEmpty();
     }
 
     /**

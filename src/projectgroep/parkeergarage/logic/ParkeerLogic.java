@@ -132,9 +132,15 @@ public class ParkeerLogic extends AbstractModel {
     }
 
     public void stepBack(int steps) {
-        Snapshot lastStep = timeline.backwards(steps);
+        restoreSnapshot(timeline.backwards(steps));
+    }
 
-        lastStep.asMap().forEach((k, v) -> {
+    public void stepForward(int steps) {
+        restoreSnapshot(timeline.forwards(steps));
+    }
+
+    void restoreSnapshot(Snapshot snapshot) {
+        snapshot.asMap().forEach((k, v) -> {
             try {
                 Field field = getClass().getDeclaredField(k);
                 field.set(this, v);
@@ -142,8 +148,7 @@ public class ParkeerLogic extends AbstractModel {
             }
         });
 
-        reservationLogic = new ReservationLogic(this, lastStep.reservationSnapshot);
-
+        reservationLogic = new ReservationLogic(this, snapshot.reservationSnapshot);
         updateViews();
     }
 
