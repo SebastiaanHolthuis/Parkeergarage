@@ -61,11 +61,16 @@ public class Controller {
         timelinePane = (Pane) scene.lookup("#timelinepane");
         timelineSlider = (Slider) scene.lookup("#timelineslider");
         timelineSlider.setShowTickLabels(true);
+        updateTimeline();
         timelineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() > oldValue.intValue()) {
-                model.stepForward(newValue.intValue() - oldValue.intValue());
-            } else {
-                model.stepBack(oldValue.intValue() - newValue.intValue());
+            int oldV = oldValue.intValue();
+            int newV = newValue.intValue();
+
+            if (newV != model.timeline.getCursor()) {
+                if (newV > oldV)
+                    model.stepForward(newV - oldV);
+                else
+                    model.stepBack(oldV - newV);
             }
         });
     }
@@ -73,7 +78,7 @@ public class Controller {
     void updateTimeline() {
         timelinePane.setDisable(model.isRunning()); // FIXME: eigen view of controller?
         timelineSlider.setMax(model.timeline.size());
-//        timelineSlider.setValue(model.timeline.getCursor());
+        timelineSlider.setValue(model.timeline.getCursor());
     }
 
     void addToggleListener() {

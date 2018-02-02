@@ -33,7 +33,7 @@ public class Timeline {
 
     void saveSnapshot(Snapshot sn) {
         snapshots.add(sn);
-        cursor = snapshots.size();
+        cursor = snapshots.size() - 1;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Timeline {
     }
 
     boolean canForward() {
-        return cursor < snapshots.size();
+        return cursor < snapshots.size() - 1;
     }
 
     public int stepsBack() {
