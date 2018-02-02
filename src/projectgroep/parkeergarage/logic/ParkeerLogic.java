@@ -42,7 +42,8 @@ public class ParkeerLogic extends AbstractModel {
      * Earnings
      */
     private double totalEarned = 0;
-    private int parkingPassEarnings;
+    private double dayEarnings = 0;
+    private static int parkingPassEarnings;
 
     private List<Car> skippedCars = new ArrayList<>();
 
@@ -191,6 +192,7 @@ public class ParkeerLogic extends AbstractModel {
         }
         while (hour > 23) {
             hour -= 24;
+            dayEarnings = 0;
             day++;
         }
         while (day > 6) {
@@ -418,12 +420,18 @@ public class ParkeerLogic extends AbstractModel {
 
             if (car instanceof ReservationCar) {
                 totalEarned += (minutes * 0.02);
+                dayEarnings += (minutes * 0.02);
             } else if (car instanceof AdHocCar) {
                 totalEarned += (minutes * 0.02);
+                dayEarnings += (minutes * 0.02);
             }
 
-            if (car.isCrookedParking()) totalEarned += 5;
+            if (car.isCrookedParking()) {
+            	totalEarned += 5;
+            	dayEarnings += 5;
+            }
 
+            
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
@@ -475,14 +483,21 @@ public class ParkeerLogic extends AbstractModel {
 
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
+        double numberOfCarsPerHour = 0;
 
+        if (events.getRunningEvents(getCurrentTime()).size() > 0) {
+        	numberOfCarsPerHour = ((averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation)*2.3;
+        } else {
+        	numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
+        }
+        
         return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
     }
 
     private double getCarMultiplier() {
         double period = (2 * Math.PI) / 24;
         double multiplier = (double) hour + (double) minute / 60;
+        
         return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));
     }
 
@@ -627,9 +642,7 @@ public class ParkeerLogic extends AbstractModel {
         for (Car car : reservationLogic.getReservationCars()) {
             if (car.getEntranceTime()[0] == getHour() && car.getEntranceTime()[1] == getMinute() && !entranceCarQueue.getQueue().contains(car)) {
                 entranceCarQueue.addCar(car);
-            }
-            if (car instanceof ReservationCar) {
-                totalEarned += 2; // Voegt 1 euro toe aan de totalEarned voordat de gereserveerde auto al op de plek staat.
+                totalEarned += 2;
             }
         }
 
@@ -688,5 +701,13 @@ public class ParkeerLogic extends AbstractModel {
     public void setSettings(Settings settings) {
         this.settings = settings;
     }
+
+	public double getDayEarnings() {
+		return dayEarnings;
+	}
+
+	public void setDayEarnings(double dayEarnings) {
+		this.dayEarnings = dayEarnings;
+	}
 
 }
