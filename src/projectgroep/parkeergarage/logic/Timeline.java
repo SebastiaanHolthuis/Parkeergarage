@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
  * first [past] last - cursor - first [future] last
  */
 public class Timeline {
-    public List<Snapshot> past = new ArrayList<>();
-    public List<Snapshot> future = new ArrayList<>();
+    public List<Snapshot> snapshots = new ArrayList<>();
+    int cursor = 0;
     int maxSize;
 
     Timeline(int maxSize) {
@@ -22,61 +22,30 @@ public class Timeline {
      * Actions
      */
     Snapshot backwards(int steps) {
-        if (cursor() == 0)
-            return null;
-
-        future = new ArrayList<Snapshot>() {{
-            addAll(past.subList(remainingPast(steps), past.size()));
-        }};
-
-        Snapshot toReturn = past.get(remainingPast(steps) - 1);
-
-        past = past.subList(0, remainingPast(steps));
-
-        return toReturn;
-    }
-
-    int remainingPast(int steps) {
-        return (past.size() - steps) > 0 ? (past.size() - steps) : 0;
+        cursor = Math.max(cursor - steps, 0);
+        return atCursor();
     }
 
     Snapshot forwards(int steps) {
-        past = new ArrayList<Snapshot>() {{
-            addAll(past);
-            addAll(future.subList(0, steps));
-        }};
-
-        future = future.subList(steps, future.size());
-
+        cursor = Math.min(cursor + steps, snapshots.size() - 1);
         return atCursor();
     }
 
     void saveSnapshot(Snapshot sn) {
-        past.addAll(future);
-        past.add(sn);
-        future.clear();
+        snapshots.add(sn);
+        cursor = snapshots.size();
     }
 
     /**
      * Getters
      */
     Snapshot atCursor() {
-        return past.get(cursor());
+        return snapshots.get(cursor);
     }
 
-    int cursor() {
-        return past.size() - 1;
-    }
-
-    Collection<Snapshot> all() {
-        return new ArrayList<Snapshot>() {{
-            addAll(past);
-            addAll(future);
-        }};
-    }
 
     int size() {
-        return past.size() + future.size();
+        return snapshots.size();
     }
 
 
@@ -85,13 +54,10 @@ public class Timeline {
     }
 
     boolean canForward() {
-        return !future.isEmpty();
+        return cursor < snapshots.size();
     }
 
-    /**
-     * Utils
-     */
     public int stepsBack() {
-        return past.size();
+        return cursor;
     }
 }

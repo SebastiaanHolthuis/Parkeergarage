@@ -85,7 +85,7 @@ public class ParkeerLogic extends AbstractModel {
         this.timeline = new Timeline(settings.maxHistory);
         this.locationLogic = new LocationLogic(this);
         this.reservationLogic = new ReservationLogic(this);
-        
+
         this.parkingPassEarnings = settings.distributedPasses * 100;
         initializeEvents();
     }
@@ -427,11 +427,11 @@ public class ParkeerLogic extends AbstractModel {
             }
 
             if (car.isCrookedParking()) {
-            	totalEarned += 5;
-            	dayEarnings += 5;
+                totalEarned += 5;
+                dayEarnings += 5;
             }
 
-            
+
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
             carLeavesSpot(car);
             i++;
@@ -486,18 +486,18 @@ public class ParkeerLogic extends AbstractModel {
         double numberOfCarsPerHour = 0;
 
         if (events.getRunningEvents(getCurrentTime()).size() > 0) {
-        	numberOfCarsPerHour = ((averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation)*2.3;
+            numberOfCarsPerHour = ((averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation) * 2.3;
         } else {
-        	numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
+            numberOfCarsPerHour = (averageNumberOfCarsPerHour + expectedEventVisitors) + random.nextGaussian() * standardDeviation;
         }
-        
+
         return (int) (Math.round(getCarMultiplier() * numberOfCarsPerHour / 60));
     }
 
     private double getCarMultiplier() {
         double period = (2 * Math.PI) / 24;
         double multiplier = (double) hour + (double) minute / 60;
-        
+
         return 0.4 + 0.6 * (1 + Math.sin(period * (multiplier - (14 - 6.5))));
     }
 
@@ -702,12 +702,12 @@ public class ParkeerLogic extends AbstractModel {
         this.settings = settings;
     }
 
-	public double getDayEarnings() {
-		return dayEarnings;
-	}
+    public double getDayEarnings() {
+        return dayEarnings;
+    }
 
-	public void setDayEarnings(double dayEarnings) {
-		this.dayEarnings = dayEarnings;
-	}
+    public void setDayEarnings(double dayEarnings) {
+        this.dayEarnings = dayEarnings;
+    }
 
 }
