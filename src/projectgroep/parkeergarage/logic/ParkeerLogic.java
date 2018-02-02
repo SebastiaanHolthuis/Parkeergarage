@@ -276,8 +276,7 @@ public class ParkeerLogic extends AbstractModel {
         duration[1] = 30;
 
         events = new Events(this);
-        events.addEvent("Koopavond", 0, 18, 30, duration, 50);
-        events.addEvent("Kermis", 3, 19, 30, duration, 45);
+        events.addEvent("Koopavond", 3, 18, 30, duration, 50);
     }
 
     private void handleEvents() {
