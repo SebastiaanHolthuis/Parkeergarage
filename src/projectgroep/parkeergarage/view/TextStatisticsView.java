@@ -17,7 +17,7 @@ public class TextStatisticsView extends AbstractView {
     HashMap<String, Function> statistics;
     GridPane container = new GridPane() {{
         setVgap(20);
-        setHgap(80);
+        setHgap(10);
         setPadding(new Insets(25, 25, 25, 25));
     }};
 
