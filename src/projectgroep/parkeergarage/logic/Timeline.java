@@ -43,8 +43,12 @@ public class Timeline {
         return snapshots.get(cursor);
     }
 
+    public int getCursor() {
+        return cursor;
+    }
 
-    int size() {
+
+    public int size() {
         return snapshots.size();
     }
 

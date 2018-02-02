@@ -13,7 +13,9 @@ public class Controller {
     ParkeerLogic model;
     Simulator simulator;
     Scene scene;
+
     Pane timelinePane;
+    Slider timelineSlider;
 
     public Controller(ParkeerLogic model, Simulator simulator, Scene scene) {
         this.model = model;
@@ -57,9 +59,21 @@ public class Controller {
 
     void initializeTimeline() {
         timelinePane = (Pane) scene.lookup("#timelinepane");
-        Slider timelineSlider = (Slider) scene.lookup("#timelineSlider");
-//        tickPauseSlider.valueProperty().addListener((observable, oldValue, newValue) ->
-//
+        timelineSlider = (Slider) scene.lookup("#timelineslider");
+        timelineSlider.setShowTickLabels(true);
+        timelineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                model.stepForward(newValue.intValue() - oldValue.intValue());
+            } else {
+                model.stepBack(oldValue.intValue() - newValue.intValue());
+            }
+        });
+    }
+
+    void updateTimeline() {
+        timelinePane.setDisable(model.isRunning()); // FIXME: eigen view of controller?
+        timelineSlider.setMax(model.timeline.size());
+//        timelineSlider.setValue(model.timeline.getCursor());
     }
 
     void addToggleListener() {
@@ -68,8 +82,7 @@ public class Controller {
             ToggleButton source = (ToggleButton) e.getSource();
             source.setSelected(model.isRunning());
             source.setText(model.isRunning() ? "Running..." : "Run");
-
-            timelinePane.setDisable(model.isRunning()); // FIXME: eigen view of controller?
+            updateTimeline();
         });
     }
 
