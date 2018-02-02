@@ -42,6 +42,8 @@ public class ParkeerLogic extends AbstractModel {
      * Earnings
      */
     private double totalEarned = 0;
+    private double dayEarnings = 0;
+    
     private int parkingPassEarnings;
 
     private List<Car> skippedCars = new ArrayList<>();
@@ -127,6 +129,7 @@ public class ParkeerLogic extends AbstractModel {
         sn.reservationSnapshot = reservationLogic.makeSnapshot();
         sn.skippedCars = skippedCars;
         sn.totalEarned = totalEarned;
+        this.parkingPassEarnings = settings.distributedPasses * 100;
 
         history.saveSnapshot(sn);
     }
@@ -178,6 +181,7 @@ public class ParkeerLogic extends AbstractModel {
         }
         while (hour > 23) {
             hour -= 24;
+            dayEarnings = 0;
             day++;
         }
         while (day > 6) {
@@ -409,10 +413,10 @@ public class ParkeerLogic extends AbstractModel {
 
             if (car instanceof ReservationCar) {
                 totalEarned += (minutes * 0.02);
+                dayEarnings += (minutes * 0.02);
             } else if (car instanceof AdHocCar) {
                 totalEarned += (minutes * 0.02);
-            } else {
-                totalEarned += 100;
+                dayEarnings += (minutes * 0.02);
             }
 
 //            totalEarned += (minutes * 0.04); // houdt nog geen rekening met het aantal uur dat de auto er staat
@@ -656,7 +660,15 @@ public class ParkeerLogic extends AbstractModel {
         return reservationLogic;
     }
 
-    public void setReservationLogic(ReservationLogic reservationLogic) {
+    public double getDayEarnings() {
+		return dayEarnings;
+	}
+
+	public void setDayEarnings(double dayEarnings) {
+		this.dayEarnings = dayEarnings;
+	}
+
+	public void setReservationLogic(ReservationLogic reservationLogic) {
         this.reservationLogic = reservationLogic;
     }
 

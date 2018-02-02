@@ -25,20 +25,21 @@ public class TextStatisticsView extends AbstractView {
         super();
 
         DecimalFormat df = new DecimalFormat("#.00");
-        
+
         statistics = new LinkedHashMap<String, Function>() {{
             put("Beschikbare plaatsen", x -> model.getNumberOfOpenSpots());
-            put("Aantal auto's", x -> model.getAllCars().count());
-            put("Aantal pashouders", x -> model.getParkingPassCars().count());
-            put("Aantal reservaties", x -> model.getReservationCars().count());
+            put("Aantal auto's in garage", x -> model.getAllCars().count());
+            put("Aantal pashouders in garage", x -> model.getParkingPassCars().count());
+            put("Aantal reservatie auto's in garage", x -> model.getReservationCars().count());
+            put("Aantal reserveringen", x -> model.getReservationLogic().getReservations());
             put("Auto's in queue", x -> model.getEntranceCarQueue().carsInQueue());
             put("Pashouders in queue", x -> model.getEntrancePassQueue().carsInQueue());
-            put("Totaal verdiend", x -> "€" + (df.format(model.getTotalEarned() + model.getParkingPassEarnings())));
+            put("Totaal verdiend", x -> "â‚¬" + (df.format(model.getTotalEarned() + model.getParkingPassEarnings())));
+            put("Vandaag verdiend", x -> "â‚¬" + (df.format(model.getDayEarnings())));
             put("Skippende auto's", x -> model.getSkipCount());
-            put("Misgelopen omzet", x -> "€" + model.getSkipCount() * 4);
+            put("Misgelopen omzet", x -> "â‚¬" + model.getSkipCount() * 4);
             put("Dagen", x -> model.getDay());
             put("Tijd", x -> model.getTime());
-            put("Stappen terug", x -> model.history.stepsBack());
         }};
 
         this.model = model;
