@@ -7,13 +7,14 @@ import javafx.scene.chart.XYChart;
 import projectgroep.parkeergarage.logic.ParkeerLogic;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.Function;
 
 
 abstract class AbstractLineChartView extends AbstractView {
     String title;
-    protected HashMap<String, Function> updaters;
-    protected HashMap<String, XYChart.Series> series = new HashMap<>();
+    protected LinkedHashMap<String, Function> updaters;
+    protected LinkedHashMap<String, XYChart.Series> series = new LinkedHashMap<>();
 
     private NumberAxis xAxis = new NumberAxis();
     private NumberAxis yAxis = new NumberAxis();
@@ -22,7 +23,7 @@ abstract class AbstractLineChartView extends AbstractView {
     ParkeerLogic model;
 
 
-    AbstractLineChartView(String title, ParkeerLogic model, HashMap<String, Function> updaters) {
+    AbstractLineChartView(String title, ParkeerLogic model, LinkedHashMap<String, Function> updaters) {
         this.model = model;
         this.title = title;
         this.updaters = updaters;
